@@ -20,9 +20,9 @@ export default withMT({
         Roboto: ["Roboto", "sans-serif"],
       },
       backgroundImage: {},
-      colors: {
-        Red: "#FF0218",
-      },
+      // colors: {
+      //   Red: "#FF0218",
+      // },
     },
   },
   plugins: [],
