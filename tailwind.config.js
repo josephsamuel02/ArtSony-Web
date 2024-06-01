@@ -24,6 +24,9 @@ export default withMT({
       //   Red: "#FF0218",
       // },
     },
+    colors: {
+      customOrange: '#F25B38',
+    },
   },
   plugins: [],
 });
