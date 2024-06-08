@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaHeart, FaEye } from 'react-icons/fa'; // Importing the heart and eye icons
-import { Profilemain } from './Profilemain.1';
+import { Profilemain } from '../ProfileGcd/Profilemain.1';
 
 export const Card: React.FC<{ image: string; name: string; loveIconCount: number; eyeIconCount: number }> = ({ image, name, loveIconCount, eyeIconCount }) => {
     return (

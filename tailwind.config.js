@@ -1,17 +1,11 @@
-<<<<<<< HEAD
 import withMT from "@material-tailwind/react/utils/withMT";
-// /** @type {import('tailwindcss').Config} */
 
+// Export Tailwind CSS configuration with Material Tailwind
 export default withMT({
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-=======
-/** @type {import('tailwindcss').Config} */
-export default {
   content: [
-    './src/**/*.{js,jsx,ts,tsx}',
-    './public/index.html',
+    './index.html', 
+    './src/**/*.{js,ts,jsx,tsx}'
   ],
->>>>>>> c6567156c14fc004c2f49d6b02918738dcba8f6c
   theme: {
     extend: {
       screens: {
@@ -25,10 +19,11 @@ export default {
         "-100": "-1",
       },
       fontFamily: {
-        Nunito: ["Nunito", " sans-serif"],
+        Nunito: ["Nunito", "sans-serif"],
         Roboto: ["Roboto", "sans-serif"],
       },
       backgroundImage: {},
+      // Uncomment and customize colors if needed
       // colors: {
       //   Red: "#FF0218",
       // },
