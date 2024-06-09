@@ -26,6 +26,8 @@ export default withMT({
     },
     colors: {
       customOrange: '#F25B38',
+      lightOrange:'rgba(255, 136, 118, 0.10)',
+      whitesmoke:'#F5F5F5'
     },
   },
   plugins: [],

@@ -35,7 +35,7 @@ const UserPost = (props:UserArtProps) => {
             <img src={item.imageUrl} alt={item.category}
             width={"290px"}
              />
-            <div className="flex gap-3 items-center border-2 border-t-0 py-1.5 justify-center border-orange-600 rounded-br rounded-bl border-y border-x">
+            <div className="flex gap-3 items-center border-2 border-t-0 py-1.5 justify-center border-customOrange rounded-br rounded-bl border-y border-x">
               <img src={item.imgUrl}/>
               <p>{item.name}</p>
             <FontAwesomeIcon icon={faHeart} style={{color:'#F25B38'}}/>
