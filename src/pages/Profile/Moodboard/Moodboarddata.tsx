@@ -11,7 +11,7 @@ export const Card: React.FC<{ image: string }> = ({ image }) => {
 };
 
 // Profilemain component
-export const Profilegrpcardm = () => {
+export const Moodboarddata = () => {
   const groupData = [
     {
       groupName: "Ocean Art",
@@ -80,4 +80,4 @@ export const Profilegrpcardm = () => {
   );
 };
 
-export default Profilegrpcardm;
+export default Moodboarddata;

@@ -1,7 +1,7 @@
 import Loadmore from "./Loadmore";
 import Profilemain from "./Profilemain";
 
-function Profile() {
+function Artworks() {
   return (
  
 
@@ -215,4 +215,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Artworks;

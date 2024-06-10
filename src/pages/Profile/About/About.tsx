@@ -1,4 +1,4 @@
-function Biomain() {
+function About() {
     return (
       <div className="mt-12 flex items-center justify-around w-full">
         <div className="flex flex-col ">
@@ -119,5 +119,5 @@ function Biomain() {
     );
   }
   
-  export default Biomain;
+  export default About;
   

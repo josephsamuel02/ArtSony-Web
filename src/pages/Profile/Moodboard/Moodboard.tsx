@@ -1,8 +1,8 @@
-import Loadmore from "../Profilepage/Loadmore";
-import Profilegrpcardm from "./Profilegrpcardm";
+import Loadmore from "../Artworks/Loadmore";
+import Profilegrpcardm from "./Moodboarddata";
 
 
-function Profilegrpcard() {
+function Moodboard() {
   return (
     <div className="w-full flex flex-col items-center">
       <header
@@ -212,4 +212,4 @@ function Profilegrpcard() {
   );
 }
 
-export default Profilegrpcard;
+export default Moodboard;

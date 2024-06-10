@@ -1,5 +1,5 @@
 
-import { Card } from '../Profilepage/Profilemain';
+import { Card } from '../Artworks/Profilemain';
 
 export function Profilemain() {
     const cardsData = [

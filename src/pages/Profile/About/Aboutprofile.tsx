@@ -1,7 +1,7 @@
-import Loadmore from "../Profilepage/Loadmore";
-import Profilecards from "./Profilecards";
+import Loadmore from "../Artworks/Loadmore";
+import About from "./About";
 
-function Profilecard() {
+function Aboutprofile() {
   return (
     <div className="w-full flex flex-col items-center">
       <header
@@ -88,7 +88,7 @@ function Profilecard() {
           </div>
         </div>
 
-        <div className="absolute mx-auto" style={{ top: "120px" }}>
+        <div className="absolute mx-auto justify-center" style={{ top: "120px" }}>
         <div className="w-[475px] h-[553px] border border-solid border-[rgba(242,91,56,0.7)] rounded-2xl border-1 border-opacity-50 backdrop-filter backdrop-blur-md p-4 flex flex-col justify-between bg-[rgba(43,43,103,0.5)]">
           <div className="flex items-center justify-center mt-4">
             <img
@@ -142,7 +142,7 @@ function Profilecard() {
               />
               Follow
             </button>
-            <button className="bg-white text-orange-600 px-4 py-2 rounded-md w-[192px] h-[48px] flex gap-[20px] text-lg hover:bg-gray-300">
+            <button className="bg-white text-orange-600 px-4 py-2 rounded-md w-[192px] h-[48px] flex gap-[20px] text-lg hover:bg-gray-300 item-center">
               <img
                 src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1716802641/mail_ol44yq.svg"
                 className="w-[20px] h-[16px]"
@@ -153,10 +153,11 @@ function Profilecard() {
           </div>
         </div>
       </div>
-        <div className="absolute top-[720px] flex gap-3">
+
+        <div className="absolute top-[720px]  flex gap-3">
           <a
             href="#artworks"
-            className="w-[228px] h-[48px] px-[61px] py-[12px]  bg-white  flex justify-between border border-orange-600  text-orange-600 rounded-tl-[6px] hover:bg-orange-600 hover:text-white"
+            className="w-[228px] h-[48px] px-[61px] py-[12px] bg-[#ffffff] flex justify-between border border-orange-600 text-orange-600 rounded-tl-[6px] hover:bg-orange-600 hover:text-white item-center"
           >
             <img
               src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1716893931/filter_hdr_ja4jfq.svg"
@@ -166,7 +167,7 @@ function Profilecard() {
           </a>
           <a
             href="#about"
-            className="w-[227px] h-[48px] px-[61px] py-[12px] bg-[#ffffff] flex rounded-none text-orange-600 border border-orange-600 gap-3  hover:bg-orange-600 hover:text-white"
+            className="w-[227px] h-[48px] px-[61px] py-[12px] bg-[#02272F] flex rounded-none text-white border border-orange-600 gap-3 hover:bg-orange-600"
           >
             <img
               src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1716894332/profilee_qy0rxm.svg"
@@ -186,9 +187,9 @@ function Profilecard() {
           </a>
           <a
             href="#store"
-            className="w-[227px] h-[48px] px-[61px] py-[12px flex items-center rounded-none text-white border bg-[#02272F]  gap-3 hover:bg-[#33636d] hover:text-white"
+            className="w-[227px] h-[48px] px-[61px] py-[12px] bg-white flex rounded-none text-orange-600 border border-orange-600 gap-3 hover:bg-orange-600 hover:text-white"
           >
-            <img className="w-[24px h-[24px]"
+            <img
               src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1716894788/store_j0eefa.svg"
               alt="store"
             />
@@ -198,15 +199,11 @@ function Profilecard() {
       </header>
       <hr className="w-full bg-orange-400 border-orange-400 mb-12" />
 
-      <Profilecards />  
-    
-  
-       <Loadmore />
-     
+      <About />
 
-      
+      <Loadmore />
     </div>
   );
 }
 
-export default Profilecard;
+export default Aboutprofile;
