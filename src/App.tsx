@@ -5,6 +5,10 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import Faq from "./pages/Faq/Faq";
 import Home from "./pages/Home/Home";
 import ContactUs from "./pages/ContactUs/ContactUs";
+import ConfirmPassword from "./Auth/ConfirmPassword";
+import Login from "./Auth/Login";
+import ForgottenPassword from "./Auth/ForgottenPassword";
+import Signup from "./Auth/Signup";
 
 function App() {
   return (
@@ -15,6 +19,10 @@ function App() {
         <Route path={"/faq"} element={<Faq/>}/>
         <Route path={"/home"} element={<Home/>} />
         <Route path={"/contactus"} element={<ContactUs/>} />
+        <Route path={"/confirmpassword"} element={<ConfirmPassword/>} />
+        <Route path={"/login"} element={<Login />} />
+        <Route path={"/forgettenpassword"} element={<ForgottenPassword />} />
+        <Route path={"/signup"} element={<Signup />} />
         <Route path={"*"} element={<Page404 />} />
       </Routes>
     </>
