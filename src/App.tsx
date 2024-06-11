@@ -7,9 +7,9 @@ import ContactUs from "./pages/ContactUs/ContactUs";
 import Faq from "./pages/Faq/Faq";
 import Landing from "./pages/Landing";
 import Artworks from "./pages/Profile/Artworks/Artworks";
-import About from "./pages/Profile/About/About";
 import Store from "./pages/Profile/Store/Store";
 import Moodboard from "./pages/Profile/Moodboard/Moodboard";
+import Aboutprofile from "./pages/Profile/About/Aboutprofile";
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
         <Route path={"/artworks"} element={<Artworks/>} />
         <Route path={"/store"} element={<Store/>} />
         <Route path={"/moodboard"} element={<Moodboard/>} />
-        <Route path={"/about"} element={<About/>} />
+        <Route path={"/about"} element={<Aboutprofile/>} />
         <Route path={"/contactus"} element={<ContactUs/>} />
         <Route path={"*"} element={<Page404 />} />
       </Routes>
