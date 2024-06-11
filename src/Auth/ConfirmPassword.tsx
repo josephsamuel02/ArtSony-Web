@@ -17,7 +17,7 @@ const ConfirmPassword = () => {
            
        
        <div className="w-[310px] mt-0 p-1 bg-[white] text-black border-none cursor-pointer rounded-lg flex flex-row justify-normal">
-       <img src="https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716794710/google_iztwr2.png" alt="google logo"  className="w-[15px] h-[15px] my-2 ml-2"
+       <img src="https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716794710/google_iztwr2.png" alt="google logo"  className="w-[25px] h-[25px] my-2 ml-2"
              />
           <div className="pl-[100px]">Google</div>
           </div>
