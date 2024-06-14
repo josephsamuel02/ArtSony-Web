@@ -10,6 +10,11 @@ import Artworks from "./pages/Profile/Artworks/Artworks";
 import Store from "./pages/Profile/Store/Store";
 import Moodboard from "./pages/Profile/Moodboard/Moodboard";
 import Aboutprofile from "./pages/Profile/About/Aboutprofile";
+import Processing from "./pages/Checkout/Processing";
+import Congratulations from "./pages/Checkout/Congratulations";
+import Failedtransaction from "./pages/Checkout/Failedtransaction";
+import Checkout from "./pages/Checkout/Checkout";
+import Checkouts from "./pages/Checkout/Checkouts";
 
 function App() {
   return (
@@ -28,6 +33,11 @@ function App() {
         <Route path={"/moodboard"} element={<Moodboard/>} />
         <Route path={"/about"} element={<Aboutprofile/>} />
         <Route path={"/contactus"} element={<ContactUs/>} />
+        <Route path={"/processing"} element={<Processing/>} />
+        <Route path={"/congratulations"} element={<Congratulations/>} />
+        <Route path={"/failedtransaction"} element={<Failedtransaction/>} />
+        <Route path={"/checkout"} element={<Checkout/>} />
+        <Route path={"/checkouts"} element={<Checkouts/>} />
         <Route path={"*"} element={<Page404 />} />
       </Routes>
     </>

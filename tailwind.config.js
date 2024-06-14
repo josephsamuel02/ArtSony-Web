@@ -19,7 +19,7 @@ export default withMT({
         "-100": "-1",
       },
       fontFamily: {
-        Nunito: ["Nunito", "sans-serif"],
+        Nunito: ["Nunito", "sans-serif", "Raleway"],
         Roboto: ["Roboto", "sans-serif"],
       },
       backgroundImage: {},
