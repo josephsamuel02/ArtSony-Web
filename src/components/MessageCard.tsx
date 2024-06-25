@@ -79,7 +79,7 @@ const MessageCard = () => {
                 alt=""
                 className="mx-3  w-[40px] h-[40px] cursor-pointer"
               />
-              <div className="absolute left-0 top-8 flex flex-col w-[197px]">
+              {/* <div className="absolute left-0 top-8 flex flex-col w-[197px]">
                 {chatOptions.map((d, i) => (
                   <p
                     className={`text-[14px] bg-[#FEF7F5]   p-4 flex flex-row items-center  ${
@@ -93,7 +93,7 @@ const MessageCard = () => {
                     {d.icon} {d.title}
                   </p>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             <div className=" ml-auto w-[160px] p-2 flex flex-row bg-[#F25B38]  rounded-md justify-end  ">

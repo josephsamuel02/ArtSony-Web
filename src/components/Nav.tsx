@@ -12,7 +12,7 @@ const Nav = () => {
 
   const naveData = [
     { title: "Explore", url: "" },
-    { title: "Shop", url: "" },
+    { title: "Shop", url: "/userpost" },
     { title: "Hire Artist", url: "" },
     { title: "Find Gigs", url: "" },
   ];
