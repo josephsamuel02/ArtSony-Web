@@ -17,8 +17,6 @@ interface UserArtProps {
     location: string;
     category: string;
     imgUrl:string;
-    picUrl?:string;  
-    photoUrl?:string;
     profession:string;
   }[]
 

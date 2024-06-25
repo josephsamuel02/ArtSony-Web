@@ -11,7 +11,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
 import { faFolder } from '@fortawesome/free-solid-svg-icons/faFolder';
 import { faShare } from '@fortawesome/free-solid-svg-icons/faShare';
 import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
-
+  
 
 const UserPostDetail: React.FC = () => {
  
