@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Item } from './types/Item';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage } from '@fortawesome/free-solid-svg-icons/faMessage';
@@ -12,12 +12,9 @@ import { faFolder } from '@fortawesome/free-solid-svg-icons/faFolder';
 import { faShare } from '@fortawesome/free-solid-svg-icons/faShare';
 import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
 
-interface UserPostDetailParams {
-  id: string;
-}
 
 const UserPostDetail: React.FC = () => {
-  const { id } = useParams();
+ 
   const location = useLocation();
   const item = (location.state as { item: Item })?.item;
 
@@ -57,7 +54,7 @@ const UserPostDetail: React.FC = () => {
               <div className='py-3'>
                         <p className='py-1'>{item.category}</p>
                         <p className='py-1'  style={{ color: 'rgba(255, 136, 108, 0.5)' }}>published 8th, November, 2022</p>
-                <div className='flex flex-row gap-3 items-center py-1'>
+                <div className='flex flex-row gap-3 items-center py-1 cursor-pointer'>
                       <div className='flex flex-row gap-1 items-center'>
                         <FontAwesomeIcon color='orange' icon={faEye}/>
                         <p>40k</p>
@@ -73,7 +70,7 @@ const UserPostDetail: React.FC = () => {
                 </div>
               </div>
               <hr className='py-3 mt-3'/>
-                  <div className='flex flex-row items-center gap-7 justify-center space-x-30'>
+                  <div className='flex flex-row items-center gap-7 justify-center space-x-30 cursor-pointer'>
 
                         <div className='border py-1 px-2 rounded-md'>
                         <FontAwesomeIcon color='orange' icon={faFolder} />
@@ -85,7 +82,7 @@ const UserPostDetail: React.FC = () => {
                         <FontAwesomeIcon color='orange' icon={faFlag} />
                         </div>
                   </div>
-                  <div className='flex flex-row gap-10 justify-center mt-40'>
+                  <div className='flex flex-row gap-10 justify-center mt-40 cursor-pointer'>
                     <img src='/assets/Vector.svg' alt="svg" />
                     <img src='/assets/Vector1.svg' alt="svg" />
                     <img src='/assets/Vector2.svg' alt="svg" />

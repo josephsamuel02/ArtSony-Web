@@ -7,30 +7,17 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-<<<<<<< HEAD
-  background: whitesmoke;
-}
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: gray;
-=======
   background: rgb(250, 235, 193);
 }
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #8d4102;
->>>>>>> f017559cbebd4613463b19e4f0b546b1ff365488
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-<<<<<<< HEAD
-  background: gray;
-  border-radius: 5px;
-=======
   background: #eeb9a1;
   border-radius: 3px;
->>>>>>> f017559cbebd4613463b19e4f0b546b1ff365488
 }
 
 @tailwind base;
