@@ -5,7 +5,7 @@ const PUBLIC_ROUTES = {
   ABOUT_US: "/about",
   CONTACT_US: "/contact",
   CATEGORIES: "/categories",
-
+  ARTIST_PROFILE: "/artist_profile",
   LOGIN: "/login",
   SIGNUP: "/signup",
   FIND_GOFER: "/find_gofer",

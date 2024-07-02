@@ -2,7 +2,7 @@ import { useState } from "react";
 import UploadCard from "./UploadCard";
 import NotificationCard from "./NotificationCard";
 import ProfileCard from "./ProfileCard";
-import MessageCard from "./MessageCard";
+import MessageCard from "./Messageing/MessageCard";
 
 const Nav = () => {
   const [showUploadCard, setShowUploadCard] = useState(false);

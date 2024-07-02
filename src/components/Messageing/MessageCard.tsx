@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import { MdOutlineArchive } from "react-icons/md";
 import { MdOutlineSettings } from "react-icons/md";
+import Icons from "./Icons";
 
 const MessageCard = () => {
   const [cardSate, setCardState] = useState("open");
   const [selectedChat, setSelectedChat] = useState(0);
+  const [showIcons, setShowIcons] = useState(false);
+
   const onlineChats = [
     { image: "/images/Ellipse 10 (1).svg", name: "James Christopher" },
     { image: "/images/Ellipse 10 (1).svg", name: "James Christopher" },
@@ -50,6 +53,8 @@ const MessageCard = () => {
     },
   ];
   const [cOption, setcOption] = useState("Messages");
+  const [showCOptions, setShowCOptions] = useState(false);
+
   const chatOptions = [
     { title: "Messages", icon: <BiEnvelopeOpen size={23} color="#F25B38" className="mx-2" /> },
     {
@@ -61,6 +66,21 @@ const MessageCard = () => {
       icon: <MdOutlineSettings size={23} color="#F25B38" className="mx-2" />,
     },
   ];
+
+  const [isOpen, setIsOpen] = useState(true);
+  const modalRef = useRef<any>(null);
+
+  const handleClickOutside = (event: any) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowCOptions(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div
       className={`w-full h-full   fixed top-0 bottom-0 left-0 right-0 flex items-center backdrop-brightness-50 backdrop-blur-xs z-50
@@ -73,27 +93,33 @@ const MessageCard = () => {
           {/* Header text & Button */}
           <div className="m-0 p-6 w-full h-auto flex flex-row    ">
             <div className="relative w-[160px] flex flex-row ">
-              <p className=" font-Poppins text-[24px] text-[#02272F]">Messages</p>
+              <p className=" font-Poppins text-[24px] text-[#02272F]">{cOption}</p>
               <img
                 src="/images/navigate_next.svg"
                 alt=""
                 className="mx-3  w-[40px] h-[40px] cursor-pointer"
+                onClick={() => setShowCOptions(!showCOptions)}
               />
-              <div className="absolute left-0 top-8 flex flex-col w-[197px]">
-                {chatOptions.map((d, i) => (
-                  <p
-                    className={`text-[14px] bg-[#FEF7F5]   p-4 flex flex-row items-center  ${
-                      cOption == d.title
-                        ? "border-l-2 text-[#F25B38] border-[#F25B38]"
-                        : "text-black border-l-2 border-[#ffffff]"
-                    }`}
-                    key={i}
-                    onclick={() => setCOptions(d.title)}
-                  >
-                    {d.icon} {d.title}
-                  </p>
-                ))}
-              </div>
+              {showCOptions && (
+                <div
+                  ref={modalRef}
+                  className="absolute left-0 top-10 flex flex-col w-[197px] rounded"
+                >
+                  {chatOptions.map((d, i) => (
+                    <p
+                      className={`text-[14px] bg-[#FEF7F5] p-4 flex flex-row items-center hover:bg-[#f5b0a0] cursor-pointer ${
+                        cOption == d.title
+                          ? "border-l-2 text-[#F25B38] border-[#F25B38]"
+                          : "text-black border-l-2 border-[#ffffff]"
+                      }`}
+                      key={i}
+                      onClick={() => setcOption(d.title)}
+                    >
+                      {d.icon} {d.title}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className=" ml-auto w-[160px] p-2 flex flex-row bg-[#F25B38]  rounded-md justify-end  ">
@@ -257,7 +283,7 @@ const MessageCard = () => {
                       }`}
                     >
                       <p
-                        className={` text-[14px] m-6 p-4 pb-1    text-white font-Poppins shadow-md  rounded-md ${
+                        className={` text-[14px] m-6 p-4 pb-1 text-white font-Poppins shadow-md  rounded-md ${
                           d.user !== "me" ? "bg-[#F25B38] " : " bg-[#02272F]"
                         }`}
                       >
@@ -272,9 +298,14 @@ const MessageCard = () => {
               </div>
             </div>
 
-            <div className="w-full h-auto py-2 flex flex-row items-center">
+            <div className="relative w-full h-auto py-2 flex flex-row items-center">
               <div className="mx-auto py-3 w-10/12 h-auto items-center flex flex-row backdrop-brightness-75 rounded-md bg-[#8F8F8F]">
-                <img src="/images/mood.svg" alt="" className=" mx-auto w-[22px] h-[22px]" />
+                <img
+                  src="/images/mood.svg"
+                  alt=""
+                  className=" mx-auto w-[22px] h-[22px] cursor-pointer"
+                  onClick={() => setShowIcons(!showIcons)}
+                />
                 <input
                   type="text"
                   name=""
@@ -292,6 +323,7 @@ const MessageCard = () => {
                   className=" mx-auto w-[22px] h-[22px]"
                 />
               </div>
+              {showIcons && <Icons showIcons={showIcons} setShowIcons={setShowIcons} />}
             </div>
           </div>
         </div>

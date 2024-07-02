@@ -1,6 +1,7 @@
 import withMT from "@material-tailwind/react/utils/withMT";
 /** @type {import('tailwindcss').Config} */
 
+// Export Tailwind CSS configuration with Material Tailwind
 export default withMT({
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
