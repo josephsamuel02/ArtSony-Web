@@ -1,15 +1,17 @@
 const PUBLIC_ROUTES = {
   HOME: "/",
 
-  //NAV BAR
+  LOGIN: "/login",
+  SIGNUP: "/signup",
+
+  ARTIST_PROFILE: "/artist_profile",
+  CHECKOUT: "/checkout",
+
+  FIND_GOFER: "/find_gofer",
+
   ABOUT_US: "/about",
   CONTACT_US: "/contact",
   CATEGORIES: "/categories",
-  ARTIST_PROFILE: "/artist_profile",
-  LOGIN: "/login",
-  SIGNUP: "/signup",
-  FIND_GOFER: "/find_gofer",
-
   //HERO SECTION
   SEARCH: "/search",
 

@@ -5,8 +5,8 @@ import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import Faq from "./pages/Faq/Faq";
-import Landing from "./pages/Landing";
 import ArtistProfile from "./pages/Profile";
+import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
   return (
@@ -14,14 +14,13 @@ function App() {
       <Routes>
         <Route index path={PUBLIC_ROUTES.HOME} element={<Home />} />
         <Route path={PUBLIC_ROUTES.ARTIST_PROFILE} element={<ArtistProfile />} />
+        <Route path={PUBLIC_ROUTES.CHECKOUT} element={<Checkout />} />
+
+        <Route path={"/faq"} element={<Faq />} />
+        <Route path={"/home"} element={<Home />} />
 
         <Route path={"/aboutus"} element={<AboutUs />} />
         <Route path={"/faq"} element={<Faq />} />
-        <Route path={"/contactus"} element={<ContactUs />} />
-        <Route index path="/" element={<Landing />} />
-        <Route path={"/aboutus"} element={<AboutUs />} />
-        <Route path={"/faq"} element={<Faq />} />
-        <Route path={"/home"} element={<Home />} />
         <Route path={"/contactus"} element={<ContactUs />} />
         <Route path={"*"} element={<Page404 />} />
       </Routes>
