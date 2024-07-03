@@ -3,6 +3,7 @@ import ArtOfTheWeek from "./ArtOfTheWeek";
 import Banner from "./Banner";
 
 const Home = () => {
+
   return (
     <div className="w-full h-auto bg-white ">
       <Nav />
@@ -11,5 +12,4 @@ const Home = () => {
     </div>
   );
 };
-
 export default Home;

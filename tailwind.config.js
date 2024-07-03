@@ -3,7 +3,10 @@ import withMT from "@material-tailwind/react/utils/withMT";
 
 // Export Tailwind CSS configuration with Material Tailwind
 export default withMT({
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  "./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       screens: {
@@ -28,6 +31,11 @@ export default withMT({
       },
       colors: {},
     },
+    colors: {
+      customOrange: '#F25B38',
+      lightOrange:'rgba(255, 136, 118, 0.10)',
+      whitesmoke:'#F5F5F5'
+    },
   },
   plugins: [],
-});
+})

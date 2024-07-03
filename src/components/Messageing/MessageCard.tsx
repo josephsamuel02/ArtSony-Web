@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import { BiEnvelopeOpen } from "react-icons/bi";
 import { MdOutlineArchive } from "react-icons/md";
@@ -67,7 +68,6 @@ const MessageCard = () => {
     },
   ];
 
-  const [isOpen, setIsOpen] = useState(true);
   const modalRef = useRef<any>(null);
 
   const handleClickOutside = (event: any) => {
