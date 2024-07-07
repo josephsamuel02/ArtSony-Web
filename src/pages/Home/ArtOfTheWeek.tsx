@@ -1,23 +1,44 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useRef, useState } from "react";
+import SearchResult from "./SearchResult";
+import ColorPicker from "react-pick-color";
 
 const ArtOfTheWeek = () => {
   const [topArt, setTopArt] = useState("Newbies");
+  const [showArtistFieldList, setShowArtistFieldList] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showLocation, setShowLocation] = useState(false);
 
-  const settings = {
-    className: " mx-auto center",
-    adaptiveHeight: true,
-    variableWidth: true,
-    dots: false,
-    infinite: true,
-    speed: 500,
-    autoplay: true,
-    slidesToShow: 4,
-    pauseOnHover: true,
-    slidesToScroll: 1,
-    centerMode: true,
-    focusOnSelect: true,
-    centerPadding: "100px",
+  const [color, setColor] = useState("#3573CB");
+
+  const colorpickeralRef = useRef<any>(null);
+
+  const handleClickOutside = (event: any) => {
+    if (colorpickeralRef.current && !colorpickeralRef.current.contains(event.target)) {
+      setShowColorPicker(false);
+    }
   };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  // const settings = {
+  //   className: " mx-auto center",
+  //   adaptiveHeight: true,
+  //   variableWidth: true,
+  //   dots: false,
+  //   infinite: true,
+  //   speed: 500,
+  //   autoplay: true,
+  //   slidesToShow: 4,
+  //   pauseOnHover: true,
+  //   slidesToScroll: 1,
+  //   centerMode: true,
+  //   focusOnSelect: true,
+  //   centerPadding: "100px",
+  // };
 
   const Artwork = [
     {
@@ -83,26 +104,60 @@ const ArtOfTheWeek = () => {
   return (
     <div className="w-full h-auto  ">
       <div className="mx-auto w-full h-[80px]  px-6 flex flex-row items-center ">
-        <div className="w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C7]">
+        <div
+          className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
+          onClick={() => setShowArtistFieldList(true)}
+        >
           <img src="/images/interests.svg" alt="" className="mx-4" />
           <p className="mx-auto text-[16px] font-Poppins text-[#333333] cursor-default">
             Artistic Field
           </p>
           <img src="/images/arrow_left.svg" alt="" className="mx-4" />
+          {showArtistFieldList && (
+            <ArtisticField
+              showArtistFieldList={showArtistFieldList}
+              setShowArtistFieldList={setShowArtistFieldList}
+            />
+          )}
         </div>
-        <div className="w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C7]">
+        <div
+          className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
+          onClick={() => setShowColorPicker(!showColorPicker)}
+        >
           <img src="/images/colors.svg" alt="" className="mx-4" />
           <p className="mx-auto text-[16px] font-Poppins text-[#333333] cursor-default">
             Color
           </p>
           <img src="/images/arrow_left.svg" alt="" className="mx-4" />
+          {showColorPicker && (
+            <div
+              ref={colorpickeralRef}
+              className="absolute top-12 w-[250px]  bg-white shadow-md rounded-md z-30  "
+            >
+              <ColorPicker
+                color={color}
+                onChange={(color: any) => setColor(color.hex)}
+                theme={{
+                  borderRadius: "2px",
+                  width: "200px",
+                }}
+              />
+            </div>
+          )}
         </div>
-        <div className="w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C7]">
+        <div
+          className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
+          onClick={() => setShowLocation(true)}
+        >
           <img src="/images/location.svg" alt="" className="mx-4" />
           <p className="mx-auto text-[16px] font-Poppins text-[#333333] cursor-default">
             Location
           </p>
           <img src="/images/arrow_left.svg" alt="" className="mx-4" />
+
+          {showLocation && (
+            <ArtLocation showLocation={showLocation} setShowLocation={setShowLocation} />
+          )}
         </div>
         <p className="mx-auto text-[16px] font-Poppins text-[#F25B38] cursor-default">
           Clear All
@@ -404,7 +459,111 @@ const ArtOfTheWeek = () => {
           ))}
         </div>
       </div>
+      <SearchResult />
     </div>
+  );
+};
+
+const ArtisticField = ({ showArtistFieldList, setShowArtistFieldList }: any) => {
+  const artFieldRef = useRef<any>(null);
+
+  const handleClickOutside = (event: any) => {
+    if (artFieldRef.current && !artFieldRef.current.contains(event.target)) {
+      setShowArtistFieldList(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  return (
+    <>
+      {showArtistFieldList && (
+        <div
+          className="absolute top-12 w-[270px] h-[329px] bg-white shadow-md rounded-md z-30 overflow-y-scroll"
+          ref={artFieldRef}
+        >
+          <div className="mx-auto  w-11/12 p-2 px-4  rounded  h-auto flex flex-row  items-center bg-[#FEF7F5]  ">
+            <img
+              src="/images/search.svg"
+              alt=""
+              className="    w-[16px] h-[15px] cursor-pointer"
+            />
+            <input
+              type="text"
+              placeholder="Search Artistic Field"
+              className="placeholder-[#F25B38B2] text-[#292929b2] font-Poppins text-[12px] px-2 w-4/5 h-auto outline-none bg-transparent"
+            />
+          </div>
+
+          <div className="w-full h-auto py-4 px-6 bg-white flex flex-col    border-t border-[#fadad3]">
+            <p className=" text-[16px] py-2 text-[#F25B38] font-Poppins  ">
+              All Artistic Fields
+            </p>
+            <p className=" text-[16px]  py-2  text-[#000000] font-Poppins  ">#</p>
+            <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
+              3d Design
+            </p>
+            <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
+              3d Modeling
+            </p>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+const ArtLocation = ({ showLocation, setShowLocation }: any) => {
+  const modalRef = useRef<any>(null);
+
+  const handleClickOutside = (event: any) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowLocation(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  return (
+    <>
+      {showLocation && (
+        <div
+          className="absolute top-12 w-[270px] h-[329px] bg-white shadow-md rounded-md z-30 overflow-y-scroll"
+          ref={modalRef}
+        >
+          <div className="mx-auto  w-11/12 p-2 px-4  rounded  h-auto flex flex-row  items-center bg-[#FEF7F5]  ">
+            <img
+              src="/images/search.svg"
+              alt=""
+              className="    w-[16px] h-[15px] cursor-pointer"
+            />
+            <input
+              type="text"
+              placeholder="Search Artistic Field"
+              className="placeholder-[#F25B38B2] text-[#292929b2] font-Poppins text-[12px] px-2 w-4/5 h-auto outline-none bg-transparent"
+            />
+          </div>
+
+          <div className="w-full h-auto py-4 px-6 bg-white flex flex-col    border-t border-[#fadad3]">
+            <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
+              Afghanistan
+            </p>
+            <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
+              Aland Island
+            </p>
+            <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
+              Albania
+            </p>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

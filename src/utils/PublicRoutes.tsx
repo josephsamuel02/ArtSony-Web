@@ -3,8 +3,13 @@ const PUBLIC_ROUTES = {
 
   LOGIN: "/login",
   SIGNUP: "/signup",
+  LOGIN_OPTIONS: "/login_options",
+  FORGOT_PASSWORD: "/forgot_password",
+  CONFIRM_PASSWORD: "/confirm_password",
 
   ARTIST_PROFILE: "/artist_profile",
+  SHOP: "/shop",
+
   CHECKOUT: "/checkout",
 
   FIND_GOFER: "/find_gofer",

@@ -1,4 +1,4 @@
-const ConfirmPassword = () => {
+const LoginOption = () => {
   return (
     <div>
       <div className="bg-[url(https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716657921/52f815ef99b62d1351fcc7c3db448e8b_ucxlyz.png)] bg-cover bg-no-repeat bg-center h-screen w-screen flex flex-col items-center justify-center ">
@@ -59,4 +59,4 @@ const ConfirmPassword = () => {
   );
 };
 
-export default ConfirmPassword;
+export default LoginOption;

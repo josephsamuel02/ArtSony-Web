@@ -53,6 +53,7 @@ const MessageCard = () => {
       time: "10:28pm",
     },
   ];
+
   const [cOption, setcOption] = useState("Messages");
   const [showCOptions, setShowCOptions] = useState(false);
 
@@ -75,6 +76,7 @@ const MessageCard = () => {
       setShowCOptions(false);
     }
   };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {

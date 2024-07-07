@@ -12,7 +12,7 @@ const Banner = () => {
             Artsony for the Artist Within You.
           </h3>
 
-          <h3 className="m-auto  w-[351px] h-[72px] py-5  text-white font-Poppins text-center shadow-sm shadow-gray-600 my-20 text-[20px] rounded backdrop-opacity-75   bg-[#F25B38] hover:bg-red-500 cursor-pointer">
+          <h3 className="m-auto  w-[351px] h-[72px] py-5  text-white font-Poppins text-center shadow-sm shadow-gray-600 my-20 text-[20px] rounded backdrop-opacity-75   bg-[#f25a38d7] hover:bg-[#f34b4bdc] cursor-pointer">
             Share Your Art
           </h3>
           <div className="w-full h-auto py-4 px-10 flex flex-row justify-end items-center">

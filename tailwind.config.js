@@ -6,7 +6,9 @@ export default withMT({
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-  "./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       screens: {
@@ -28,14 +30,15 @@ export default withMT({
         "banner-one": "url('images/Property 1=Default.svg')",
         "hero-pattern": "url('/img/hero-pattern.svg')",
         "chat-background": "url('/images/Frame 1954.svg')",
+        "footer-background": "url('/images/footer bg1.svg')",
       },
       colors: {},
     },
     colors: {
-      customOrange: '#F25B38',
-      lightOrange:'rgba(255, 136, 118, 0.10)',
-      whitesmoke:'#F5F5F5'
+      customOrange: "#F25B38",
+      lightOrange: "rgba(255, 136, 118, 0.10)",
+      whitesmoke: "#F5F5F5",
     },
   },
   plugins: [],
-})
+});

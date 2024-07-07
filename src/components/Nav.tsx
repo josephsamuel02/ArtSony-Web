@@ -3,6 +3,7 @@ import UploadCard from "./UploadCard";
 import NotificationCard from "./NotificationCard";
 import ProfileCard from "./ProfileCard";
 import MessageCard from "./Messageing/MessageCard";
+import PUBLIC_ROUTES from "../utils/PublicRoutes";
 
 const Nav = () => {
   const [showUploadCard, setShowUploadCard] = useState(false);
@@ -12,7 +13,7 @@ const Nav = () => {
 
   const naveData = [
     { title: "Explore", url: "" },
-    { title: "Shop", url: "/userpost" },
+    { title: "Shop", url: PUBLIC_ROUTES.SHOP },
     { title: "Hire Artist", url: "" },
     { title: "Find Gigs", url: "" },
   ];
