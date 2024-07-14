@@ -7,7 +7,6 @@ import PUBLIC_ROUTES from "../utils/PublicRoutes";
 
 const Nav = () => {
   const [showUploadCard, setShowUploadCard] = useState("close");
-
   const [showNotificationCard, setShowNotificationCard] = useState(false);
   const [showProfileCard, setShowProfileCard] = useState(false);
   const [showMessageCard, setShowMessageCard] = useState(false);
