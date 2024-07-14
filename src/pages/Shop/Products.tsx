@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
-import SearchResult from "../../components/SearchResult";
 import ColorPicker from "react-pick-color";
 import UserPostDetail from "../../components/PostDetails/UserPostDetail";
+import SearchResult from "../../components/SearchResult";
+import { IoCartOutline } from "react-icons/io5";
 
-const ArtOfTheWeek = () => {
-  const [topArt, setTopArt] = useState("Newbies");
+const Products = () => {
+  const [topArt, setTopArt] = useState("All");
   const [showArtistFieldList, setShowArtistFieldList] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
   const [showPostData, setShowPostData] = useState(false);
+  const [showSearchResult] = useState(false);
 
   const [color, setColor] = useState("#3573CB");
 
@@ -26,21 +28,6 @@ const ArtOfTheWeek = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  // const settings = {
-  //   className: " mx-auto center",
-  //   adaptiveHeight: true,
-  //   variableWidth: true,
-  //   dots: false,
-  //   infinite: true,
-  //   speed: 500,
-  //   autoplay: true,
-  //   slidesToShow: 4,
-  //   pauseOnHover: true,
-  //   slidesToScroll: 1,
-  //   centerMode: true,
-  //   focusOnSelect: true,
-  //   centerPadding: "100px",
-  // };
 
   const Artwork = [
     {
@@ -101,7 +88,7 @@ const ArtOfTheWeek = () => {
     },
   ];
 
-  const topArtMenu = ["Newbies", "Recent", "Trending", "For You"];
+  const topArtMenu = ["All", "Pro Artist", "Recent", "Newbies", "For You"];
 
   return (
     <div className="w-full h-auto  ">
@@ -169,129 +156,13 @@ const ArtOfTheWeek = () => {
           <img src="/images/arrow_drop_down black.svg" alt="" className="mx-4" />
         </div>
       </div>
-      {/* Art of the week */}
-      <div className="w-full h-auto">
-        <div className="w-full mx-10 bg-white py-10">
-          <h3 className="text-[36px] font-Poppins text-black">Art Of The Week</h3>
-        </div>
-        <div className="w-screen h-auto flex flex-row  overflow-x-scroll">
-          <div className="w-min h-auto mx-auto items-center bg-white py-5 flex flex-row">
-            {Artwork.slice(0, 3).map((i, n) => (
-              <div
-                className="mx-10 md:mx-16 w-[434px] h-[350px] rounded   relative"
-                key={n}
-                onClick={() => setShowPostData(true)}
-              >
-                <img
-                  src={i.img}
-                  alt=""
-                  className=" mx-auto w-full h-full rounded-md object-cover"
-                />
-                <div className="absolute  bottom-6 left-0 right-0 bg-transparent h-1/4 bg-gradient-to-t  from-[#1919194D]">
-                  <p className="text-[28px] font-Raleway text-white text-center font-light ">
-                    Next Gen
-                  </p>
-                  <div className="w-full h-auto flex flex-row items-center">
-                    <div className="w-1/3 mx-4 items-center flex flex-row">
-                      <img
-                        src="/images/favorite.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2"
-                      />
-                      <p className="text-[10] font-Raleway text-white text-center font-light ">
-                        {i.likes}k
-                      </p>
-                      <img
-                        src="/images/visibility.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2 "
-                      />{" "}
-                      <p className="text-[10] font-Raleway text-white text-center font-light ">
-                        {i.views}k
-                      </p>
-                    </div>
-                    <div className="w-2/3 px-4 flex flex-row items-center justify-end  ">
-                      <p className="text-[14px] px-2 font-Poppins text-white  ">Hassan John</p>
-                      <img
-                        src="/images/Ellipse 10.svg"
-                        alt=""
-                        className="w-[48px] h-[48px] mx-1 "
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* Just For You */}
-      <div className="w-full mx-auto h-auto bg-white">
-        <div className="w-full mx-10 bg-white py-5">
-          <h3 className="text-[36px] font-Poppins text-black">Just For You</h3>
-        </div>
 
-        <div className="w-screen h-auto bg-[#02272F0D]  py-4 overflow-x-scroll">
-          <div className=" w-min h-auto mx-auto items-center   py-5 flex flex-row ">
-            {Artwork.slice(0, 4).map((i, n) => (
-              <div
-                className="mx-6 w-[304px] h-[207px] bg-white rounded  relative"
-                onClick={() => setShowPostData(true)}
-                key={n}
-              >
-                <img
-                  src={i.img}
-                  alt=""
-                  className=" mx-auto w-full h-full rounded object-cover"
-                />
-                <div className="absolute  bottom-7 left-0 right-0 bg-transparent h-1/4 bg-gradient-to-t  from-[#1919194D]">
-                  <p className="text-[28px] font-Raleway text-white text-center font-light ">
-                    Next Gen
-                  </p>
-                  <div className="w-full bottom-0 h-[50px] rounded-b-sm  border border-[#f7b38594] rounded-b-sm bg-white flex flex-row items-center">
-                    <div className="w-2/3 px-4 flex flex-row items-center justify-start  ">
-                      <img
-                        src="/images/Ellipse 10.svg"
-                        alt=""
-                        className="w-[38px] h-[38px] mx-0 "
-                      />
-                      <p className="text-[11px] px-2 font-Poppins text-black ">Hassan John </p>
-                    </div>
-                    <div className="w-1/3 mx-4 items-center justify-end flex flex-row">
-                      <img
-                        src="/images/favorite.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2"
-                      />
-                      <p className="text-[10] font-Raleway text-[#F25B38] text-center font-light ">
-                        {i.likes}k
-                      </p>
-                      <img
-                        src="/images/visibility.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2 "
-                      />{" "}
-                      <p className="text-[10] font-Raleway text-[#F25B38] text-center font-light ">
-                        {i.views}k
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {/* </Slider> */}
-          </div>
-        </div>
-      </div>
-      {/* Top Art */}
-      <div className="w-full h-auto mx-auto items-center mt-10 bg-white  flex flex-col ">
+      <div className="w-full h-auto mx-auto items-center mt-1 bg-white  flex flex-col ">
         <div className="w-full flex flex-row  py-5  items-center">
-          <h3 className="mx-auto text-[36px] font-Poppins text-black">Top Art</h3>
           <div className="w-4/5 mx-auto flex flex-row items-center bg-white ">
             {topArtMenu.map((d, i) => (
               <h3
-                className={`text-[25px]  mx-5 font-Poppins text-black border-b-4 cursor-pointer ${
+                className={`text-[22px]  mx-5 font-Poppins text-black border-b-4 cursor-pointer ${
                   topArt == d ? "border-[#F25B38]" : "border-[#ffff]"
                 }`}
                 key={i}
@@ -300,16 +171,13 @@ const ArtOfTheWeek = () => {
                 {d}
               </h3>
             ))}
-            {/* <h3 className="text-[25px]  mx-5 font-Poppins text-black">Recent</h3>
-            <h3 className="text-[25px]  mx-5 font-Poppins text-black">Trending</h3>
-            <h3 className="text-[25px]  mx-5 font-Poppins text-black">For You</h3> */}
           </div>
         </div>
-        {/* slider with art content */}
-        <div className="w-full h-auto mx-auto items-center bg-white grid gap-2  grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
+
+        <div className="w-full h-auto mx-auto items-center bg-white grid gap-2  grid-flow-row grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
           {Artwork.map((i, n) => (
             <div
-              className="mx-auto w-[304px] h-[207px] my-6 bg-white rounded-md   relative"
+              className="mx-auto w-[304px] h-[207px] my-10 bg-white rounded-md   relative"
               onClick={() => setShowPostData(true)}
               key={n}
             >
@@ -318,6 +186,9 @@ const ArtOfTheWeek = () => {
                 alt=""
                 className=" mx-auto w-full rounded h-full object-cover"
               />
+              <div className="  absolute mx-2 top-2 lef-2 cursor-pointer items-center w-9 h-8 p-1 flex rounded  bg-[#05000060]  ">
+                <IoCartOutline size={26} className="text-white hover:text-[#fa6746]" />
+              </div>
               <div className="absolute  bottom-7 left-0 right-0 bg-transparent h-1/4 bg-gradient-to-t  from-[#1919194D]">
                 <p className="text-[28px] font-Raleway text-white text-center font-light ">
                   Next Gen
@@ -344,7 +215,7 @@ const ArtOfTheWeek = () => {
                       src="/images/visibility.svg"
                       alt=""
                       className="w-[20px] h-[18px] mx-2 "
-                    />{" "}
+                    />
                     <p className="text-[10] font-Raleway text-[#F25B38] text-center font-light ">
                       {i.views}k
                     </p>
@@ -354,124 +225,40 @@ const ArtOfTheWeek = () => {
             </div>
           ))}
         </div>
-        {/* 
-        <div className="w-full h-16 mx-auto flex flex-row items-center ">
-          <p className="mx-4 text-[16px] font-Poppins justify-end   text-[#F25B38] cursor-pointer hover:border-b-4 border-[#F25B38]">
-            See More..
+      </div>
+
+      {/* advert */}
+      <div className="w-full h-[400px] my-10 object-cover bg-cover bg-shop-add-one">
+        <div className="w-1/2 p-10 pt-6">
+          <h3 className="text-customOrange text-[35px] font-Raleway">
+            Become An Artsony Artist
+          </h3>
+          <p className="py-2 text-[25px] font-Poppins text-white font-light">
+            Sell your marvelous creation on Artsony Shop, Grow your audience and your career as
+            an artist.
           </p>
-        </div> */}
-      </div>
-
-      {/* Artsony Shop */}
-      <div className="w-full h-auto mx-auto items-center mt-10 bg-white  flex flex-col ">
-        <div className="w-full px-6   flex flex-row  py-5  items-center">
-          <h3 className="mx-3 text-[36px] font-Poppins text-black">Artsony Shop</h3>
-          <img
-            src="/images/add_business.svg"
-            alt=""
-            className="w-10 h-10 rounded object-cover mx-3"
-          />
-        </div>
-        {/* slider with art content */}
-        <div className="w-screen h-auto bg-[#02272F0D]  py-4 overflow-x-scroll">
-          <div className=" w-min h-auto mx-auto items-center py-5 flex flex-row ">
-            {/* <Slider {...settings} className=" mx-auto my-0  w-full  "> */}
-            {Artwork.slice(0, 4).map((i, n) => (
-              <div
-                className="mx-6 w-[304px] h-[207px] bg-white rounded  relative"
-                onClick={() => setShowPostData(true)}
-                key={n}
-              >
-                <img
-                  src={i.img}
-                  alt=""
-                  className=" mx-auto w-full h-full rounded object-cover"
-                />
-                <div className="  absolute mx-2 top-2 lef-2  items-center w-9 h-8 p-1 flex rounded  bg-black opacity-25">
-                  <img
-                    src={"/images/shopping_cart.png"}
-                    alt="cart"
-                    className="m-auto justify-center w-5 h-5 object-cover"
-                  />
-                </div>
-
-                <div className="absolute  bottom-7 left-0 right-0 bg-transparent h-1/4 bg-gradient-to-t  from-[#1919194D]">
-                  <p className="text-[28px] font-Raleway text-white text-center font-light ">
-                    Next Gen
-                  </p>
-                  <div className="w-full bottom-0 h-[50px] rounded-b-sm  border border-[#f7b38594] rounded-b-sm bg-white flex flex-row items-center">
-                    <div className="w-2/3 px-4 flex flex-row items-center justify-start  ">
-                      <img
-                        src="/images/Ellipse 10.svg"
-                        alt=""
-                        className="w-[38px] h-[38px] mx-0 "
-                      />
-                      <p className="text-[11px] px-2 font-Poppins text-black ">Hassan John </p>
-                    </div>
-                    <div className="w-1/3 mx-4 items-center justify-end flex flex-row">
-                      <img
-                        src="/images/favorite.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2"
-                      />
-                      <p className="text-[10] font-Raleway text-[#F25B38] text-center font-light ">
-                        {i.likes}k
-                      </p>
-                      <img
-                        src="/images/visibility.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2 "
-                      />{" "}
-                      <p className="text-[10] font-Raleway text-[#F25B38] text-center font-light ">
-                        {i.views}k
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {/* </Slider> */}
+          <h3 className="my-5 w-[290px] py-4 px-4  text-white font-Poppins text-center shadow-sm shadow-gray-600   text-[20px] rounded backdrop-opacity-75   bg-[#f25a38d7] hover:bg-[#c74141] cursor-pointer">
+            Become a Seller ?
+          </h3>
+          <div className="w-full h-auto pt-8  flex flex-row justify-start items-center">
+            <img
+              src="/images/profilimage.jpeg"
+              alt=""
+              className="w-10 h-10 object-cover rounded-full"
+            />
+            <p className="font-Poppins font-light text-[14px] text-white mx-4 ">
+              Grace Bamidele
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Following */}
+      {/* other contents */}
       <div className="w-full h-auto px-2">
-        <div className="w-full mx-10 bg-white py-10">
-          <h3 className="text-[36px] font-Poppins text-black">Following</h3>
-        </div>
-        <div className="w-full h-auto flex flex-row bg-[rgba(242,91,56,0.05)] overflow-x-scroll">
-          <div className="w-min h-auto mx-auto items-center   py-5 flex flex-row">
-            {Artwork.map((i, n) => (
-              <div
-                className="mx-8 md:mx-8 w-[224px] h-[237px] rounded-md  relative"
-                key={n}
-                onClick={() => setShowPostData(true)}
-              >
-                <img
-                  src={i.img}
-                  alt=""
-                  className=" mx-auto w-full rounded h-full object-cover"
-                />
-                <img
-                  src={i.img}
-                  alt=""
-                  className=" absolute top-6 left-0 right-0 mx-auto my-4 w-20 h-20 rounded-full z-20 object-cover"
-                />
-                <div className="w-full absolute left-0 flex right-0 bottom-0 h-[170px] backdrop-brightness-75 backdrop-blur-sm   rounded-t-full z-10  ">
-                  <h2 className="m-auto text-[16px] text-center font-light text-white font-Raleway">
-                    Christine Boluwatife
-                  </h2>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="w-full h-auto mx-auto items-center bg-white py-5 grid grid-cols-4">
+        <div className="w-full h-auto mx-auto items-center bg-white py-5 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {Artwork.map((i, n) => (
             <div
-              className="mx-auto w-[304px] h-[207px] my-6 bg-white rounded-md   relative"
+              className="mx-auto w-[304px] h-[207px] my-10 bg-white rounded-md relative"
               onClick={() => setShowPostData(true)}
               key={n}
             >
@@ -480,11 +267,14 @@ const ArtOfTheWeek = () => {
                 alt=""
                 className=" mx-auto w-full h-full rounded object-cover"
               />
+              <div className="  absolute mx-2 top-2 left-2 cursor-pointer items-center w-9 h-8 p-1 flex rounded  bg-[#05000060]  ">
+                <IoCartOutline size={26} className="text-white hover:text-[#fa6746]" />
+              </div>
               <div className="absolute  bottom-7 left-0 right-0 bg-transparent h-1/4 bg-gradient-to-t  from-[#1919194D]">
                 <p className="text-[28px] font-Raleway text-white text-center font-light ">
                   Next Gen
                 </p>
-                <div className="w-full bottom-0 h-[50px]   border border-[#f7b38594] rounded-b-sm bg-white flex flex-row items-center">
+                <div className="w-full bottom-0 h-[50px]  border border-[#f7b38594] rounded-b-sm bg-white flex flex-row items-center">
                   <div className="w-2/3 px-4 flex flex-row items-center justify-start  ">
                     <img
                       src="/images/Ellipse 10.svg"
@@ -517,7 +307,7 @@ const ArtOfTheWeek = () => {
           ))}
         </div>
       </div>
-      <SearchResult />
+      {showSearchResult && <SearchResult />}
       {showPostData && <UserPostDetail setShowPostData={setShowPostData} />}
     </div>
   );
@@ -626,4 +416,4 @@ const ArtLocation = ({ showLocation, setShowLocation }: any) => {
   );
 };
 
-export default ArtOfTheWeek;
+export default Products;

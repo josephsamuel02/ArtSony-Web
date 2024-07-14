@@ -8,8 +8,9 @@ const PUBLIC_ROUTES = {
   CONFIRM_PASSWORD: "/confirm_password",
 
   ARTIST_PROFILE: "/artist_profile",
+  MY_PROFILE: "/my_profile",
   SHOP: "/shop",
-
+  EXPLORE: "/explore",
   CHECKOUT: "/checkout",
 
   FIND_GOFER: "/find_gofer",

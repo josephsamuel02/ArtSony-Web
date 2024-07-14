@@ -27,7 +27,10 @@ export default withMT({
         Raleway: ["Raleway", "sans-serif"],
       },
       backgroundImage: {
-        "banner-one": "url('images/Property 1=Default.svg')",
+        "banner-one": "url('images/Property 1=Default-1.svg')",
+        "banner-two": "url('images/Property 1=Default.svg')",
+        "shop-add-one": "url('images/shop add poster.svg')",
+
         "hero-pattern": "url('/img/hero-pattern.svg')",
         "chat-background": "url('/images/Frame 1954.svg')",
         "footer-background": "url('/images/footer bg1.svg')",

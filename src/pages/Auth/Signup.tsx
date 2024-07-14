@@ -1,6 +1,39 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { MouseEvent, useState } from "react";
 import PUBLIC_ROUTES from "../../utils/PublicRoutes";
+import { useDispatch, useSelector } from "react-redux";
+import { UserSignup } from "../../Redux/AuthSlice";
+import { AppDispatch } from "../../Redux/store";
+import { useNavigate } from "react-router-dom";
+import { Loading } from "../../components/Loading";
 
 function Signup() {
+  const dispatch = useDispatch<AppDispatch>();
+  const Navigate = useNavigate();
+  const LogInResponse = useSelector((state: any) => state.Auth.user.status);
+
+  const [loading, setLoading] = useState(false);
+  const [signupData, setSignupData] = useState<object>({
+    user_name: "",
+    email: "",
+    password: "",
+  });
+
+  const SignupAction = (e: MouseEvent) => {
+    e.preventDefault();
+    dispatch(UserSignup(signupData));
+    setLoading(true);
+
+    setTimeout(() => {
+      if (LogInResponse === 200) {
+        setLoading(false);
+        window.location.assign;
+
+        Navigate(PUBLIC_ROUTES.HOME);
+      }
+    }, 1000);
+    console.log(setSignupData);
+  };
   return (
     <div className="bg-[url(https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716657921/52f815ef99b62d1351fcc7c3db448e8b_ucxlyz.png)] bg-cover bg-no-repeat bg-center h-screen  w-screen flex flex-col items-center justify-center ">
       <div className="w-[380px] h-auto bg-[rgba(22,22,53,0.5)]  bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-xl flex flex-col justify-center items-center px-6  ">
@@ -14,19 +47,31 @@ function Signup() {
             className="p-0.5 w-[300px] my-2 bg-transparent border-b border-white font-light placeholder-white font-Raleway outline-none text-sm focus:outline-none text-white underline-offset-1 "
             type="text"
             placeholder="Username"
+            onChange={(e) =>
+              setSignupData((prev: object) => ({ ...prev, user_name: e.target.value }))
+            }
           />
           <input
             className="p-0.5 w-[300px] my-2 bg-transparent border-b border-white font-light placeholder-white font-Raleway outline-none text-sm focus:outline-none text-white underline-offset-1 "
             type="email"
             placeholder="Email"
+            onChange={(e) =>
+              setSignupData((prev: object) => ({ ...prev, email: e.target.value }))
+            }
           />
           <input
             className="p-0.5 w-[300px] my-2 bg-transparent border-b border-white font-light placeholder-white font-Raleway outline-none text-sm focus:outline-none text-white underline-offset-1 "
             type="password"
             placeholder="Password"
+            onChange={(e) =>
+              setSignupData((prev: object) => ({ ...prev, password: e.target.value }))
+            }
           />
 
-          <button className="w-[300px] mt-3 p-3 bg-[#F25b38] hover:bg-[#f3512c] text-white font-light font-Raleway border-none cursor-pointer rounded-lg">
+          <button
+            onClick={(e) => SignupAction(e)}
+            className="w-[300px] mt-3 p-3 bg-[#F25b38] hover:bg-[#f3512c] text-white font-light font-Raleway border-none cursor-pointer rounded-lg"
+          >
             Create Account
           </button>
           <span className="text-center font-Poppins text-[10px] font-light text-white text-xs mt-1 space-x-1 w-[290px] ">
@@ -64,8 +109,7 @@ function Signup() {
           </a>
         </span>
       </div>
-
-      <div className="mx-auto w-[1200px] h-[40px] mb-3 bg-[rgba(43,43,103,0.5)] bg-opacity-60 backdrop-filter backdrop-blur-md mt-10 rounded-full text-[12px] ">
+      <div className="mx-auto w-10/12 h-[40px] mb-3 bg-[rgba(43,43,103,0.5)] bg-opacity-60 backdrop-filter backdrop-blur-md mt-10 rounded-full text-[12px] ">
         <div className="px-6 flex flex-row items-center justify-between p-2 text-white">
           <div className=" flex flex-row justify-center items-center gap-3">
             <img
@@ -89,7 +133,8 @@ function Signup() {
             <div>Language</div>
           </div>
         </div>
-      </div>
+      </div>{" "}
+      {loading && <Loading />}
     </div>
   );
 }

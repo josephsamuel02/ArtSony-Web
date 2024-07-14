@@ -1,18 +1,19 @@
 import { useState } from "react";
-import UploadCard from "./UploadCard";
-import NotificationCard from "./NotificationCard";
-import ProfileCard from "./ProfileCard";
+import UploadCard from "./Cards/UploadCard";
+import NotificationCard from "./Cards/NotificationCard";
+import ProfileCard from "./Cards/ProfileCard";
 import MessageCard from "./Messageing/MessageCard";
 import PUBLIC_ROUTES from "../utils/PublicRoutes";
 
 const Nav = () => {
-  const [showUploadCard, setShowUploadCard] = useState(false);
+  const [showUploadCard, setShowUploadCard] = useState("close");
+
   const [showNotificationCard, setShowNotificationCard] = useState(false);
   const [showProfileCard, setShowProfileCard] = useState(false);
   const [showMessageCard, setShowMessageCard] = useState(false);
 
   const naveData = [
-    { title: "Explore", url: "" },
+    { title: "Explore", url: PUBLIC_ROUTES.EXPLORE },
     { title: "Shop", url: PUBLIC_ROUTES.SHOP },
     { title: "Hire Artist", url: "" },
     { title: "Find Gigs", url: "" },
@@ -48,7 +49,7 @@ const Nav = () => {
           </div>
         </div>
         <div className="mx-auto w-64 h-auto flex flex-row items-center">
-          <h2 className=" mx-auto  " onClick={() => setShowUploadCard(!showUploadCard)}>
+          <h2 className=" mx-auto  " onClick={() => setShowUploadCard("upload")}>
             <img src="/images/upload.svg" alt="search" className="w-[27px] h-8" />
           </h2>
           <h2 className=" mx-auto">
@@ -94,8 +95,9 @@ const Nav = () => {
           {showProfileCard && <ProfileCard />}
         </div>
       </div>
-      {showUploadCard && <UploadCard />}
-
+      {showUploadCard && (
+        <UploadCard showUploadCard={showUploadCard} setShowUploadCard={setShowUploadCard} />
+      )}
       {showMessageCard && <MessageCard />}
     </>
   );

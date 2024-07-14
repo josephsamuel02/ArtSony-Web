@@ -10,12 +10,11 @@ import Signup from "./pages/Auth/Signup";
 import Faq from "./pages/Faq/Faq";
 import ArtistProfile from "./pages/Profile";
 import Checkout from "./pages/Checkout/Checkout";
-import UserPostDetail from "./components/UserPostDetail";
-import UserPost from "./components/UserPost";
-import { UserArtProps } from "./constants";
 import Footer from "./components/Footer";
 import LoginOption from "./pages/Auth/LoginOption";
-import Shop from "./constants/Shop";
+import Shop from "./pages/Shop";
+import Explore from "./pages/Explore";
+import MyProfile from "./pages/MyProfile";
 
 const App = () => {
   return (
@@ -23,6 +22,8 @@ const App = () => {
       <Routes>
         <Route index path={PUBLIC_ROUTES.HOME} element={<Home />} />
         <Route path={PUBLIC_ROUTES.ARTIST_PROFILE} element={<ArtistProfile />} />
+        <Route path={PUBLIC_ROUTES.MY_PROFILE} element={<MyProfile />} />
+
         <Route path={PUBLIC_ROUTES.CHECKOUT} element={<Checkout />} />
 
         <Route path={PUBLIC_ROUTES.SIGNUP} element={<Signup />} />
@@ -32,9 +33,7 @@ const App = () => {
         <Route path={PUBLIC_ROUTES.CONFIRM_PASSWORD} element={<LoginOption />} />
 
         <Route path={PUBLIC_ROUTES.SHOP} element={<Shop />} />
-
-        <Route path={"/userdetails/:id"} element={<UserPostDetail />} />
-        <Route path={"/userpost"} element={<UserPost items={UserArtProps} />} />
+        <Route path={PUBLIC_ROUTES.EXPLORE} element={<Explore />} />
 
         <Route path={"/aboutus"} element={<AboutUs />} />
         <Route path={"/faq"} element={<Faq />} />

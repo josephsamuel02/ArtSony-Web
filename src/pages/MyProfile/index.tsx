@@ -1,16 +1,19 @@
 import { useState } from "react";
 import Nav from "../../components/Nav";
+import Followers from "../../components/Cards/Followers";
+import Following from "../../components/Cards/Following";
 import Artwork from "./Artworks";
 import About from "./About";
 import Moodboard from "./Moodboard";
 import Store from "./Store";
-import Followers from "../../components/Cards/Followers";
-import Following from "../../components/Cards/Following";
+import { MdOutlineFileUpload } from "react-icons/md";
+import UploadCard from "../../components/Cards/UploadCard";
 
-const ArtistProfile = () => {
+const MyProfile = () => {
   const [profileComponent, setProfileComponent] = useState("Artwork");
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
+  const [showUploadCard, setShowUploadCard] = useState("close");
 
   const profileMenu = [
     {
@@ -34,13 +37,7 @@ const ArtistProfile = () => {
   return (
     <div className="w-full h-auto">
       <Nav />
-      <div
-        className="w-full relative bg-no-repeat bg-center bg-cover mb-80 flex flex-col items-center"
-        style={{
-          height: "513px",
-          backgroundImage: "url('/images/Rectangle 276.svg')",
-        }}
-      >
+      <div className="w-full h-[513px] relative bg-banner-one bg-no-repeat bg-center bg-cover mb-80 flex flex-col items-center">
         {/* ----------------------------------main----------------------- */}
         <div className="absolute mx-auto" style={{ top: "120px" }}>
           <div className="w-[475px] h-[553px] border border-solid border-[rgba(242,90,56,0.54)] rounded-2xl border-1 border-opacity-50 backdrop-filter backdrop-blur-sm p-4 flex flex-col justify-between bg-[rgba(43,43,103,0.5)]">
@@ -94,13 +91,12 @@ const ArtistProfile = () => {
               </div>
             </div>
             <div className="flex justify-around my-6 ">
-              <button className="bg-[#F25B38] w-[192px] h-[48px] text-white px-4 py-2 rounded-md mr-2 text-lg hover:bg-[#f25a38ba]">
-                <img
-                  src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1716802356/prsn_s5cqwv.svg "
-                  alt="icon"
-                  className="inline-block w-6 h-6 mr-2"
-                />
-                Follow
+              <button
+                className="bg-[#F25B38] w-[192px] h-[48px] text-white px-4 py-2 flex flex-row items-center rounded-md mr-2 text-lg hover:bg-[#f25a38ba]"
+                onClick={() => setShowUploadCard("upload")}
+              >
+                <MdOutlineFileUpload size={26} color="white" />
+                <p className="mx-auto">Upload</p>
               </button>
               <button className="bg-white text-[#F25B38] px-4 py-2 rounded-md w-[192px] h-[48px] gap-[20px] justify-center  text-lg hover:bg-gray-300 flex items-center">
                 <img
@@ -108,7 +104,7 @@ const ArtistProfile = () => {
                   className="  w-[20px] h-[16px] items-center object-cover"
                   alt="message"
                 />
-                Message
+                Inbox
               </button>
             </div>
           </div>
@@ -136,8 +132,10 @@ const ArtistProfile = () => {
       {profileComponent == "Moodboard" && <Moodboard />}
       {profileComponent == "Store" && <Store />}
       {showFollowers && <Followers setShowFollowers={setShowFollowers} />}
-
       {showFollowing && <Following setShowFollowing={setShowFollowing} />}
+      {showUploadCard && (
+        <UploadCard showUploadCard={showUploadCard} setShowUploadCard={setShowUploadCard} />
+      )}
       <div className="w-full flex flex-row py-10  mt-6 item-center justify-center   ">
         <img
           className="mx-6 w-[32px] h-[32px]"
@@ -151,4 +149,4 @@ const ArtistProfile = () => {
   );
 };
 
-export default ArtistProfile;
+export default MyProfile;
