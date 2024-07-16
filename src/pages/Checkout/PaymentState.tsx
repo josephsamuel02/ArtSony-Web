@@ -1,6 +1,11 @@
+import { useState } from "react";
 import DropdownOptions from "./DropdownOptions";
+import Processing from "./Processing";
+import Congratulations from "./Congratulations";
+import Failedtransaction from "./Failedtransaction";
 
 export const PaymentState_1 = () => {
+  const [paymentState, setPaymentState] = useState("none");
   return (
     <div className="flex flex-col  w-1/2  items-start mx-auto px-10 pt-14">
       <div
@@ -117,9 +122,16 @@ export const PaymentState_1 = () => {
         <p className="text-[#F25B38]">$ 11,070</p>
       </div>
 
-      <p className="text-white text-center pt-6 bg-[#F25B38] w-[560px] h-[72px] rounded   mt-6 hover:bg-orange-800 font-Poppins">
+      <p
+        className="text-white text-center pt-6 bg-[#F25B38] w-[560px] h-[72px]     mt-6 hover:bg-customOrange rounded font-Poppins"
+        onClick={() => setPaymentState("processing")}
+      >
         Checkout
       </p>
+
+      {paymentState == "processing" && <Processing />}
+      {paymentState == "success" && <Congratulations />}
+      {paymentState == "failed" && <Failedtransaction />}
     </div>
   );
 };
@@ -128,8 +140,8 @@ export const PaymentState_2 = () => {
   const options1 = ["Kenturky", "two", "three"];
   const options2 = ["USA", "five", "six"];
   return (
-    <div className="flex flex-col  w-1/2 items-start mx-auto">
-      <div className="flex flex-col justify-between w-full gap-4 mt-12  ">
+    <div className="flex flex-col  w-[500px] mx-auto justify-items-start">
+      <div className="mx-auto flex flex-col justify-between w-full gap-y-4 mt-12  ">
         <div className="flex w-[86.25px] gap-2 h-[22px]">
           <p className="w-[129px] h-[24px]">Address</p>
           <img
@@ -138,29 +150,29 @@ export const PaymentState_2 = () => {
           />
         </div>
 
-        <div className="flex items-center justify-center w-[553.15px] h-[66.6px] border border-orange-600">
+        <div className="flex items-center px-4 justify-center w-[553.15px] h-[66.6px] rounded border border-customOrange">
           <input
             type="text"
-            placeholder="address"
-            className="w-[500px] h-full border border-none outline-none font-Poppins text-[18.5px]"
+            placeholder="Address"
+            className="w-full h-full border border-none outline-none font-Poppins text-[18.5px]"
           />
         </div>
 
-        <div className="flex items-center justify-center w-[553.15px] h-[66.6px] border border-orange-600">
+        <div className="flex items-center px-4 justify-center w-[553.15px] h-[66.6px] rounded border border-customOrange">
           <input
             type="text"
-            placeholder="addresss"
-            className="w-[500px] h-full border border-none outline-none font-Poppins text-[18.5px]"
+            placeholder="City"
+            className="w-full h-full border border-none outline-none font-Poppins text-[18.5px]"
           />
         </div>
 
         <DropdownOptions
-          className="checkout-dropdown w-[324.68px] h-[66.6px] border border-orange-600  pl-4 text-[18px] font-Poppins outline-none"
+          className="checkout-dropdown w-[324.68px] h-[66.6px] border border-customOrange  pl-4 text-[18px] font-Poppins outline-none"
           options={options1}
           placeholder={"Select State"}
         />
         <DropdownOptions
-          className="checkout-dropdown w-[553.15px] h-[66.6px] border border-orange-600 text-[18px] font-Poppins pl-4 outline-none"
+          className="checkout-dropdown w-[553.15px] h-[66.6px] border border-customOrange text-[18px] font-Poppins pl-4 outline-none"
           options={options2}
           placeholder={"select country"}
         />
@@ -168,7 +180,7 @@ export const PaymentState_2 = () => {
 
       {/* ---------------------card payment---------- */}
 
-      <hr className="bg-[#8fdcde] w-[554px]" />
+      <hr className="bg-[#8fdcde] w-[554px] my-4" />
       <div className="flex justify-between w-full">
         <div className="flex justify-between w-full">
           <div className="flex justify-between gap-6">
@@ -192,11 +204,11 @@ export const PaymentState_2 = () => {
         <p className="text-[#F25B38]">$ 11,070</p>
       </div>
 
-      <hr className="bg-[#8fdcde] w-[554px]" />
+      <hr className="bg-[#8fdcde] w-full my-6" />
 
       {/* 
 ---------cards payment options--------- */}
-      <div className="flex w-full justify-between">
+      <div className="flex w-full justify-between gap-y-4 ">
         <img
           src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718224418/Frame_87_yidurr.svg"
           alt="master cards"
@@ -216,10 +228,10 @@ export const PaymentState_2 = () => {
       </div>
 
       {/* -----------card info--------- */}
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-y-4">
         <p className="w-[129px] h-[24px]">Card info</p>
 
-        <div className="flex flex-row justify-between gap-3">
+        <div className="flex flex-row justify-between gap-4">
           <p className="">Mastarcard</p>
 
           <img
@@ -229,32 +241,32 @@ export const PaymentState_2 = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-center w-[553.15px] h-[66.6px] border border-orange-600">
+      <div className="flex my-2 mt-10 items-center px-4 justify-center w-[553.15px] h-[66.6px] rounded border border-customOrange">
         <input
           type="text"
           placeholder="Holders name"
-          className="w-[500px] h-full border border-none outline-none font-Poppins text-[18.5px]"
+          className="w-full h-full border border-none outline-none font-Poppins  text-[18.5px]"
         />
       </div>
 
-      <div className="flex items-center justify-center w-[553.15px] h-[66.6px] border border-orange-600">
+      <div className="flex my-2 items-center px-4 justify-center w-[553.15px] h-[66.6px] rounded border border-customOrange">
         <input
           type="text"
           placeholder="Card No:"
-          className="w-[500px] h-full border border-none outline-none font-Poppins text-[18.5px]"
+          className="w-full h-full border border-none outline-none font-Poppins text-[18.5px]"
         />
       </div>
 
-      <div className="flex flex-row justify-between  w-[553.15px]">
-        <div className="flex  pl-6 w-[242.15px] h-[66.6px] border border-orange-600 ">
+      <div className="flex my-2 flex-row justify-between  w-[553.15px]">
+        <div className="flex  pl-6 w-[242.15px] h-[66.6px] rounded border border-customOrange ">
           <input
             type="text"
             placeholder="CVV"
-            className="w-[242px] h-full border border-none outline-none font-Poppins text-[18.5px]"
+            className="w-[202px] h-full border border-none outline-none  font-Poppins text-[18.5px]"
           />
         </div>
 
-        <div className="flex pl-6 w-[242.15px] h-[66.6px] border border-orange-600">
+        <div className="flex pl-6 w-[242.15px] h-[66.6px]  rounded border border-customOrange">
           <input
             type="text"
             placeholder="dd/mm/yyyy"
@@ -265,7 +277,7 @@ export const PaymentState_2 = () => {
 
       <a
         href="#email"
-        className="text-white text-center pt-6 bg-[#F25B38] w-[560px] h-[72px] mt-6 hover:bg-orange-800 font-Poppins"
+        className="text-white text-center pt-6 bg-customOrange w-[560px] h-[72px] mt-6 hover:bg-customOrange rounded font-Poppins"
       >
         Checkout
       </a>

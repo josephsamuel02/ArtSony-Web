@@ -187,7 +187,7 @@ const Checkout = () => {
         {paymentOptionState == "newCard" && <PaymentState_2 />}
       </div>
 
-      <div className="flex flex-col w-full h-[561px] mx-auto mt-10 pt-10 border-t-2 border-[#F25B38]  ">
+      <div className="flex flex-col w-full h-auto mx-auto mt-10 pt-10 border-t-2 border-[#F25B38]  ">
         <h1 className="font-Poppins text-[30px]  py-2">Artworks you may like </h1>
 
         <div className="w-full grid grid-cols-3 justify-around ">

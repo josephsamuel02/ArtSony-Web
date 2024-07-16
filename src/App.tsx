@@ -15,6 +15,7 @@ import LoginOption from "./pages/Auth/LoginOption";
 import Shop from "./pages/Shop";
 import Explore from "./pages/Explore";
 import MyProfile from "./pages/MyProfile";
+import PostArt from "./pages/PostArt";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route index path={PUBLIC_ROUTES.HOME} element={<Home />} />
         <Route path={PUBLIC_ROUTES.ARTIST_PROFILE} element={<ArtistProfile />} />
         <Route path={PUBLIC_ROUTES.MY_PROFILE} element={<MyProfile />} />
+        <Route path={PUBLIC_ROUTES.POST_ART} element={<PostArt />} />
 
         <Route path={PUBLIC_ROUTES.CHECKOUT} element={<Checkout />} />
 

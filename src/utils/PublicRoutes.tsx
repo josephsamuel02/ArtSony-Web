@@ -9,6 +9,7 @@ const PUBLIC_ROUTES = {
 
   ARTIST_PROFILE: "/artist_profile",
   MY_PROFILE: "/my_profile",
+  POST_ART: "/post_art",
   SHOP: "/shop",
   EXPLORE: "/explore",
   CHECKOUT: "/checkout",
