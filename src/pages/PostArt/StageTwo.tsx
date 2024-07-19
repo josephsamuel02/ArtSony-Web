@@ -1,15 +1,31 @@
+import Switch from "react-switch";
 import { MdClose } from "react-icons/md";
+import Select from "react-select";
+import { useState } from "react";
+import "react-tooltip/dist/react-tooltip.css";
+import { ToolTip } from "../../components/ToolTip";
 
 interface compState {
   setUploadState: (item: string) => void;
 }
 const StageTwo = ({ setUploadState }: compState) => {
+  const [disableComments, setDisableComments] = useState<boolean>(false);
+  const options = [
+    { value: "everyone", label: "Everyone" },
+    { value: "people_i_follow", label: "People I Follow" },
+    { value: "people_following_me", label: "People Following Me" },
+  ];
+
   return (
     <div className="w-1/3 h-auto bg-[#02272F] flex flex-col p-4 rounded">
       <h3 className="w-full flex flex-row items-start">
         <MdClose size={24} color="white" className="ml-auto" />
       </h3>
-      <h3 className="text-[20px] font-Raleway font-light text-white py-3">Name of Art work</h3>
+      <h3 className="text-[20px] font-Raleway font-light text-white py-3">Art Field</h3>
+      <span className="text-[#8AC5C7] text-[13px] font-Poppins px-1 py-0.5">
+        ( What fields will you categories your art )
+        <span className="text-[#d33d29] text-[13px] font-Poppins px-1">Required</span>
+      </span>
       <div className="w-full h-auto bg-white rounded-md">
         <input
           type="text"
@@ -17,55 +33,154 @@ const StageTwo = ({ setUploadState }: compState) => {
           className="w-full p-3 placeholder-blue-gray-500 font-Raleway rounded outline-none"
         />
       </div>
-      <h3 className="text-[20px] font-Raleway text-white py-3">
-        Tags
-        <span className="text-[#8AC5C7] text-[13px] font-Poppins px-1">
-          ( Add up to 10 Tags , this help users find your Artwork. )
-        </span>
-      </h3>
-      <div className="w-full h-auto bg-white rounded-md">
-        <input
-          type="text"
-          className="w-full p-3 placeholder-blue-gray-500 font-Raleway rounded outline-none"
-        />
+      <h3 className="text-[20px] font-Raleway font-light text-white py-3">Common Fields</h3>
+      <div className="w-full h-auto flex flex-row flex-wrap">
+        <h4 className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer">
+          Abstract Art
+        </h4>
+        <h4 className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer">
+          Painting
+        </h4>
+        <h4 className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer">
+          Photography
+        </h4>
+        <h4 className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer">
+          Pencil Art
+        </h4>
+        <h4 className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer">
+          Illustration
+        </h4>
+        <h4 className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer">
+          Graphic Art
+        </h4>
       </div>
-      <h3 className="text-[20px] font-Raleway text-white py-3">
-        Tools
-        <span className="text-[#8AC5C7] text-[13px] font-Poppins px-1">
-          ( Add tools like Software, Hardware or Materials you used)
-        </span>
+      <h3 className="text-[20px] font-Raleway font-light text-white py-3">
+        Who can see this post
       </h3>
       <div className="w-full h-auto bg-white rounded-md">
-        <input
-          type="text"
-          className="w-full p-3 placeholder-blue-gray-500 font-Raleway rounded outline-none"
+        <Select options={options} />
+      </div>
+
+      <div className="w-full h-auto mt-3 flex flex-row items-center">
+        <h3 className="text-[17px] font-Raleway font-light text-white py-3">
+          Disable Comment section for this post
+        </h3>
+        <Switch
+          onChange={() => setDisableComments(!disableComments)}
+          checked={disableComments}
+          onColor={"#f25b38"}
+          offColor={"#8AC5C7"}
+          className="ml-auto"
         />
       </div>
 
-      <h3 className="text-[20px] font-Raleway text-white py-3">
-        Description
-        <span className="text-[#8AC5C7] text-[13px] font-Poppins px-1">
-          (Give a brief description of your Artwork)
-        </span>
+      <h3 className="text-[17px] font-Raleway font-light flex text-white py-3">
+        Copyright & License <span className="ml-auto text-customOrange">Required</span>
       </h3>
-      <div className="w-full h-auto bg-white rounded-md">
-        <textarea className="w-full p-3 placeholder-blue-gray-500 font-Raleway rounded  outline-none" />
-      </div>
-      <span className="text-[#8AC5C7] text-[13px] font-Poppins py-1">
-        Maximum of 250 characters
-      </span>
+      <div className="w-full h-auto flex flex-col ">
+        <h3 className="flex flex-row ">
+          <input type="checkbox" className="mr-2 my-0 accent-customOrange" />
+          <p className="text-[12px] font-Raleway font-light flex flex-row items-center text-white py-3">
+            Attribution (CC BY)
+          </p>
 
-      <div className="w-full h-auto mt-4 rounded-md flex">
+          <ToolTip
+            header={"Attribution (CC BY)"}
+            tip={
+              "This license lets others, remix, adapt, and build upon your work, evencommercially, as long as they credit you for the original creation"
+            }
+          />
+        </h3>
+        <h3 className="flex flex-row ">
+          <input type="checkbox" className="mr-2 my-0 accent-customOrange" />
+          <p className="text-[12px] font-Raleway font-light flex flex-row items-center text-white py-3">
+            Attribution ShareAlike (CC BY-SA)
+          </p>
+          <ToolTip
+            header={"Attribution ShareAlike (CC BY-SA)"}
+            tip={
+              "This license lets others, remix, adapt, and build upon your work, even for commercial purposes, as long as they credit you and license their new creations under the identical terms."
+            }
+          />
+        </h3>
+        <h3 className="flex flex-row ">
+          <input type="checkbox" className="mr-2 my-0 accent-customOrange" />
+          <p className="text-[12px] font-Raleway font-light flex flex-row items-center text-white py-3">
+            Attribution Derivs (CC BY-ND)
+          </p>
+          <ToolTip
+            header={"Attribution Derivs (CC BY-ND)"}
+            tip={
+              "This license lets others reuse the work for any purpose, including commercially; however, it cannot be shared with others in adapted form, and credit must be provided to you."
+            }
+          />
+        </h3>
+        <h3 className="flex flex-row ">
+          <input type="checkbox" className="mr-2 my-0 accent-customOrange" />
+          <p className="text-[12px] font-Raleway font-light flex flex-row items-center text-white py-3">
+            Attribution Non-commercial (CC BY-NC)
+          </p>
+          <ToolTip
+            header={"Attribution Non-commercial (CC BY-NC)"}
+            tip={
+              " This license lets others, remix, adapt, and build upon your work non-commercially, and although their new work must also acknowledge you and be enon-commercial, they dont have to license their derivative works on the same terms."
+            }
+          />
+        </h3>
+        <div className="flex flex-row">
+          <input type="checkbox" className="mr-2 my-0 accent-customOrange" />
+          <p className="text-[12px] font-Raleway font-light flex flex-row items-center text-white py-3">
+            Attribution-Non-commercial-ShareAlike (CC BY-NC-SA)
+          </p>
+          <ToolTip
+            header={"Attribution-Non-commercial-ShareAlike (CC BY-NC-SA)"}
+            tip={
+              " This license lets others, remix, adapt, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms"
+            }
+          />
+        </div>
+        <div className="flex flex-row">
+          <input type="checkbox" className="mr-2 my-0 accent-customOrange" />
+          <p className="text-[12px] font-Raleway font-light flex flex-row items-center text-white py-3">
+            Attribution-Non-commercial-NoDerivs (CC BY-NC-ND)
+          </p>
+          <ToolTip
+            header={"Attribution-Non-commercial-NoDerivs (CC BY-NC-ND)"}
+            tip={
+              " This license lets others, download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially."
+            }
+          />
+        </div>
+        <h3 className="flex flex-row ">
+          <input type="checkbox" className="mr-2 my-0 accent-customOrange" />
+          <p className="text-[12px] font-Raleway font-light flex flex-row items-center text-white py-3">
+            All Rights Reserved
+          </p>
+          <ToolTip
+            header={"All Rights Reserved"}
+            tip={
+              " This implies that no one can utilize your work without first getting permission from you"
+            }
+          />
+        </h3>
+      </div>
+      <div className="w-full h-auto mt-8 mb-4 rounded-md flex">
         <input
           type="button"
           value="Save as Draft"
-          className="mr-auto w-2/5 py-3 text-[16px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
+          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
+        />
+        <input
+          type="button"
+          value="Back"
+          onClick={() => setUploadState("stageOne")}
+          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
           type="button"
           value="Next"
           onClick={() => setUploadState("stageThree")}
-          className="ml-auto w-2/5 py-3 text-[16px] font-poppins text-white bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
+          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />
       </div>
     </div>

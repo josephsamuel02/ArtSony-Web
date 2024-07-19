@@ -1,8 +1,15 @@
 import { MdClose } from "react-icons/md";
+import Select from "react-select";
+
 interface compState {
   setUploadState: (item: string) => void;
 }
 const StageOne = ({ setUploadState }: compState) => {
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
   return (
     <div className="w-1/3 h-auto bg-[#02272F] flex flex-col p-4 rounded">
       <h3 className="w-full flex flex-row items-start">
@@ -23,10 +30,7 @@ const StageOne = ({ setUploadState }: compState) => {
         </span>
       </h3>
       <div className="w-full h-auto bg-white rounded-md">
-        <input
-          type="text"
-          className="w-full p-3 placeholder-blue-gray-500 font-Raleway rounded outline-none"
-        />
+        <Select options={options} isMulti />
       </div>
       <h3 className="text-[20px] font-Raleway text-white py-3">
         Tools
@@ -35,10 +39,7 @@ const StageOne = ({ setUploadState }: compState) => {
         </span>
       </h3>
       <div className="w-full h-auto bg-white rounded-md">
-        <input
-          type="text"
-          className="w-full p-3 placeholder-blue-gray-500 font-Raleway rounded outline-none"
-        />
+        <Select options={options} isMulti />
       </div>
 
       <h3 className="text-[20px] font-Raleway text-white py-3">
@@ -54,7 +55,7 @@ const StageOne = ({ setUploadState }: compState) => {
         Maximum of 250 characters
       </span>
 
-      <div className="w-full h-auto mt-4 rounded-md flex">
+      <div className="w-full h-auto mt-8 mb-4 rounded-md flex">
         <input
           type="button"
           value="Save as Draft"

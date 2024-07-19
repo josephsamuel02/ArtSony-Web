@@ -4,6 +4,10 @@ import { useState } from "react";
 import StageTwo from "./StageTwo";
 import StageThree from "./StageThree";
 import StageOne from "./StageOne";
+import StageFour from "./StageFour";
+import StageFive from "./StageFive";
+import StageSix from "./StageSix";
+import StageSeven from "./StageSeven";
 
 const PostArt = () => {
   const [addHint, setAddHint] = useState(false);
@@ -110,6 +114,10 @@ const PostArt = () => {
         {uploadState == "stageOne" && <StageOne setUploadState={setUploadState} />}
         {uploadState == "stageTwo" && <StageTwo setUploadState={setUploadState} />}
         {uploadState == "stageThree" && <StageThree setUploadState={setUploadState} />}
+        {uploadState == "stageFour" && <StageFour setUploadState={setUploadState} />}
+        {uploadState == "stageFive" && <StageFive setUploadState={setUploadState} />}
+        {uploadState == "stageSix" && <StageSix setUploadState={setUploadState} />}
+        {uploadState == "stageSeven" && <StageSeven setUploadState={setUploadState} />}
       </div>
     </div>
   );
