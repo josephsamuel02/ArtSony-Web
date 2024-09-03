@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-// Define an async thunk for the API call
+
 export const UserSignup = createAsyncThunk(
   "register-user",
   async (data: object, { rejectWithValue }) => {
@@ -23,14 +23,17 @@ export const UserSignup = createAsyncThunk(
 export const LoginUser = createAsyncThunk(
   "login-user",
   async (data: any, { rejectWithValue }) => {
+    console.log(data);
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/auth/login`,
         data
       );
+
       if (response.data.access_token) {
-        localStorage.setItem(response.data.access_token, "ASY_A_Token");
+        localStorage.setItem("ASY_A_Token", response.data.access_token);
       }
+
       console.log(response.data);
       return response.data;
     } catch (error: any) {
@@ -132,5 +135,4 @@ export const authSlice: any = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-
 export default authSlice.reducer;

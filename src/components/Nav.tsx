@@ -21,17 +21,19 @@ const Nav = () => {
   return (
     <>
       <div className="fixed top-0 left-0 right-0 w-full py-4 h-auto flex flex-row px-2 items-center backdrop-blur-sm backdrop-contrast-75 backdrop-opacity-75 backdrop-brightness-50 z-50 ">
-        <img
-          src="/images/artsonylogo.png"
-          alt="Art sony logo"
-          className="mx-6  w-auto h-5 object-cover"
-        />
+        <a href={PUBLIC_ROUTES.HOME}>
+          <img
+            src="/images/artsonylogo.png"
+            alt="Art sony logo"
+            className="mx-6  w-auto h-5 object-cover"
+          />
+        </a>
         <div className="w-auto mx-auto items-center flex flex-row h-auto ">
           {naveData.map((i, n) => (
             <a
               href={i.url}
               key={n}
-              className="mx-auto p-2 text-[16px] text-center text-white font-Poppins"
+              className="mx-auto p-2 text-[13px] text-center text-white font-Poppins"
             >
               {i.title}
             </a>
@@ -51,9 +53,9 @@ const Nav = () => {
           <h2 className=" mx-auto  " onClick={() => setShowUploadCard("upload")}>
             <img src="/images/upload.svg" alt="search" className="w-[27px] h-8" />
           </h2>
-          <h2 className=" mx-auto">
+          <a href={PUBLIC_ROUTES.ORDERS} className=" mx-auto">
             <img src="/images/local_shipping.svg" alt="search" className="w-[27px] h-8 " />
-          </h2>
+          </a>
           <h2
             className="mx-auto relative p-1.5 px-1"
             onClick={() => setShowNotificationCard(!showNotificationCard)}
@@ -64,12 +66,12 @@ const Nav = () => {
             <img src="/images/notifications.svg" alt="search" className="w-[27px] h-8" />
             {showNotificationCard && <NotificationCard />}
           </h2>
-          <h2 className=" mx-auto relative p-1.5 px-1">
+          <a href={PUBLIC_ROUTES.CHECKOUT} className=" mx-auto relative p-1.5 px-1">
             <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
               3
             </p>
             <img src="/images/local_mall.svg" alt="search" className="w-[27px] h-8" />
-          </h2>
+          </a>
           <h2
             className=" mx-auto relative p-1.5 px-1"
             onClick={() => setShowMessageCard(!showMessageCard)}

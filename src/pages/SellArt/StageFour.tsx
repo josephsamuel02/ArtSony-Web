@@ -2,18 +2,14 @@
 import { MdClose, MdOutlineArrowCircleLeft, MdOutlineArrowCircleRight } from "react-icons/md";
 import UserPostDetail from "../../components/PostDetails/UserPostDetail";
 
-import { useState } from "react";
-import PostArtwork, { PostArtworkDraft, PostArtworkStage } from "../../Redux/PostArtwork";
+import { useEffect, useState } from "react";
+import { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
 
-import { useDispatch, useSelector } from "react-redux";
-import { Loading } from "../../components/Loading";
+import { useDispatch } from "react-redux";
 
-const StageFive = () => {
+const StageFour = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [artDetail, setArtDetail] = useState<any>({});
-  const [loading, setLoading] = useState("false");
-  const artData = useSelector((state: any) => state.PostArtwork.post_artwork_stage);
-
   const dispatch = useDispatch();
   const Thumbnail = [
     "/images/Property 1=Variant3.svg",
@@ -26,28 +22,7 @@ const StageFive = () => {
   const [TN, setTN] = useState(0);
 
   const updatePost = async () => {
-    dispatch(PostArtworkDraft(artDetail));
-  };
-
-  const uploadArtwork = async () => {
-    setLoading("true");
-    updatePost();
-    try {
-      console.log(artData);
-
-      const action = await dispatch(PostArtwork(artData));
-
-      if (PostArtwork.fulfilled.match(action)) {
-        setLoading("success");
-        console.log("Artwork posted successfully:", action.payload);
-      } else if (PostArtwork.rejected.match(action)) {
-        setLoading("failed");
-        console.error("Failed to post artwork:", action.payload);
-      }
-    } catch (error) {
-      setLoading("error");
-      console.error("Error posting artwork:", error);
-    }
+    dispatch(SellArtworkDraft(artDetail));
   };
 
   return (
@@ -100,22 +75,22 @@ const StageFive = () => {
         <input
           type="button"
           value="Back"
-          onClick={() => dispatch(PostArtworkStage("stageFour"))}
+          onClick={() => dispatch(SellArtworkStage("stageThree"))}
           className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
           type="button"
-          value="Upload"
+          value="Next"
           onClick={() => {
-            uploadArtwork();
+            updatePost();
+            dispatch(SellArtworkStage("stageFive"));
           }}
           className="mx-1 w-1/3 py-3 text-[14px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />
       </div>
       {showPreview && <UserPostDetail setShowPostData={setShowPreview} />}
-      {loading == "true" ? <Loading /> : null}
     </div>
   );
 };
 
-export default StageFive;
+export default StageFour;

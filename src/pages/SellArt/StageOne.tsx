@@ -3,11 +3,11 @@ import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { PostArtworkDraft, PostArtworkStage } from "../../Redux/PostArtwork";
+import { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
 
 const StageOne = () => {
   const dispatch = useDispatch();
-  const artData = useSelector((state: any) => state.PostArtwork.post_artwork_stage);
+  const artData = useSelector((state: any) => state.PostArtwork.sell_artwork_draft);
   const [artDetail, setArtDetail] = useState({});
 
   const options = [
@@ -16,7 +16,7 @@ const StageOne = () => {
     { value: "vanilla", label: "Vanilla" },
   ];
   const updatePost = async () => {
-    dispatch(PostArtworkDraft(artDetail));
+    dispatch(SellArtworkDraft(artDetail));
   };
 
   return (
@@ -102,7 +102,7 @@ const StageOne = () => {
           value="Next"
           onClick={() => {
             updatePost();
-            dispatch(PostArtworkStage("stageTwo"));
+            dispatch(SellArtworkStage("stageTwo"));
           }}
           className="ml-auto w-2/5 py-3 text-[16px] font-poppins text-white bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />

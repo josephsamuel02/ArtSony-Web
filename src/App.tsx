@@ -16,30 +16,33 @@ import Shop from "./pages/Shop";
 import Explore from "./pages/Explore";
 import MyProfile from "./pages/MyProfile";
 import PostArt from "./pages/PostArt";
+import SellArtwork from "./pages/SellArt";
+import Orders from "./pages/Orders";
 
 const App = () => {
   return (
     <>
       <Routes>
+        <Route path={PUBLIC_ROUTES.SIGNUP} element={<Signup />} />
+        <Route path={PUBLIC_ROUTES.LOGIN} element={<Login />} />
+        <Route path={PUBLIC_ROUTES.FORGOT_PASSWORD} element={<ForgottenPassword />} />
+        <Route path={PUBLIC_ROUTES.CONFIRM_PASSWORD} element={<LoginOption />} />
+
         <Route index path={PUBLIC_ROUTES.HOME} element={<Home />} />
         <Route path={PUBLIC_ROUTES.ARTIST_PROFILE} element={<ArtistProfile />} />
         <Route path={PUBLIC_ROUTES.MY_PROFILE} element={<MyProfile />} />
         <Route path={PUBLIC_ROUTES.POST_ART} element={<PostArt />} />
-
-        <Route path={PUBLIC_ROUTES.CHECKOUT} element={<Checkout />} />
-
-        <Route path={PUBLIC_ROUTES.SIGNUP} element={<Signup />} />
-        <Route path={PUBLIC_ROUTES.LOGIN} element={<Login />} />
-
-        <Route path={PUBLIC_ROUTES.FORGOT_PASSWORD} element={<ForgottenPassword />} />
-        <Route path={PUBLIC_ROUTES.CONFIRM_PASSWORD} element={<LoginOption />} />
+        <Route path={PUBLIC_ROUTES.SELL_ART} element={<SellArtwork />} />
 
         <Route path={PUBLIC_ROUTES.SHOP} element={<Shop />} />
         <Route path={PUBLIC_ROUTES.EXPLORE} element={<Explore />} />
+        <Route path={PUBLIC_ROUTES.ORDERS} element={<Orders />} />
 
-        <Route path={"/aboutus"} element={<AboutUs />} />
+        <Route path={PUBLIC_ROUTES.CHECKOUT} element={<Checkout />} />
+
+        <Route path={"/about_us"} element={<AboutUs />} />
         <Route path={"/faq"} element={<Faq />} />
-        <Route path={"/contactus"} element={<ContactUs />} />
+        <Route path={"/contact_us"} element={<ContactUs />} />
 
         <Route path={"*"} element={<Page404 />} />
       </Routes>

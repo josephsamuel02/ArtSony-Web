@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "react-tooltip/dist/react-tooltip.css";
-import { PostArtworkDraft, PostArtworkStage } from "../../Redux/PostArtwork";
+import PostArtwork, { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
+import { Loading } from "../../components/Loading";
 
-const StageFour = () => {
+const StageSeven = () => {
   const dispatch = useDispatch();
-
+  const artData = useSelector((state: any) => state.PostArtwork.sell_artwork_draft);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState("false");
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const handleAddFile = () => {
@@ -45,7 +47,86 @@ const StageFour = () => {
     const convertedFiles = await Promise.all(
       selectedFiles.map((file) => convertToBase64(file))
     );
-    dispatch(PostArtworkDraft({ production_files: convertedFiles }));
+    dispatch(SellArtworkDraft({ production_files: convertedFiles }));
+  };
+
+  // const uploadArtwork = () => {
+  //   updatePost();
+  //   dispatch(PostArtwork(artData));
+  //  };
+
+  // const sampleData={
+  //   userId: "mr77z4evifyuy",
+  //   storeId: "string1",
+  //   artwork_name: "Sample artwork",
+  //   tags: ["stone art", "paintin"],
+  //   artwork_type: "physical",
+  //   tools: ["ardobe illustrator", "string"],
+  //   description: "a great art",
+  //   art_field: ["string"],
+  //   visibility: "everyone",
+  //   disable_comments: false,
+  //   copyright_license: ["string"],
+  //   co_owners: [
+  //     {
+  //       profile_img: "https://image.jpg",
+  //       user_name: "String",
+  //       userId: "String",
+  //     },
+  //   ],
+  //   designed_for: ["string"],
+  //   appreciation: ["string"],
+  //   dimensions: {
+  //     width: "String",
+  //     breadth: "String",
+  //     height: "String",
+  //   },
+  //   images: ["string"],
+  //   thumbnail: "string",
+  //   embed_code: ["string"],
+  //   audio_video: ["string"],
+  //   animated_3d: ["string"],
+  //   certificate_of_authentication_type: "digital",
+  //   certificate_of_authentication: ["string"],
+  //   available_quantity: 20,
+  //   currency: "usd",
+  //   auction: false,
+  //   price: 10000,
+  //   likes: 34352,
+  //   views: 34352,
+  //   comments: [
+  //     {
+  //       profile_img: "https://image.jpg",
+  //       userId: "random9r3",
+  //       user_name: "Pius",
+  //       comment: "String",
+  //       likes: 45,
+  //     },
+  //   ],
+  //   for_sale: false,
+  //   draft: false,
+  // }
+
+  const uploadArtwork = async () => {
+    setLoading("true");
+    try {
+      console.log(artData);
+      await updatePost();
+      const action = await dispatch(PostArtwork(artData));
+
+      if (PostArtwork.fulfilled.match(action)) {
+        // Handle success
+        setLoading("success");
+        console.log("Artwork posted successfully:", action.payload);
+      } else if (PostArtwork.rejected.match(action)) {
+        // Handle error
+        setLoading("failed");
+        console.error("Failed to post artwork:", action.payload);
+      }
+    } catch (error) {
+      setLoading("error");
+      console.error("Error posting artwork:", error);
+    }
   };
 
   return (
@@ -104,21 +185,22 @@ const StageFour = () => {
         <input
           type="button"
           value="Back"
-          onClick={() => dispatch(PostArtworkStage("stageThree"))}
+          onClick={() => dispatch(SellArtworkStage("stageSix"))}
           className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
           type="button"
           value="Post"
           onClick={() => {
-            dispatch(PostArtworkStage("stageFive"));
-            updatePost();
+            // dispatch(SellArtworkStage("stageEight"));
+            uploadArtwork();
           }}
           className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />
       </div>
+      {loading == "true" ? <Loading /> : null}
     </div>
   );
 };
 
-export default StageFour;
+export default StageSeven;

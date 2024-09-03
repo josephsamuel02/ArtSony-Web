@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { PostArtworkDraft, PostArtworkStage } from "../../Redux/PostArtwork";
+import { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
 
 const StageThree = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const StageThree = () => {
   ];
   const updatePost = async () => {
     console.log(artDetail);
-    dispatch(PostArtworkDraft(artDetail));
+    dispatch(SellArtworkDraft(artDetail));
   };
 
   return (
@@ -114,7 +114,7 @@ const StageThree = () => {
         <input
           type="button"
           value="Back"
-          onClick={() => dispatch(PostArtworkStage("stageTwo"))}
+          onClick={() => dispatch(SellArtworkStage("stageTwo"))}
           className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
@@ -122,7 +122,7 @@ const StageThree = () => {
           value="Next"
           onClick={() => {
             updatePost();
-            dispatch(PostArtworkStage("stageFour"));
+            dispatch(SellArtworkStage("stageFour"));
           }}
           className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />

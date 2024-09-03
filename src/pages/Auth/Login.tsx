@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import PUBLIC_ROUTES from "../../utils/PublicRoutes";
 import { LoginUser } from "../../Redux/AuthSlice";
@@ -19,6 +20,7 @@ const Login: React.FC = () => {
 
   const LoginAction = (e: MouseEvent) => {
     e.preventDefault();
+    console.log(loginData);
     dispatch(LoginUser(loginData));
     setLoading(true);
 
@@ -59,7 +61,7 @@ const Login: React.FC = () => {
             }
           />
           <button
-            onClick={(e) => LoginAction(e)}
+            onClick={(e: any) => LoginAction(e)}
             className="w-[300px] mt-3 p-3 font-Poppins text-[10px] font-light  text-xs   bg-[#F25b38] backdrop-filter backdrop-blur-md text-white border-none cursor-pointer rounded-lg"
           >
             Login

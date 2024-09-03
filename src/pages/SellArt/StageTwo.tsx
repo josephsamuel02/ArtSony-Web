@@ -6,11 +6,10 @@ import { useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToolTip } from "../../components/ToolTip";
 import { useDispatch, useSelector } from "react-redux";
-import { PostArtworkDraft, PostArtworkStage } from "../../Redux/PostArtwork";
+import { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
 
 const StageTwo = () => {
-  const artData = useSelector((state: any) => state.PostArtwork.post_artwork_stage);
-
+  const artData = useSelector((state: any) => state.PostArtwork.sell_artwork_draft);
   const dispatch = useDispatch();
   const [disableComments, setDisableComments] = useState<boolean>(false);
   const [artDetail, setArtDetail] = useState<any>({ copyright_license: [] });
@@ -44,7 +43,7 @@ const StageTwo = () => {
   };
 
   const updatePost = async () => {
-    dispatch(PostArtworkDraft({ ...artDetail, disable_comments: disableComments }));
+    dispatch(SellArtworkDraft({ ...artDetail, disable_comments: disableComments }));
   };
 
   return (
@@ -250,7 +249,7 @@ const StageTwo = () => {
         <input
           type="button"
           value="Back"
-          onClick={() => dispatch(PostArtworkStage("stageOne"))}
+          onClick={() => dispatch(SellArtworkStage("stageOne"))}
           className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
@@ -258,7 +257,7 @@ const StageTwo = () => {
           value="Next"
           onClick={() => {
             updatePost();
-            dispatch(PostArtworkStage("stageThree"));
+            dispatch(SellArtworkStage("stageThree"));
           }}
           className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />

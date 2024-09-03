@@ -1,20 +1,22 @@
 const PUBLIC_ROUTES = {
   HOME: "/",
 
+  //AUTHENTICATION
   LOGIN: "/login",
   SIGNUP: "/signup",
   LOGIN_OPTIONS: "/login_options",
   FORGOT_PASSWORD: "/forgot_password",
   CONFIRM_PASSWORD: "/confirm_password",
 
+  //USER ACTIONS
   ARTIST_PROFILE: "/artist_profile",
   MY_PROFILE: "/my_profile",
   POST_ART: "/post_art",
+  SELL_ART: "/sell_art",
   SHOP: "/shop",
   EXPLORE: "/explore",
   CHECKOUT: "/checkout",
-
-  FIND_GOFER: "/find_gofer",
+  ORDERS: "/orders",
 
   ABOUT_US: "/about",
   CONTACT_US: "/contact",

@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "./AuthSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import postArtworkSlice from "./PostArtwork";
 
 const reducers = combineReducers({
   Auth: authSlice,
+  PostArtwork: postArtworkSlice,
 });
 
 const persistConfig = {
@@ -21,6 +23,8 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+        // ignore specific paths in the state
+        // ignoredPaths: ["postArtwork.draft.images"],
       },
     }),
 });

@@ -1,25 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MdAdd, MdArrowCircleDown, MdArrowCircleUp, MdDelete, MdEdit } from "react-icons/md";
+import { useEffect, useRef } from "react";
+
 import Nav from "../../components/Nav";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import StageTwo from "./StageTwo";
 import StageThree from "./StageThree";
 import StageOne from "./StageOne";
-import { useDispatch, useSelector } from "react-redux";
-import { PostArtworkDraft } from "../../Redux/PostArtwork";
-import StageFive from "./StageFive";
 import StageFour from "./StageFour";
+import StageFive from "./StageFive";
+import StageSix from "./StageSix";
+import StageSeven from "./StageSeven";
+import { SellArtworkDraft } from "../../Redux/PostArtwork";
+import { useDispatch, useSelector } from "react-redux";
 
-const PostArt = () => {
+const SellArtwork = () => {
   const [addHint, setAddHint] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // State to store selected files
   const dispatch = useDispatch();
-  const uploadStage = useSelector((state: any) => state.PostArtwork.post_artwork_stage);
+  const uploadStage = useSelector((state: any) => state.PostArtwork.sell_artwork_stage);
   const [uploadState, setUploadState] = useState(uploadStage);
-
   // Create a ref for the hidden file input element
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   const handleAddFile = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -57,7 +59,7 @@ const PostArt = () => {
     const convertedFiles = await Promise.all(
       selectedFiles.map((file) => convertToBase64(file))
     );
-    dispatch(PostArtworkDraft({ images: convertedFiles }));
+    dispatch(SellArtworkDraft({ images: convertedFiles }));
   };
 
   useEffect(() => {
@@ -191,7 +193,6 @@ const PostArt = () => {
                           className="text-white hover:text-customOrange "
                         />
                       </h3>
-
                       <h3
                         onClick={() => {
                           const nextImage = document.getElementById(`image-${index + 1}`);
@@ -235,9 +236,11 @@ const PostArt = () => {
         {uploadState == "stageThree" && <StageThree />}
         {uploadState == "stageFour" && <StageFour />}
         {uploadState == "stageFive" && <StageFive />}
+        {uploadState == "stageSix" && <StageSix />}
+        {uploadState == "stageSeven" && <StageSeven />}
       </div>
     </div>
   );
 };
 
-export default PostArt;
+export default SellArtwork;

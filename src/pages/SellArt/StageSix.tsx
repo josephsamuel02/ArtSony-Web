@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MdClose } from "react-icons/md";
 import Select from "react-select";
 import { ToolTip } from "../../components/ToolTip";
 import { useState } from "react";
-interface compState {
-  setUploadState: (item: string) => void;
-}
-const StageSix = ({ setUploadState }: compState) => {
-  const [saleType, setSaleType] = useState("fixed");
+import { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
+import { useDispatch } from "react-redux";
+
+const StageSix = () => {
+  const dispatch = useDispatch();
+
+  const [artDetail, setArtDetail] = useState<any>({ auction: false, service_fee: 3456 });
+
   const options = [
     { value: "fiat", label: "Fiat" },
     { value: "USD", label: "USD" },
@@ -14,6 +18,10 @@ const StageSix = ({ setUploadState }: compState) => {
     { value: "GBP", label: "GBP" },
     { value: "NGN", label: "NGN" },
   ];
+
+  const updatePost = async () => {
+    dispatch(SellArtworkDraft(artDetail));
+  };
 
   return (
     <div className="w-1/3 h-auto bg-[#02272F] flex flex-col p-4 rounded">
@@ -24,26 +32,43 @@ const StageSix = ({ setUploadState }: compState) => {
         <input
           type="button"
           value="Fixed Price"
-          onClick={() => setSaleType("fixed")}
-          className="mx-0 w-2/5 py-2 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
+          onClick={() => {
+            setArtDetail((prev: any) => ({ ...prev, auction: false }));
+          }}
+          className={`mx-0 w-2/5 py-2 text-[16px] font-poppins text-white  hover:bg-[#be4621] border border-customOrange rounded cursor-pointer ${
+            !artDetail.auction ? " bg-customOrange" : "bg-[#d8450b50]"
+          }`}
         />
         <input
           type="button"
           value="Unction"
-          onClick={() => setSaleType("auction")}
-          className="ml-auto w-2/5 py-2 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
+          onClick={() => {
+            setArtDetail((prev: any) => ({ ...prev, auction: true }));
+          }}
+          className={`ml-auto w-2/5 py-2 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621] border border-customOrange rounded cursor-pointer  ${
+            artDetail.auction ? " bg-customOrange" : "bg-[#d8450b50]"
+          }`}
         />
       </div>
-      {saleType == "fixed" && (
+      {!artDetail.auction && (
         <div className="w-full h-auto">
           <div className="w-full h-auto bg-white rounded-md">
-            <Select options={options} placeholder={"Currency"} />
+            <Select
+              options={options}
+              placeholder={"Currency"}
+              onChange={(option) => {
+                setArtDetail((prev: any) => ({ ...prev, currency: option?.value }));
+              }}
+            />
           </div>
           <h3 className="text-[16px] font-Raleway text-white  py-3 ">Amount</h3>
           <div className="w-full h-auto bg-white rounded-md">
             <input
               type="number"
               placeholder="00:00"
+              onChange={(e) => {
+                setArtDetail((prev: any) => ({ ...prev, price: e.target.value }));
+              }}
               className="w-full p-3 placeholder-customOrange text-customOrange text-center font-Raleway rounded outline-none"
             />
           </div>
@@ -56,11 +81,13 @@ const StageSix = ({ setUploadState }: compState) => {
             </h3>
           </div>
           <div className="w-2/5 h-auto bg-white rounded-md">
-            <p className="p-3   text-customOrange text-center font-Raleway ">00:00</p>
+            <p className="p-3   text-customOrange text-center font-Raleway ">
+              {artDetail.service_fee}
+            </p>
           </div>
         </div>
       )}
-      {saleType == "auction" && (
+      {artDetail.auction && (
         <div className="w-full h-full flex flex-col items-center">
           <img
             src="/images/full logo.svg"
@@ -76,18 +103,21 @@ const StageSix = ({ setUploadState }: compState) => {
         <input
           type="button"
           value="Save as Draft"
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
+          className="mx-1 w-1/3 py-3 text-[13px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
         />
         <input
           type="button"
           value="Back"
-          onClick={() => setUploadState("stageFive")}
+          onClick={() => dispatch(SellArtworkStage("stageFive"))}
           className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
           type="button"
           value="Next"
-          onClick={() => setUploadState("stageSeven")}
+          onClick={() => {
+            updatePost();
+            dispatch(SellArtworkStage("stageSeven"));
+          }}
           className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />
       </div>
