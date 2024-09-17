@@ -134,7 +134,7 @@ const MessageCard = () => {
             </div>
           </div>
 
-          {/* Serch Input */}
+          {/* Search Input */}
           <div className="m-0 p-6   py-6 w-full h-auto flex  items-center   border-y border-[#F25B3833]  ">
             <div className="m-0   w-full p-4 py-2 rounded  h-auto flex flex-row  items-center bg-[#FEF7F5]  ">
               <img

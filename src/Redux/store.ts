@@ -33,4 +33,5 @@ export const persistor = persistStore(store);
 // Infer the `RootState` and `AppDispatch` types from the store its_elf
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
 export default store;

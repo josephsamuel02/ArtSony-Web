@@ -4,6 +4,7 @@ import Select from "react-select";
 import { useState } from "react";
 import { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 
 const StageFive = () => {
   const [artDetail, setArtDetail] = useState<any>({ dimensions: {} });
@@ -24,21 +25,29 @@ const StageFive = () => {
     }
   };
 
-  const convertToBase64 = (file: any) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  const uploadImage = async (): Promise<void> => {
+    const formData = new FormData();
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append("file", selectedFiles[i]);
+      formData.append("upload_preset", "my_upload_preset");
+      formData.append("cloud_name", "promotion-army");
+      await axios
+        .post("https://api.cloudinary.com/v1_1/promotion-army/image/upload", formData)
+        .then((response) => {
+          setImageUrls((prev: any) => [...prev, response.data.secure_url]);
+          console.log(response.data.secure_url);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const updatePost = async () => {
-    const convertedFiles = await Promise.all(
-      selectedFiles.map((file: any) => convertToBase64(file))
-    );
-    dispatch(
-      SellArtworkDraft({ ...artDetail, certificate_of_authentication: convertedFiles })
+    await uploadImage();
+    await dispatch(
+      SellArtworkDraft({ ...artDetail, certificate_of_authentication: imageUrls })
     );
   };
 

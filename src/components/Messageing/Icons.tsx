@@ -2,7 +2,7 @@
 import EmojiPicker from "emoji-picker-react";
 import { useRef, useEffect } from "react";
 const Icons = ({ setShowIcons }: any) => {
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: any) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -15,6 +15,7 @@ const Icons = ({ setShowIcons }: any) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

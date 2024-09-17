@@ -10,7 +10,7 @@ export const UserSignup = createAsyncThunk(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/auth/signup`,
         data
       );
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
@@ -23,9 +23,10 @@ export const UserSignup = createAsyncThunk(
 export const LoginUser = createAsyncThunk(
   "login-user",
   async (data: any, { rejectWithValue }) => {
-    console.log(data);
     try {
-      const response = await axios.get(
+      console.log(data);
+
+      const response = await axios.post(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/auth/login`,
         data
       );
@@ -37,6 +38,7 @@ export const LoginUser = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error: any) {
+      console.log(error);
       return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
@@ -129,7 +131,7 @@ export const authSlice: any = createSlice({
       })
       .addCase(LoginUser.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload;
+        state.error = action.payload as any;
       });
   },
 });

@@ -11,30 +11,35 @@ const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const Navigate = useNavigate();
   const LogInResponse = useSelector((state: any) => state.Auth.user.status);
+  const status = useSelector((state: any) => state.Auth.status);
 
-  const [loading, setLoading] = useState(false);
-  const [loginData, setLoginData] = useState<object>({
+  const [loading, setLoading] = useState(status);
+  const [loginData, setLoginData] = useState<any>({
     email: "",
     password: "",
   });
 
-  const LoginAction = (e: MouseEvent) => {
+  const LoginAction = async (e: MouseEvent) => {
     e.preventDefault();
     console.log(loginData);
-    dispatch(LoginUser(loginData));
-    setLoading(true);
 
-    setTimeout(() => {
-      if (LogInResponse === 200) {
-        setLoading(false);
-        window.location.assign;
+    try {
+      dispatch(LoginUser(loginData));
+      setLoading(true);
+      setTimeout(() => {
+        if (LogInResponse === 200) {
+          setLoading(false);
+          window.location.assign;
+          Navigate(PUBLIC_ROUTES.HOME);
+        }
+      }, 1000);
 
-        Navigate(PUBLIC_ROUTES.HOME);
-      }
-    }, 1000);
-
-    console.log(setLoginData);
+      console.log(loginData);
+    } catch (error) {
+      console.log(`${error}, unable to login`);
+    }
   };
+
   return (
     <div className="bg-[url(https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716659025/552fe2dc96c0c5502efc7291525a99e9_qzcemj.png)] bg-cover bg-no-repeat bg-center h-screen w-screen flex flex-col items-center justify-center">
       <div className="w-[380px] h-auto py-8 bg-[rgba(22,22,53,0.5)]  bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-xl flex flex-col justify-center items-center px-6  ">
@@ -137,7 +142,7 @@ const Login: React.FC = () => {
         </div>
       </div>
 
-      {loading && <Loading />}
+      {loading == "loading" && <Loading />}
     </div>
   );
 };

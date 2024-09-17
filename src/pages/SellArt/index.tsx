@@ -11,15 +11,19 @@ import StageFour from "./StageFour";
 import StageFive from "./StageFive";
 import StageSix from "./StageSix";
 import StageSeven from "./StageSeven";
-import { SellArtworkDraft } from "../../Redux/PostArtwork";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { SellArtworkDraft } from "../../Redux/PostArtwork";
 
 const SellArtwork = () => {
-  const [addHint, setAddHint] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // State to store selected files
   const dispatch = useDispatch();
   const uploadStage = useSelector((state: any) => state.PostArtwork.sell_artwork_stage);
+
+  const [addHint, setAddHint] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // State to store selected files
+
   const [uploadState, setUploadState] = useState(uploadStage);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   // Create a ref for the hidden file input element
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const handleAddFile = () => {
@@ -46,32 +50,33 @@ const SellArtwork = () => {
     setSelectedFiles(newArray);
   };
 
-  const convertToBase64 = (file: any) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+  const uploadImage = async (): Promise<void> => {
+    const formData = new FormData();
 
-  const updatePost = async () => {
-    const convertedFiles = await Promise.all(
-      selectedFiles.map((file) => convertToBase64(file))
-    );
-    dispatch(SellArtworkDraft({ images: convertedFiles }));
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append("file", selectedFiles[i]);
+      formData.append("upload_preset", "my_upload_preset");
+      formData.append("cloud_name", "promotion-army");
+      await axios
+        .post("https://api.cloudinary.com/v1_1/promotion-army/image/upload", formData)
+        .then((response) => {
+          setImageUrls((prev: any) => [...prev, response.data.secure_url]);
+          console.log(response.data.secure_url);
+        })
+        .catch((err) => console.log(err));
+    }
+
+    dispatch(SellArtworkDraft({ images: imageUrls }));
   };
 
   useEffect(() => {
-    updatePost();
     setUploadState(uploadStage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uploadStage, selectedFiles, deleteArt]);
+  }, [uploadStage]);
 
   return (
     <div className="w-full h-auto bg-white mt-20">
       <Nav />
-      <div className="w-full h-auto flex flex-row">
+      <div className="w-full h-full flex flex-row">
         <div className="w-2/3 h-auto px-6">
           <input
             type="file"
@@ -230,14 +235,13 @@ const SellArtwork = () => {
             </div>
           )}
         </div>
-
         {uploadState == "stageOne" && <StageOne />}
         {uploadState == "stageTwo" && <StageTwo />}
         {uploadState == "stageThree" && <StageThree />}
         {uploadState == "stageFour" && <StageFour />}
         {uploadState == "stageFive" && <StageFive />}
         {uploadState == "stageSix" && <StageSix />}
-        {uploadState == "stageSeven" && <StageSeven />}
+        {uploadState == "stageSeven" && <StageSeven uploadImage={uploadImage} />}
       </div>
     </div>
   );

@@ -11,8 +11,9 @@ function Signup() {
   const dispatch = useDispatch<AppDispatch>();
   const Navigate = useNavigate();
   const LogInResponse = useSelector((state: any) => state.Auth.user.status);
+  const status = useSelector((state: any) => state.Auth.status);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(status);
   const [signupData, setSignupData] = useState<object>({
     user_name: "",
     email: "",
@@ -28,11 +29,10 @@ function Signup() {
       if (LogInResponse === 200) {
         setLoading(false);
         window.location.assign;
-
         Navigate(PUBLIC_ROUTES.HOME);
       }
     }, 1000);
-    console.log(setSignupData);
+    // console.log(setSignupData);
   };
   return (
     <div className="bg-[url(https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716657921/52f815ef99b62d1351fcc7c3db448e8b_ucxlyz.png)] bg-cover bg-no-repeat bg-center h-screen  w-screen flex flex-col items-center justify-center ">
@@ -133,8 +133,8 @@ function Signup() {
             <div>Language</div>
           </div>
         </div>
-      </div>{" "}
-      {loading && <Loading />}
+      </div>
+      {loading == "loading" && <Loading />}
     </div>
   );
 }

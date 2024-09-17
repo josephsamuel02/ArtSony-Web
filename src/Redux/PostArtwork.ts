@@ -13,7 +13,7 @@ export const PostArtwork = createAsyncThunk(
         data,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Include the Bearer token for authorization
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -22,7 +22,12 @@ export const PostArtwork = createAsyncThunk(
     } catch (error: any) {
       console.error(rejectWithValue);
       console.log(error);
-      return error.response.data;
+
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue("An unexpected error occurred");
+      }
     }
   }
 );
@@ -30,22 +35,22 @@ export const PostArtwork = createAsyncThunk(
 export const LoginUser = createAsyncThunk(
   "login-user",
   async (data: any, { rejectWithValue }) => {
-    console.log(data);
     try {
+      console.log(data);
+
       const response = await axios.post(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/auth/login`,
         data
       );
 
-      // Store the access token in localStorage
       if (response.data.access_token) {
         localStorage.setItem("ASY_A_Token", response.data.access_token);
       }
 
       console.log(response.data);
-      return response.data; // Return the response data if the request is successful
+      return response.data;
     } catch (error: any) {
-      // Use rejectWithValue to handle errors
+      console.log(error);
       return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
@@ -92,15 +97,15 @@ export const postArtworkSlice: any = createSlice({
     builder
       .addCase(PostArtwork.pending, (state) => {
         state.status = "loading";
-        state.error = null;
+        // state.error = null;
       })
-      .addCase(PostArtwork.fulfilled, (state, action: any) => {
+      .addCase(PostArtwork.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
       })
       .addCase(PostArtwork.rejected, (state, action: any) => {
         state.status = "failed";
-        state.error = action.payload;
+        state.error = action.payload || "Failed to post artwork"; // Fallback error message
       })
       .addCase(LoginUser.pending, (state) => {
         state.status = "loading";
@@ -112,7 +117,7 @@ export const postArtworkSlice: any = createSlice({
       })
       .addCase(LoginUser.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload;
+        state.error = action?.payload as any;
       });
   },
 });

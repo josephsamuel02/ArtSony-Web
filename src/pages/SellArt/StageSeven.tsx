@@ -1,14 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import "react-tooltip/dist/react-tooltip.css";
-import PostArtwork, { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
+import { PostArtwork, SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
 import { Loading } from "../../components/Loading";
+import { AppDispatch } from "../../Redux/store";
 
-const StageSeven = () => {
-  const dispatch = useDispatch();
-  const artData = useSelector((state: any) => state.PostArtwork.sell_artwork_draft);
+interface cmpData {
+  uploadImage: () => Promise<void>;
+}
+
+const StageSeven = ({ uploadImage }: cmpData) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const userId = useSelector((state: any) => state.Auth.user.user.userId);
+  const stateArtData = useSelector((state: any) => state.PostArtwork.sell_artwork_draft);
+
+  // const draftImages = useSelector((state: any) => state.PostArtwork.sell_artwork_draft.images);
+
+  const [artData, setArtData] = useState<any>(stateArtData);
+
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState("false");
 
@@ -111,8 +122,10 @@ const StageSeven = () => {
     setLoading("true");
     try {
       console.log(artData);
+
+      await uploadImage();
       await updatePost();
-      const action = await dispatch(PostArtwork(artData));
+      const action = dispatch(PostArtwork({ ...artData, userId: userId }));
 
       if (PostArtwork.fulfilled.match(action)) {
         // Handle success
@@ -125,10 +138,11 @@ const StageSeven = () => {
       }
     } catch (error) {
       setLoading("error");
-      console.error("Error posting artwork:", error);
+      console.log(error);
     }
   };
 
+  useEffect(() => setArtData(stateArtData), [stateArtData]);
   return (
     <div className="w-1/3 h-auto bg-[#02272F] flex flex-col p-4 rounded">
       <h3 className="w-full flex flex-row items-start">
