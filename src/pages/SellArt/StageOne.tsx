@@ -10,11 +10,27 @@ const StageOne = () => {
   const artData = useSelector((state: any) => state.PostArtwork.sell_artwork_draft);
   const [artDetail, setArtDetail] = useState({});
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+  const [Tags] = useState([
+    { value: "random", label: "Random" },
+    { value: "ai Art", label: "Ai Art" },
+    { value: "architecture", label: "Architecture" },
+    { value: "space", label: "Space" },
+    { value: "painting", label: "Painting" },
+    { value: "plant Life", label: "Plant Life" },
+    { value: "abstract", label: "Abstract" },
+    { value: "medieval", label: "Medieval" },
+    { value: "futuristic", label: "Futuristic" },
+    { value: "animation", label: "Animation" },
+    { value: "spiritual", label: "Spiritual" },
+  ]);
+
+  const Tools = [
+    { value: "corel Draw", label: "Corel Draw" },
+    { value: "adobe illustrator", label: "Adobe illustrator" },
+    { value: "spline", label: "Spline" },
+    { value: "canva", label: "Canva" },
   ];
+
   const updatePost = async () => {
     dispatch(SellArtworkDraft(artDetail));
   };
@@ -42,9 +58,9 @@ const StageOne = () => {
       </h3>
       <div className="w-full h-auto bg-white rounded-md">
         <Select
-          options={options}
+          options={Tags}
           isMulti
-          defaultValue={artData.tags}
+          defaultInputValue={artData.tags}
           onChange={(selectedOptions) => {
             setArtDetail((prev) => ({
               ...prev,
@@ -61,9 +77,9 @@ const StageOne = () => {
       </h3>
       <div className="w-full h-auto bg-white rounded-md">
         <Select
-          options={options}
+          options={Tools}
           isMulti
-          defaultValue={artData.tools}
+          defaultInputValue={artData.tools}
           onChange={(selectedOptions) => {
             setArtDetail((prev) => ({
               ...prev,
@@ -92,11 +108,11 @@ const StageOne = () => {
       </span>
 
       <div className="w-full h-auto mt-8 mb-4 rounded-md flex">
-        <input
+        {/* <input
           type="button"
           value="Save as Draft"
           className="mr-auto w-2/5 py-3 text-[16px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
-        />
+        /> */}
         <input
           type="button"
           value="Next"
@@ -104,7 +120,7 @@ const StageOne = () => {
             updatePost();
             dispatch(SellArtworkStage("stageTwo"));
           }}
-          className="ml-auto w-2/5 py-3 text-[16px] font-poppins text-white bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
+          className="ml-auto w-full py-3 text-[16px] font-poppins text-white bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />
       </div>
     </div>

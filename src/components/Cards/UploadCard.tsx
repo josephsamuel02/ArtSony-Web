@@ -36,7 +36,7 @@ const UploadCard = ({ showUploadCard, setShowUploadCard }: compState) => {
               <a
                 href={PUBLIC_ROUTES.POST_ART}
                 onClick={() =>
-                  dispatch(SellArtworkDraft({ artwork_type: 2, for_sale: false }))
+                  dispatch(SellArtworkDraft({ artwork_type: "digital", for_sale: false }))
                 }
                 className=" mx-3 p-4  w-[208px] h-[208px] flex flex-col items-center border border-[#d6d3d3] rounded"
               >
@@ -77,7 +77,9 @@ const UploadCard = ({ showUploadCard, setShowUploadCard }: compState) => {
             <div className="w-auto h-auto flex flex-row items-center justify-center">
               <a
                 href={PUBLIC_ROUTES.SELL_ART}
-                onClick={() => dispatch(SellArtworkDraft({ artwork_type: 2, for_sale: true }))}
+                onClick={() =>
+                  dispatch(SellArtworkDraft({ artwork_type: "digital", for_sale: true }))
+                }
                 className=" mx-3 p-4  w-[208px] h-[208px] flex flex-col items-center border border-[#d6d3d3] rounded"
               >
                 <img
@@ -92,7 +94,9 @@ const UploadCard = ({ showUploadCard, setShowUploadCard }: compState) => {
 
               <a
                 href={PUBLIC_ROUTES.SELL_ART}
-                onClick={() => dispatch(SellArtworkDraft({ artwork_type: 1, for_sale: true }))}
+                onClick={() =>
+                  dispatch(SellArtworkDraft({ artwork_type: "physical", for_sale: true }))
+                }
                 className=" mx-3 p-4  w-[208px] h-[208px]  flex flex-col items-center border  border-[#d6d3d3] rounded"
               >
                 <img
@@ -111,7 +115,7 @@ const UploadCard = ({ showUploadCard, setShowUploadCard }: compState) => {
               onClick={() => setShowUploadCard("upload")}
             >
               <img src="/images/arrow_back_ios.svg" alt="" className="h-8 w-auto px-0" />
-              <p className=" mx-6 text-white text-[16px] font-Poppins   ">Back</p>
+              <p className=" mx-6 text-white text-[16px] font-Poppins">Back</p>
             </div>
           </div>
         )}

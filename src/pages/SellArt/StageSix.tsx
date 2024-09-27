@@ -4,19 +4,20 @@ import Select from "react-select";
 import { ToolTip } from "../../components/ToolTip";
 import { useState } from "react";
 import { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const StageSix = () => {
+  const rdxData = useSelector((state: any) => state.PostArtwork.sell_artwork_draft);
   const dispatch = useDispatch();
 
-  const [artDetail, setArtDetail] = useState<any>({ auction: false, service_fee: 3456 });
+  const [artDetail, setArtDetail] = useState<any>({ auction: false });
 
   const options = [
     { value: "fiat", label: "Fiat" },
-    { value: "USD", label: "USD" },
-    { value: "EURO", label: "EURO" },
-    { value: "GBP", label: "GBP" },
-    { value: "NGN", label: "NGN" },
+    { value: "usd", label: "USD" },
+    { value: "euro", label: "EURO" },
+    { value: "gbp", label: "GBP" },
+    { value: "ngn", label: "NGN" },
   ];
 
   const updatePost = async () => {
@@ -56,6 +57,7 @@ const StageSix = () => {
             <Select
               options={options}
               placeholder={"Currency"}
+              defaultInputValue={rdxData.currency}
               onChange={(option) => {
                 setArtDetail((prev: any) => ({ ...prev, currency: option?.value }));
               }}
@@ -66,8 +68,9 @@ const StageSix = () => {
             <input
               type="number"
               placeholder="00:00"
+              defaultValue={rdxData.price}
               onChange={(e) => {
-                setArtDetail((prev: any) => ({ ...prev, price: e.target.value }));
+                setArtDetail((prev: any) => ({ ...prev, price: Number(e.target.value) }));
               }}
               className="w-full p-3 placeholder-customOrange text-customOrange text-center font-Raleway rounded outline-none"
             />
@@ -81,9 +84,7 @@ const StageSix = () => {
             </h3>
           </div>
           <div className="w-2/5 h-auto bg-white rounded-md">
-            <p className="p-3   text-customOrange text-center font-Raleway ">
-              {artDetail.service_fee}
-            </p>
+            <p className="p-3   text-customOrange text-center font-Raleway ">3636</p>
           </div>
         </div>
       )}
@@ -100,16 +101,16 @@ const StageSix = () => {
         </div>
       )}
       <div className="w-full h-auto mt-auto mb-4 rounded-md flex">
-        <input
+        {/* <input
           type="button"
           value="Save as Draft"
           className="mx-1 w-1/3 py-3 text-[13px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
-        />
+        /> */}
         <input
           type="button"
           value="Back"
           onClick={() => dispatch(SellArtworkStage("stageFive"))}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
+          className="mx-1 w-1/2 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
           type="button"
@@ -118,7 +119,7 @@ const StageSix = () => {
             updatePost();
             dispatch(SellArtworkStage("stageSeven"));
           }}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
+          className="mx-1 w-1/2 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />
       </div>
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons/faMessage";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons/faUserCircle";
@@ -9,10 +10,11 @@ import { IoImages } from "react-icons/io5";
 import { BsFlag } from "react-icons/bs";
 
 interface cmpState {
+  Artwork: any;
   setShowPostData: (item: boolean) => void;
 }
 
-const UserPostDetail = ({ setShowPostData }: cmpState) => {
+const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
   const item = {
     images: [
       "/images/wide image256.svg",
@@ -21,7 +23,6 @@ const UserPostDetail = ({ setShowPostData }: cmpState) => {
     ],
     category: "",
     caption: "Lake Side View- Dream Mountain",
-
     profile_image: "/images/Ellipse 10.svg",
     user_name: "Christine Boluwatife",
     profession: "Landscape Photographer",
@@ -36,8 +37,13 @@ const UserPostDetail = ({ setShowPostData }: cmpState) => {
     <div className="  fixed top-20 left-0 right-0 w-full h-auto flex flex-row bg-white rounded-lg z-10">
       <div className="w-4/5 h-[900px] overflow-y-scroll">
         <div className=" w-full h-auto ">
-          {item.images.map((d, i) => (
+          {/* {item.images.map((d, i) => (
             <img src={d} alt={"images"} className="w-full h-auto" key={i} />
+          ))} */}
+
+          {Artwork.images.map((d: string, i: number) => (
+            // <img src={d} key={i} />
+            <img src={d} alt={`image ${i}`} className="w-full h-auto" key={i} />
           ))}
         </div>
       </div>
@@ -50,9 +56,11 @@ const UserPostDetail = ({ setShowPostData }: cmpState) => {
           <FontAwesomeIcon icon={faRemove} />
         </div>
         <div className=" mx-auto flex gap-3">
-          <img src={item.profile_image} />
+          <img src={Artwork.user.profile_img} />
           <div className="flex flex-col gap-0.5">
-            <h1 className="text-[#F25B38] text-[16px] font-Raleway">{item.user_name}</h1>
+            <h1 className="text-[#F25B38] text-[16px] font-Raleway">
+              {Artwork.user.user_name}
+            </h1>
             <p className="text-[#0a0a0a] text-[16px] font-light font-Raleway">
               {item.profession}
             </p>
@@ -78,16 +86,17 @@ const UserPostDetail = ({ setShowPostData }: cmpState) => {
           <div className="mx-auto w-4/5 pt-3 flex flex-row gap-3 items-center py-1 cursor-pointer">
             <div className="mx-auto flex flex-row gap-1 items-center">
               <MdOutlineRemoveRedEye color={"#F25B38"} size={25} />
-
-              <p className="text-sm font-Poppins  ">{item.views}k</p>
+              {Artwork.views && <p className="text-sm font-Poppins  ">{Artwork.views}k</p>}
             </div>
             <div className="mx-auto flex flex-row gap-1 items-center">
               <AiOutlineHeart color={"#F25B38"} size={23} />
-              <p className="text-sm font-Poppins  ">{item.likes}k</p>
+              {Artwork.likes && <p className="text-sm font-Poppins  ">{Artwork.likes}k</p>}
             </div>
             <div className="mx-auto flex flex-row gap-1 items-center">
               <BiMessage color={"#F25B38"} size={23} />
-              <p className="text-sm font-Poppins  ">{item.messages}k</p>
+              {Artwork.comments.length > 0 && (
+                <p className="text-sm font-Poppins  ">{Artwork.comments.length}k</p>
+              )}
             </div>
           </div>
         </div>

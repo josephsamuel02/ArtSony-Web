@@ -58,7 +58,8 @@ const SellArtwork = () => {
       formData.append("upload_preset", "my_upload_preset");
       formData.append("cloud_name", "promotion-army");
       await axios
-        .post("https://api.cloudinary.com/v1_1/promotion-army/image/upload", formData)
+        .post(import.meta.env.VITE_CLOUDINARY_BASE_URL, formData)
+
         .then((response) => {
           setImageUrls((prev: any) => [...prev, response.data.secure_url]);
           console.log(response.data.secure_url);
@@ -66,12 +67,17 @@ const SellArtwork = () => {
         .catch((err) => console.log(err));
     }
 
-    dispatch(SellArtworkDraft({ images: imageUrls }));
+    await dispatch(SellArtworkDraft({ images: imageUrls }));
   };
 
   useEffect(() => {
     setUploadState(uploadStage);
-  }, [uploadStage]);
+  }, [uploadStage, dispatch]);
+
+  useEffect(() => {
+    dispatch(SellArtworkDraft({ images: imageUrls }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageUrls]);
 
   return (
     <div className="w-full h-auto bg-white mt-20">
@@ -238,7 +244,7 @@ const SellArtwork = () => {
         {uploadState == "stageOne" && <StageOne />}
         {uploadState == "stageTwo" && <StageTwo />}
         {uploadState == "stageThree" && <StageThree />}
-        {uploadState == "stageFour" && <StageFour />}
+        {uploadState == "stageFour" && <StageFour selectedFiles={selectedFiles} />}
         {uploadState == "stageFive" && <StageFive />}
         {uploadState == "stageSix" && <StageSix />}
         {uploadState == "stageSeven" && <StageSeven uploadImage={uploadImage} />}

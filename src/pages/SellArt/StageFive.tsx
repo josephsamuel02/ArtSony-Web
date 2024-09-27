@@ -3,14 +3,21 @@ import { MdClose } from "react-icons/md";
 import Select from "react-select";
 import { useState } from "react";
 import { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 const StageFive = () => {
-  const [artDetail, setArtDetail] = useState<any>({ dimensions: {} });
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // State to store selected files
+  const stateArtData = useSelector((state: any) => state.PostArtwork.sell_artwork_draft);
 
   const dispatch = useDispatch();
+  const Dimension = useSelector(
+    (state: any) => state.PostArtwork.sell_artwork_draft.dimensions
+  );
+
+  const [artDetail, setArtDetail] = useState<any>({
+    dimensions: { length: "", breath: "", height: "" },
+  });
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // State to store selected files
 
   const options = [
     { value: "physical", label: "Physical" },
@@ -35,7 +42,8 @@ const StageFive = () => {
       formData.append("upload_preset", "my_upload_preset");
       formData.append("cloud_name", "promotion-army");
       await axios
-        .post("https://api.cloudinary.com/v1_1/promotion-army/image/upload", formData)
+        .post(import.meta.env.VITE_CLOUDINARY_BASE_URL, formData)
+
         .then((response) => {
           setImageUrls((prev: any) => [...prev, response.data.secure_url]);
           console.log(response.data.secure_url);
@@ -63,6 +71,7 @@ const StageFive = () => {
       <div className="w-full h-auto bg-white rounded-md">
         <Select
           options={options}
+          defaultInputValue={stateArtData.certificate_of_authentication_type}
           onChange={(option) => {
             setArtDetail((prev: any) => ({
               ...prev,
@@ -102,10 +111,11 @@ const StageFive = () => {
           <input
             type="number"
             placeholder="00:00"
+            defaultValue={Dimension ? Dimension.length : ""}
             onChange={(e) =>
               setArtDetail((prev: any) => ({
                 ...prev,
-                dimensions: { ...prev.dimensions, width: e.target.value },
+                dimensions: { ...prev.dimensions, length: e.target.value },
               }))
             }
             className="w-full p-2 placeholder-blue-gray-500 text-center bg-white font-Raleway rounded outline-none"
@@ -115,9 +125,11 @@ const StageFive = () => {
           <p className="text-[#ffffff] text-[15px] text-center font-Poppins font-light py-0.5">
             Breadth
           </p>
+
           <input
             type="number"
             placeholder="00:00"
+            defaultValue={Dimension ? Dimension.breadth : ""}
             onChange={(e) =>
               setArtDetail((prev: any) => ({
                 ...prev,
@@ -134,6 +146,7 @@ const StageFive = () => {
           <input
             type="number"
             placeholder="00:00"
+            defaultValue={Dimension ? Dimension.height : ""}
             onChange={(e) =>
               setArtDetail((prev: any) => ({
                 ...prev,
@@ -145,17 +158,17 @@ const StageFive = () => {
         </div>
       </div>
 
-      <div className="w-full h-auto mt-6 mb-4 rounded-md flex">
-        <input
+      <div className="w-full h-auto mt-6 mb-0 rounded-md flex">
+        {/* <input
           type="button"
           value="Save as Draft"
           className="mx-1 w-1/3 py-3 text-[13px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
-        />
+        /> */}
         <input
           type="button"
           value="Back"
           onClick={() => dispatch(SellArtworkStage("stageFour"))}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
+          className="mx-1 w-1/2 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
           type="button"
@@ -164,7 +177,7 @@ const StageFive = () => {
             updatePost();
             dispatch(SellArtworkStage("stageSix"));
           }}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
+          className="mx-1 w-1/2 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />
       </div>
     </div>

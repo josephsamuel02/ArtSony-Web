@@ -11,7 +11,9 @@ import { SellArtworkDraft, SellArtworkStage } from "../../Redux/PostArtwork";
 const StageTwo = () => {
   const artData = useSelector((state: any) => state.PostArtwork.sell_artwork_draft);
   const dispatch = useDispatch();
-  const [disableComments, setDisableComments] = useState<boolean>(false);
+  const [disableComments, setDisableComments] = useState<boolean>(
+    artData.disable_comments ? artData.disable_comments : false
+  );
   const [artDetail, setArtDetail] = useState<any>({ copyright_license: [] });
 
   const options = [
@@ -59,11 +61,8 @@ const StageTwo = () => {
       <div className="w-full h-auto bg-white rounded-md">
         <input
           type="text"
-          placeholder="Give your artwork a name."
-          defaultValue={artData.art_field}
-          onChange={(e) =>
-            setArtDetail((prev: any) => ({ ...prev, art_field: [e.target.value] }))
-          }
+          placeholder="Art Field"
+          defaultValue={artData.art_field ? artData.art_field[0] : ""}
           className="w-full p-3 placeholder-blue-gray-500 font-Raleway rounded outline-none"
         />
       </div>
@@ -72,7 +71,10 @@ const StageTwo = () => {
         <h4 className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer">
           Abstract Art
         </h4>
-        <h4 className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer">
+        <h4
+          className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer"
+          onClick={() => setArtDetail((prev: any) => ({ ...prev, art_field: ["Painting"] }))}
+        >
           Painting
         </h4>
         <h4 className="mx-2  my-1 p-1 text-[12px] text-center font-Poppins text-white border border-customOrange hover:border-white  rounded cursor-pointer">
@@ -94,7 +96,7 @@ const StageTwo = () => {
       <div className="w-full h-auto bg-white rounded-md">
         <Select
           options={options}
-          defaultValue={artData.visibility}
+          defaultInputValue={artData.visibility}
           onChange={(selectedOptions) =>
             setArtDetail((prev: any) => ({ ...prev, visibility: selectedOptions!.value }))
           }
@@ -107,6 +109,7 @@ const StageTwo = () => {
         </h3>
         <Switch
           // onChange={() => setDisableComments(!disableComments)}
+          defaultChecked={artData.disable_comments ? artData.disable_comments : false}
           checked={disableComments}
           onColor={"#f25b38"}
           offColor={"#8AC5C7"}
@@ -125,6 +128,11 @@ const StageTwo = () => {
         <h3 className="flex flex-row ">
           <input
             type="checkbox"
+            defaultChecked={
+              artData.copyright_license
+                ? artData.copyright_license.includes("Attribution (CC BY)")
+                : false
+            }
             onClick={(e) => handleCheckboxChange(e, "Attribution (CC BY)")}
             className="mr-2 my-0 accent-customOrange"
           />
@@ -142,6 +150,11 @@ const StageTwo = () => {
         <h3 className="flex flex-row ">
           <input
             type="checkbox"
+            defaultChecked={
+              artData.copyright_license
+                ? artData.copyright_license.includes("Attribution ShareAlike (CC BY-SA)")
+                : false
+            }
             onClick={(e) => handleCheckboxChange(e, "Attribution ShareAlike (CC BY-SA)")}
             className="mr-2 my-0 accent-customOrange"
           />
@@ -158,6 +171,11 @@ const StageTwo = () => {
         <h3 className="flex flex-row ">
           <input
             type="checkbox"
+            defaultChecked={
+              artData.copyright_license
+                ? artData.copyright_license.includes("Attribution Derivs (CC BY-ND)")
+                : false
+            }
             onClick={(e) => handleCheckboxChange(e, "Attribution Derivs (CC BY-ND)")}
             className="mr-2 my-0 accent-customOrange"
           />
@@ -175,6 +193,11 @@ const StageTwo = () => {
           <input
             type="checkbox"
             onClick={(e) => handleCheckboxChange(e, "Attribution Non-commercial (CC BY-NC)")}
+            defaultChecked={
+              artData.copyright_license
+                ? artData.copyright_license.includes("Attribution Non-commercial (CC BY-NC)")
+                : false
+            }
             className="mr-2 my-0 accent-customOrange"
           />
           <p className="text-[12px] font-Raleway font-light flex flex-row items-center text-white py-3">
@@ -190,6 +213,13 @@ const StageTwo = () => {
         <div className="flex flex-row">
           <input
             type="checkbox"
+            defaultChecked={
+              artData.copyright_license
+                ? artData.copyright_license.includes(
+                    "Attribution-Non-commercial-ShareAlike (CC BY-NC-SA)"
+                  )
+                : false
+            }
             onClick={(e) =>
               handleCheckboxChange(e, "Attribution-Non-commercial-ShareAlike (CC BY-NC-SA)")
             }
@@ -201,13 +231,20 @@ const StageTwo = () => {
           <ToolTip
             header={"Attribution-Non-commercial-ShareAlike (CC BY-NC-SA)"}
             tip={
-              " This license lets others, remix, adapt, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms"
+              "This license lets others, remix, adapt, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms"
             }
           />
         </div>
         <div className="flex flex-row">
           <input
             type="checkbox"
+            defaultChecked={
+              artData.copyright_license
+                ? artData.copyright_license.includes(
+                    "Attribution-Non-commercial-NoDerivs (CC BY-NC-ND)"
+                  )
+                : false
+            }
             onClick={(e) =>
               handleCheckboxChange(e, "Attribution-Non-commercial-NoDerivs (CC BY-NC-ND)")
             }
@@ -226,6 +263,11 @@ const StageTwo = () => {
         <h3 className="flex flex-row ">
           <input
             type="checkbox"
+            defaultChecked={
+              artData.copyright_license
+                ? artData.copyright_license.includes("All Rights Reserved")
+                : false
+            }
             onClick={(e) => handleCheckboxChange(e, "All Rights Reserved")}
             className="mr-2 my-0 accent-customOrange"
           />
@@ -241,16 +283,16 @@ const StageTwo = () => {
         </h3>
       </div>
       <div className="w-full h-auto mt-8 mb-4 rounded-md flex">
-        <input
+        {/* <input
           type="button"
           value="Save as Draft"
           className="mx-1 w-1/3 py-3 text-[14px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
-        />
+        /> */}
         <input
           type="button"
           value="Back"
           onClick={() => dispatch(SellArtworkStage("stageOne"))}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
+          className="mx-1 w-1/2 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
           type="button"
@@ -259,7 +301,7 @@ const StageTwo = () => {
             updatePost();
             dispatch(SellArtworkStage("stageThree"));
           }}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
+          className="mx-1 w-1/2 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />
       </div>
     </div>

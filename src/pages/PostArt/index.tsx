@@ -7,8 +7,9 @@ import StageThree from "./StageThree";
 import StageOne from "./StageOne";
 import { useDispatch, useSelector } from "react-redux";
 import { PostArtworkDraft } from "../../Redux/PostArtwork";
-import StageFive from "./StageFive";
+import axios from "axios";
 import StageFour from "./StageFour";
+import StageFive from "./StageFive";
 
 const PostArt = () => {
   const [addHint, setAddHint] = useState(false);
@@ -16,6 +17,8 @@ const PostArt = () => {
   const dispatch = useDispatch();
   const uploadStage = useSelector((state: any) => state.PostArtwork.post_artwork_stage);
   const [uploadState, setUploadState] = useState(uploadStage);
+
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   // Create a ref for the hidden file input element
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -44,27 +47,34 @@ const PostArt = () => {
     setSelectedFiles(newArray);
   };
 
-  const convertToBase64 = (file: any) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+  const uploadImage = async (): Promise<void> => {
+    const formData = new FormData();
 
-  const updatePost = async () => {
-    const convertedFiles = await Promise.all(
-      selectedFiles.map((file) => convertToBase64(file))
-    );
-    dispatch(PostArtworkDraft({ images: convertedFiles }));
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append("file", selectedFiles[i]);
+      formData.append("upload_preset", "my_upload_preset");
+      formData.append("cloud_name", "promotion-army");
+      await axios
+        .post(import.meta.env.VITE_CLOUDINARY_BASE_URL, formData)
+
+        .then((response) => {
+          setImageUrls((prev: any) => [...prev, response.data.secure_url]);
+          console.log(response.data.secure_url);
+        })
+        .catch((err) => console.log(err));
+    }
+
+    await dispatch(PostArtworkDraft({ images: imageUrls }));
   };
 
   useEffect(() => {
-    updatePost();
     setUploadState(uploadStage);
+  }, [uploadStage, dispatch]);
+
+  useEffect(() => {
+    dispatch(PostArtworkDraft({ images: imageUrls }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uploadStage, selectedFiles, deleteArt]);
+  }, [imageUrls]);
 
   return (
     <div className="w-full h-auto bg-white mt-20">
@@ -233,8 +243,8 @@ const PostArt = () => {
         {uploadState == "stageOne" && <StageOne />}
         {uploadState == "stageTwo" && <StageTwo />}
         {uploadState == "stageThree" && <StageThree />}
-        {uploadState == "stageFour" && <StageFour />}
-        {uploadState == "stageFive" && <StageFive />}
+        {uploadState == "stageFour" && <StageFour selectedFiles={selectedFiles} />}
+        {uploadState == "stageFive" && <StageFive uploadImage={uploadImage} />}
       </div>
     </div>
   );

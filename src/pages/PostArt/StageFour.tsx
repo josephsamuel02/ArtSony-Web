@@ -1,122 +1,123 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRef, useState } from "react";
-import { MdClose } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import "react-tooltip/dist/react-tooltip.css";
+import { MdClose, MdOutlineArrowCircleLeft, MdOutlineArrowCircleRight } from "react-icons/md";
+
+import { useEffect, useState } from "react";
 import { PostArtworkDraft, PostArtworkStage } from "../../Redux/PostArtwork";
 
-const StageFour = () => {
+import { useDispatch, useSelector } from "react-redux";
+interface compData {
+  selectedFiles: File[];
+}
+
+const StageFour = ({ selectedFiles }: compData) => {
+  const [artDetail, setArtDetail] = useState<any>({});
+
+  const ArtTitle = useSelector(
+    (state: any) => state.PostArtwork.post_artwork_draft.artwork_name
+  );
   const dispatch = useDispatch();
+  const [Thumbnail, setThumbnail] = useState<any>([
+    "https://images.pexels.com/photos/1070534/pexels-photo-1070534.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  ]);
 
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const handleAddFile = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    } else {
-      console.error("File input ref is null");
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files); // Convert FileList to an array
-      setSelectedFiles((prevFiles) => [...prevFiles, ...filesArray]); // Append new files to the existing state
-    }
-  };
-  const deleteFile = (i: number) => {
-    const newArray = selectedFiles.filter((_item, index) => {
-      return index !== i;
-    });
-
-    setSelectedFiles(newArray);
-  };
-  const convertToBase64 = (file: any) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+  const imgLength = Thumbnail.length;
+  const [TN, setTN] = useState(0);
 
   const updatePost = async () => {
-    const convertedFiles = await Promise.all(
-      selectedFiles.map((file) => convertToBase64(file))
-    );
-    dispatch(PostArtworkDraft({ production_files: convertedFiles }));
+    dispatch(PostArtworkDraft(artDetail));
   };
 
+  useEffect(() => {
+    setThumbnail(selectedFiles);
+  }, [selectedFiles]);
   return (
     <div className="w-1/3 h-auto bg-[#02272F] flex flex-col p-4 rounded">
       <h3 className="w-full flex flex-row items-start">
         <MdClose size={24} color="white" className="ml-auto" />
       </h3>
-      <h3 className="text-[20px] font-Raleway font-light text-white  py-3">Files</h3>
-      <span className="text-[#8AC5C7] text-[13px] font-Poppins px-1 py-0.5">
-        For all Digital Artworks, all files relating to the creation of the Art piece must be
-        Uploaded. You may also add any additional Videos ,Document etc. as you see fit.
-      </span>
-
-      <h3 className="text-[20px] font-Raleway font-light text-white mt-6 py-3">Add File</h3>
-      <span className="text-[#8AC5C7] text-[13px] font-Poppins px-1 py-0.5">
-        Supported file formats : pdf, svg, png, jpeg, figma ,Adobe XD
-      </span>
-
-      <div className="w-full h-auto   my-4 flex flex-col">
-        <input
-          type="file"
-          multiple
-          ref={fileInputRef}
-          style={{ display: "none" }}
-          onChange={(e) => handleFileChange(e)}
-          className="my-2 mb-5 text-sm text-customOrange file:mr-5 file:py-2 file:px-4 file:rounded file:border-[1.5px] file:border-customOrange file:text-xs file:font-Poppins file:bg-[#f25a384b] file:text-white file:cursor-pointer hover:file:bg-[#f25a3881]"
-        />
-        {selectedFiles.length !== 0
-          ? selectedFiles.map((d, i) => (
-              <div key={i} className="my-1 flex flex-row ">
-                <p className="  text-sm text-customOrange ">{d.name}</p>
-                <span onClick={() => deleteFile(i)} className="ml-auto">
-                  <MdClose size={18} color="orangered" />
-                </span>
-              </div>
-            ))
-          : ""}
-      </div>
-
-      <span className="text-[#a9ddde] text-[10px] font-Poppins px-1 py-1">
-        You can select multiple files
-      </span>
-      <div
-        className="w-full h-auto mb-6 py-3 bg-white hover:bg-[#f5ffffcc] rounded cursor-pointer "
-        onClick={() => handleAddFile()}
-      >
-        <p className="text-[15px] font-Raleway text-[#02272F] text-center">+ Add files </p>
-      </div>
-
-      <div className="w-full h-auto mt-auto mb-4 rounded-md flex">
-        <input
-          type="button"
-          value="Save as Draft"
-          className="mx-1 w-1/3 py-3 text-[13px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
-        />
-        <input
-          type="button"
-          value="Back"
-          onClick={() => dispatch(PostArtworkStage("stageThree"))}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
-        />
-        <input
-          type="button"
-          value="Post"
-          onClick={() => {
-            dispatch(PostArtworkStage("stageFive"));
-            updatePost();
-          }}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
-        />
-      </div>
+      {Thumbnail && (
+        <>
+          <div className="relative w-full h-auto flex flex-col rounded">
+            {selectedFiles.length == 0 ? (
+              <img
+                src={
+                  "https://images.pexels.com/photos/1070534/pexels-photo-1070534.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                }
+                alt=""
+                className="w-full h-[210px] object-cover rounded"
+              />
+            ) : (
+              <img
+                src={URL.createObjectURL(selectedFiles[TN])}
+                alt=""
+                className="w-full h-[210px] object-cover rounded"
+              />
+            )}
+            {Thumbnail.length === 0 ? (
+              <p className="absolute bottom-6 left-0 right-0 text-[15px] font-Raleway font-light text-white text-center">
+                Upload files to select a thumbnail
+              </p>
+            ) : (
+              <p className="absolute bottom-6 left-0 right-0 text-[15px] font-Raleway font-light text-white text-center">
+                {ArtTitle}
+              </p>
+            )}
+          </div>
+          {Thumbnail.length !== 0 && (
+            <div className=" my-5 w-full h-auto flex flex-row">
+              <p className=" mr-auto text-[15px] font-Raleway font-light text-white text-center">
+                Thumbnail
+              </p>
+              <p className=" mx-auto text-[15px] flex flex-row gap-x-2 font-Raleway font-light text-white text-center">
+                <MdOutlineArrowCircleLeft
+                  size={25}
+                  onClick={() => {
+                    setTN(TN > 0 ? TN - 1 : 0);
+                    setArtDetail((prev: any) => ({ ...prev, thumbnail: `${TN}` }));
+                  }}
+                  className="text-white hover:text-customOrange cursor-pointer"
+                />
+                <MdOutlineArrowCircleRight
+                  size={25}
+                  onClick={() => {
+                    setTN((prevTN) => (prevTN < imgLength - 1 ? prevTN + 1 : prevTN));
+                    setArtDetail((prev: any) => ({ ...prev, thumbnail: `${TN}` }));
+                  }}
+                  className="text-white hover:text-customOrange cursor-pointer"
+                />
+              </p>
+              <p className=" ml-auto text-[15px] font-Raleway font-light text-white text-center"></p>
+            </div>
+          )}
+          <div className="w-full h-auto my-4 py-3 bg-[#8AC5C733] hover:bg-[#226364cc] rounded cursor-pointer ">
+            <p className="text-[15px] font-Raleway font-light text-white text-center">
+              Preview
+            </p>
+          </div>
+          <div className="w-full h-auto mt-auto mb-4 rounded-md flex">
+            {/* <input
+              type="button"
+              value="Save as Draft"
+              className="mx-1 w-1/3 py-3 text-[12px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
+            /> */}
+            <input
+              type="button"
+              value="Back"
+              onClick={() => dispatch(PostArtworkStage("stageThree"))}
+              className="mx-1 w-1/2 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
+            />
+            <input
+              type="button"
+              value="Next"
+              onClick={() => {
+                updatePost();
+                dispatch(PostArtworkStage("stageFive"));
+              }}
+              className="mx-1 w-1/2 py-3 text-[14px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

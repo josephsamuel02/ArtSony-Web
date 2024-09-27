@@ -4,19 +4,35 @@ import NotificationCard from "./Cards/NotificationCard";
 import ProfileCard from "./Cards/ProfileCard";
 import MessageCard from "./Messageing/MessageCard";
 import PUBLIC_ROUTES from "../utils/PublicRoutes";
+import { ArtSearch } from "../Redux/FetchArtwork";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../Redux/store";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const [showUploadCard, setShowUploadCard] = useState("close");
   const [showNotificationCard, setShowNotificationCard] = useState(false);
   const [showProfileCard, setShowProfileCard] = useState(false);
   const [showMessageCard, setShowMessageCard] = useState(false);
 
+  const [searchText, setSearchText] = useState("");
+
   const naveData = [
     { title: "Explore", url: PUBLIC_ROUTES.EXPLORE },
     { title: "Shop", url: PUBLIC_ROUTES.SHOP },
-    { title: "Hire Artist", url: "" },
-    { title: "Find Gigs", url: "" },
+    // { title: "Hire Artist", url: "" },
+    // { title: "Find Gigs", url: "" },
   ];
+  const handleKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      // Trigger the dispatch when Enter is pressed
+      dispatch(ArtSearch({ search_string: searchText }));
+      navigate(PUBLIC_ROUTES.SEARCH);
+    }
+  };
 
   return (
     <>
@@ -45,6 +61,8 @@ const Nav = () => {
             <input
               type="text"
               placeholder="Search"
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-4/5 h-auto  bg-transparent text-sm font-light text-white font-Poppins p-2 outline-none focus:outline-none"
             />
           </div>

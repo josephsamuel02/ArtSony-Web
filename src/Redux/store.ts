@@ -3,9 +3,15 @@ import authSlice from "./AuthSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import postArtworkSlice from "./PostArtwork";
+import FetchArtwork from "./FetchArtwork";
+import Engagement from "./Engagement";
+import ShopArtworks from "./ShopArtworks";
 
 const reducers = combineReducers({
   Auth: authSlice,
+  FetchArtwork: FetchArtwork,
+  ShopArtworks: ShopArtworks,
+  Engagement: Engagement,
   PostArtwork: postArtworkSlice,
 });
 

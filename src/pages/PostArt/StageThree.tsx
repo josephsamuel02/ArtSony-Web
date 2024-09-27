@@ -1,19 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PostArtworkDraft, PostArtworkStage } from "../../Redux/PostArtwork";
 
 const StageThree = () => {
+  const rdxData = useSelector((state: any) => state.PostArtwork.post_artwork_draft);
+
   const dispatch = useDispatch();
   const [artDetail, setArtDetail] = useState<any>({ co_owners: [] });
   const users = [
-    { profile_image: "/images/Ellipse 10.svg", user_name: "Profile User Name", user_id: "1" },
-    { profile_image: "/images/Ellipse 10.svg", user_name: "Profile User Name", user_id: "2" },
-    // { profile_image: "/images/Ellipse 10.svg", user_name: "Profile User Name", user_id: "3" },
+    { profile_img: "/images/Ellipse 10.svg", user_name: "Profile User Name", userId: "1" },
+    { profile_img: "/images/Ellipse 10.svg", user_name: "Profile User Name", userId: "2" },
+    {
+      profile_img: "/images/Ellipse 10.svg",
+      user_name: "Pius",
+      userId: "3",
+    },
   ];
   const updatePost = async () => {
-    console.log(artDetail);
+    // console.log(artDetail);
     dispatch(PostArtworkDraft(artDetail));
   };
 
@@ -47,12 +53,12 @@ const StageThree = () => {
             onClick={() =>
               setArtDetail((prev: any) => ({
                 ...prev,
-                co_owners: [...prev.co_owners, d.user_id],
+                co_owners: [...prev.co_owners, d],
               }))
             }
           >
             <img
-              src={d.profile_image}
+              src={d.profile_img}
               alt="profile_image"
               className="w-10 h-10 rounded-full object-cover"
             />
@@ -78,9 +84,10 @@ const StageThree = () => {
       <div className="w-full h-auto bg-white rounded-md">
         <input
           type="text"
-          placeholder="Individual, Company , Brand etc."
-          onClick={() =>
-            setArtDetail((prev: any) => ({ ...prev, designed_for: [users[0].user_id] }))
+          placeholder="Individual, Company, Brand etc."
+          defaultValue={rdxData.designed_for ? rdxData.designed_for[0] : ""}
+          onChange={(e) =>
+            setArtDetail((prev: any) => ({ ...prev, designed_for: [e.target.value] }))
           }
           className="w-full p-3 placeholder-blue-gray-500 font-Raleway rounded outline-none"
         />
@@ -89,13 +96,15 @@ const StageThree = () => {
         Appreciation ?
         <span className="text-[#d33d29] text-[13px] font-Poppins px-2">Optional</span>
       </h3>
+
       <span className="text-[#8AC5C7] text-[11px] font-Poppins px-1 py-0.5">
         You can give credit to people who contributed to creating your Art
       </span>
       <div className="w-full h-auto bg-white rounded-md">
         <input
           type="text"
-          placeholder="Art Depo, Companies , Individuals etc"
+          placeholder="Art Depo, Companies, Individuals etc"
+          defaultValue={rdxData.designed_for ? rdxData.appreciation[0] : ""}
           onChange={(e) =>
             setArtDetail((prev: any) => ({
               ...prev,
@@ -106,25 +115,25 @@ const StageThree = () => {
         />
       </div>
       <div className="w-full h-auto mt-8 mb-4 rounded-md flex">
-        <input
+        {/* <input
           type="button"
           value="Save as Draft"
           className="mx-1 w-1/3 py-3 text-[12px] font-poppins text-white bg-[#8AC5C733] hover:bg-[#20424481] rounded cursor-pointer"
-        />
+        /> */}
         <input
           type="button"
           value="Back"
           onClick={() => dispatch(PostArtworkStage("stageTwo"))}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
+          className="mx-1 w-1/2 py-3 text-[16px] font-poppins text-white bg-[#d8450b50] hover:bg-[#be4621b6] border border-customOrange rounded cursor-pointer"
         />
         <input
           type="button"
           value="Next"
           onClick={() => {
-            updatePost();
             dispatch(PostArtworkStage("stageFour"));
+            updatePost();
           }}
-          className="mx-1 w-1/3 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
+          className="mx-1 w-1/2 py-3 text-[16px] font-poppins text-white  bg-customOrange hover:bg-[#be4621] rounded cursor-pointer"
         />
       </div>
     </div>
