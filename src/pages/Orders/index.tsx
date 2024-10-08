@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavBar/Nav";
 import SideNav from "./SideNav";
 import Tracker from "./Tracker";
 import Files from "./Files";

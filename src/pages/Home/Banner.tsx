@@ -38,7 +38,7 @@ const Banner = () => {
           </a>
           <div className="w-full h-auto py-4 px-10 flex flex-row justify-end items-center">
             {User.user.user_name && (
-              <p className="font-Poppins font-light text-[16px] text-white mx-4 ">
+              <p className="font-Poppins font-light text-[16px] text-white mx-4 cursor-pointer">
                 {capitalizeFirstLetter(User.user.user_name)}
               </p>
             )}

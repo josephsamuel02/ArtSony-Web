@@ -2,9 +2,20 @@
 import { useState, useRef, useEffect } from "react";
 import PUBLIC_ROUTES from "../../utils/PublicRoutes";
 
-const ProfileCard = () => {
+interface compData {
+  User: any;
+}
+
+const ProfileCard = ({ User }: compData) => {
   const [isOpen, setIsOpen] = useState(true);
   const modalRef = useRef<any>(null);
+
+  const capitalizeFirstLetter = (sentence: string) => {
+    return sentence
+      .split(" ") // Split the sentence into words
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+      .join(" "); // Join the words back into a sentence
+  };
 
   const handleClickOutside = (event: any) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -26,13 +37,17 @@ const ProfileCard = () => {
           ref={modalRef}
         >
           <div className="w-full h-auto px-10 py-3 bg-white flex flex-row border-b border-gray-400 ">
-            <img
-              src="/images/profilimage.jpeg"
-              alt=""
-              className="w-[60px] h-[60px] rounded-full object-cover  "
-            />
+            {User.profile_img !== null && (
+              <img
+                src={User.profile_img}
+                alt=""
+                className="w-[60px] h-[60px] rounded-full object-cover  "
+              />
+            )}
             <div className=" mx-5 w-3/5 flex flex-col  ">
-              <p className=" text-[20px] text-[#2e2d2d] font-Poppins  ">Lee Chang</p>
+              <p className=" text-[20px] text-[#2e2d2d] font-Poppins  ">
+                {capitalizeFirstLetter(User.user_name)}
+              </p>
               <a
                 href={PUBLIC_ROUTES.MY_PROFILE}
                 className=" text-[14px] text-[#F25B38] font-Poppins font-light "
@@ -47,12 +62,18 @@ const ProfileCard = () => {
               <h3 className="   my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default">
                 Manage Products
               </h3>
-              <h3 className="   my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default">
+              <a
+                href={PUBLIC_ROUTES.PROFILE_SETTINGS}
+                className="   my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default"
+              >
                 Profile Settings
-              </h3>
-              <h3 className="   my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default">
+              </a>
+              <a
+                href={PUBLIC_ROUTES.GENERAL_SETTINGS}
+                className="   my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default"
+              >
                 General Settings
-              </h3>
+              </a>
               <h3 className="   my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default">
                 Wallet & Statistics
               </h3>

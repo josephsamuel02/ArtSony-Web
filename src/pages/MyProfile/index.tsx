@@ -1,19 +1,33 @@
-import { useState } from "react";
-import Nav from "../../components/Nav";
-import Followers from "../../components/Cards/Followers";
-import Following from "../../components/Cards/Following";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
+import Nav from "../../components/NavBar/Nav";
+import Followers from "../../components/NavBar/Followers";
+import Following from "../../components/NavBar/Following";
 import Artwork from "./Artworks";
 import About from "./About";
 import Moodboard from "./Moodboard";
 import Store from "./Store";
 import { MdOutlineFileUpload } from "react-icons/md";
-import UploadCard from "../../components/Cards/UploadCard";
+import UploadCard from "../../components/NavBar/UploadCard";
+import { GetMyProfile } from "../../Redux/User";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../Redux/store";
 
 const MyProfile = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const User = useSelector((state: any) => state.User.my_profile.data);
+
   const [profileComponent, setProfileComponent] = useState("Artwork");
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
   const [showUploadCard, setShowUploadCard] = useState("close");
+
+  const capitalizeFirstLetter = (sentence: string) => {
+    return sentence
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+      .join(" ");
+  };
 
   const profileMenu = [
     {
@@ -34,6 +48,13 @@ const MyProfile = () => {
     },
   ];
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      dispatch(GetMyProfile());
+    };
+    fetchUser();
+  }, []);
+
   return (
     <div className="w-full h-auto">
       <Nav />
@@ -43,28 +64,38 @@ const MyProfile = () => {
           <div className="w-[475px] h-[553px] border border-solid border-[rgba(242,90,56,0.54)] rounded-2xl border-1 border-opacity-50 backdrop-filter backdrop-blur-sm p-4 flex flex-col justify-between bg-[rgba(43,43,103,0.5)]">
             <div className="flex items-center justify-center mt-4">
               <div className="relative bg-[url(https://res.cloudinary.com/dspkk9qlz/image/upload/v1718099830/Group_1542_rqqlwm.png)] bg-cover w-[166.77px] h-[166px] text-orange-500">
-                <img
-                  className="absolute mt-5 ml-5 w-[127px] h-[126.42] flex"
-                  src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718099969/profile_page_image_ohcd63.svg"
-                  alt="profilepix"
-                />
+                {User.profile_img !== null ? (
+                  <img
+                    className="absolute mt-5 ml-5 w-[127px] h-[126.42] flex"
+                    src={User.profile_img}
+                    alt="profile image"
+                  />
+                ) : (
+                  <img
+                    className="absolute mt-5 ml-5 w-[127px] h-[126.42] flex"
+                    src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718099969/profile_page_image_ohcd63.svg"
+                    alt="profile image"
+                  />
+                )}
               </div>
             </div>
             <div className="text-center mt-4">
               <div className="flex items-center justify-center">
-                <h2 className="text-xl font-semibold text-white mr-2">Christine Boluwatife</h2>
-                <img
+                <h2 className="text-xl font-semibold text-white mr-2">
+                  {capitalizeFirstLetter(User.user_name)}
+                </h2>
+                {/* <img
                   src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1716800070/iconfbolu_kp0gex.svg"
                   alt="Icon"
                   className="w-6 h-6"
-                />
+                /> */}
               </div>
               <div className="flex justify-center ml-4 items-center mt-14 w-[384px] h-[73px]">
                 <div
                   className="flex flex-col items-center mr-4 text-white w-[120px] h-[50px] pt-2 cursor-pointer rounded-md hover:bg-[#15192b8a]"
                   onClick={() => setShowFollowing(true)}
                 >
-                  <p className="text-sm font-normal text-slate-500">34</p>
+                  <p className="text-sm font-normal text-slate-500">{User.following.length}</p>
                   <p className="text-sm text-white-500 font-normal">Following</p>
                 </div>
                 <img
@@ -77,7 +108,7 @@ const MyProfile = () => {
                     setShowFollowers(true);
                   }}
                 >
-                  <p className="text-sm text-slate-500">125k</p>
+                  <p className="text-sm text-slate-500">{User.followers.length}</p>
                   <p className="text-sm text-white-500">Followers</p>
                 </div>
                 <img
@@ -85,7 +116,7 @@ const MyProfile = () => {
                   alt="line"
                 />
                 <div className="flex flex-col items-center text-white w-[120px] h-[50px]">
-                  <p className="text-sm text-slate-500">670k</p>
+                  <p className="text-sm text-slate-500">{User.likes}</p>
                   <p className="text-sm text-white-500">Likes</p>
                 </div>
               </div>
@@ -128,7 +159,7 @@ const MyProfile = () => {
       </div>
 
       {profileComponent == "Artwork" && <Artwork />}
-      {profileComponent == "About" && <About />}
+      {profileComponent == "About" && <About User={User} />}
       {profileComponent == "Moodboard" && <Moodboard />}
       {profileComponent == "Store" && <Store />}
       {showFollowers && <Followers setShowFollowers={setShowFollowers} />}

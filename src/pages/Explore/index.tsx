@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaRegImages } from "react-icons/fa";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavBar/Nav";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Artworks, getArtworksByArtField } from "../../Redux/FetchArtwork";

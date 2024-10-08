@@ -2,11 +2,8 @@
 import { useState } from "react";
 import Select from "react-select";
 import Switch from "react-switch";
-interface compData {
-  userInfo: any;
-}
-
-const LanguageAndRegion = ({ userInfo }: compData) => {
+const LanguageAndRegion = () => {
+  // const userData = useSelector((state: any) => state.User.data);
   const userData = true;
   const [disableComments, setDisableComments] = useState<boolean>(userData ? userData : false);
   // const [artDetail, setArtDetail] = useState<any>({ copyright_license: [] });
@@ -24,14 +21,6 @@ const LanguageAndRegion = ({ userInfo }: compData) => {
     { value: "animation", label: "Animation" },
     { value: "spiritual", label: "Spiritual" },
   ]);
-
-  // const capitalizeFirstLetter = (sentence: string) => {
-  //   return sentence
-  //     .split("")
-  //     .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-  //     .join("");
-  // };
-
   return (
     <div className="w-full h-full p-5 rounded-md">
       <h2 className="text-xl p-3 py-2 border-b border-[#ff6f4349] text-customOrange font-Raleway">
@@ -47,7 +36,7 @@ const LanguageAndRegion = ({ userInfo }: compData) => {
         <Select
           options={Countries}
           placeholder="Country"
-          defaultInputValue={userInfo.country !== null ? userInfo.country : ""}
+          //   defaultInputValue={artData.tags}
           //   onChange={(selectedOptions) => {
           //     setArtDetail((prev) => ({
           //       ...prev,
@@ -59,7 +48,6 @@ const LanguageAndRegion = ({ userInfo }: compData) => {
         <Select
           options={Countries}
           placeholder="State/Province"
-          defaultInputValue={userInfo.state !== null ? userInfo.state : ""}
           className=" w-3/5    px-4 outline-none font-Poppins   rounded"
         />
 
@@ -96,7 +84,6 @@ const LanguageAndRegion = ({ userInfo }: compData) => {
         <Select
           options={Countries}
           placeholder="Language"
-          defaultInputValue={userInfo.language !== null ? userInfo.language : ""}
           className=" w-3/5 py-2  px-4 outline-none font-Poppins   rounded"
         />
       </div>

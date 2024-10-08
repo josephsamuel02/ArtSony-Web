@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavBar/Nav";
 import Artwork from "./Artworks";
 import About from "./About";
 import Moodboard from "./Moodboard";
 import Store from "./Store";
-import Followers from "../../components/Cards/Followers";
-import Following from "../../components/Cards/Following";
+import Followers from "../../components/NavBar/Followers";
+import Following from "../../components/NavBar/Following";
 
 const ArtistProfile = () => {
   const [profileComponent, setProfileComponent] = useState("Artwork");

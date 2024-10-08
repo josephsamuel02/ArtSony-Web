@@ -6,9 +6,11 @@ import postArtworkSlice from "./PostArtwork";
 import FetchArtwork from "./FetchArtwork";
 import Engagement from "./Engagement";
 import ShopArtworks from "./ShopArtworks";
+import User from "./User";
 
 const reducers = combineReducers({
   Auth: authSlice,
+  User: User,
   FetchArtwork: FetchArtwork,
   ShopArtworks: ShopArtworks,
   Engagement: Engagement,

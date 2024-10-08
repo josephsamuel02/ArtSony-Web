@@ -19,6 +19,7 @@ import SellArtwork from "./pages/SellArt";
 import Orders from "./pages/Orders";
 import SearchPage from "./pages/SearchPage.tsx";
 import ProfileSettings from "./pages/ProfileSettings/index.tsx";
+import GeneralSettings from "./pages/GeneralSettings/index.tsx";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
 
         <Route path={PUBLIC_ROUTES.MY_PROFILE} element={<MyProfile />} />
         <Route path={PUBLIC_ROUTES.PROFILE_SETTINGS} element={<ProfileSettings />} />
+        <Route path={PUBLIC_ROUTES.GENERAL_SETTINGS} element={<GeneralSettings />} />
 
         <Route path={PUBLIC_ROUTES.CHECKOUT} element={<Checkout />} />
 

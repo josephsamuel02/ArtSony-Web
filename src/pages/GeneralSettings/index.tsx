@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Nav from "../../components/NavBar/Nav";
 import ProfileContent from "./ProfileContent";
 import SideMenue from "./SideMenue";
 
-const ProfileSettings = () => {
+const GeneralSettings = () => {
   const [displayCom, setDisplayComp] = useState("Personal Information");
 
   return (
@@ -18,4 +17,4 @@ const ProfileSettings = () => {
   );
 };
 
-export default ProfileSettings;
+export default GeneralSettings;

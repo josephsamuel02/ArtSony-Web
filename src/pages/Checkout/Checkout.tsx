@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavBar/Nav";
 import { PaymentState_1, PaymentState_2 } from "./PaymentState";
 
 const Checkout = () => {

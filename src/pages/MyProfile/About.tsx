@@ -1,18 +1,21 @@
-const About = () => {
+import { FaYoutube } from "react-icons/fa6";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+interface compData {
+  User: any;
+}
+const About = ({ User }: compData) => {
   return (
     <div className="mt-12 flex items-center justify-around w-full">
       <div className="flex flex-col ">
         <div className="gap-2">
           <h1 className="text-[24px] text-xl font-normal">Bio</h1>
-          <p className="w-[613px]   font-Poppins text-[17px]">
-            Hi, I am Christine Boluwatife. I am a medical doctor with a passion for painting.
-            My main specialty is abstract art and I am simply just a mother who loves to paint.
-            If you want to know more about me you can check my web page and socials in the
-            links below.
-          </p>
+          {User.bio !== null && (
+            <p className="w-[613px] font-Poppins text-[17px]">{User.bio}</p>
+          )}
         </div>
 
-        <div className="flex flex-col gap-6 ">
+        {/* <div className="flex flex-col gap-6 ">
           <h1 className="text-[24px] text-xl font-normal">Page</h1>
 
           <div className="flex flex-col mt-5">
@@ -47,7 +50,7 @@ const About = () => {
               <h1 className="text-[#A19D9D] w-[234px] h-[24px]">Member since 2022</h1>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <img className="" src="./images/Line 23.svg" alt="" />
@@ -55,44 +58,83 @@ const About = () => {
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-6">
           <h1 className="w-[103px] h-[24px]">Socials</h1>
-          <div className="flex gap-12">
-            <img src="./images/instagram.svg" alt="instagram" className="hover:opacity-60" />
-            <img src="public/images/behance.svg" alt="behance" className="hover:opacity-60" />
-            <img
-              src="public/images/facebook.svg"
-              alt="facebook"
-              className="hover:opacity-60"
-            />
-            <img
-              src="public/images/linkedin.svg"
-              alt="linkedin"
-              className="hover:opacity-60"
-            />
-            <img src="public/images/twitter.svg" alt="twitter" className="hover:opacity-60" />
-          </div>
+          {User.socials !== null && (
+            <div className="flex gap-12">
+              <img src="./images/instagram.svg" alt="instagram" className="hover:opacity-60" />
+              <img
+                src="public/images/behance.svg"
+                alt="behance"
+                className="hover:opacity-60"
+              />
+              {User.socials.facebook && (
+                <a href={User.socials.facebook} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="public/images/facebook.svg"
+                    alt="facebook"
+                    className="hover:opacity-60"
+                  />
+                </a>
+              )}
+
+              {User.socials.x_social && (
+                <a href={User.socials.x_social} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="public/images/twitter.svg"
+                    alt="twitter"
+                    className="hover:opacity-60"
+                  />
+                </a>
+              )}
+
+              {User.socials.youtube && (
+                <a href={User.socials.youtube} target="_blank" rel="noopener noreferrer">
+                  <FaYoutube color="red" size={28} />
+                </a>
+              )}
+
+              {User.socials.linkedin && (
+                <a href={User.socials.linkedin} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="public/images/linkedin.svg"
+                    alt="linkedin"
+                    className="hover:opacity-60"
+                  />
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
-        <div className="flex flex-col gap-6">
-          <h1 className="w-[143px] h-[23px]">Links</h1>
-          <button className="text-[#F25B38] w-[384px] h-[48px] border border-[#F25B38] hover:bg-[#F25B38] hover:text-white">
-            www.designhaven.com
-          </button>
-        </div>
-
-        <div className="flex flex-col gap-6">
-          <h1 className="w-[143px] h-[23px]">Art focus</h1>
-          <div className="flex flex-row gap-3 text-[#8AC5C7]">
-            <p className="w-[126px] h-[24px]">Abstract Art</p>
-            <p className="w-[126px] h-[24px]">Oil Painting</p>
+        {User.website.length > 0 && (
+          <div className="flex flex-col gap-6">
+            <h1 className="w-[143px] h-[23px]">Website</h1>
+            <button className="text-[#F25B38] w-[384px] h-[48px] border border-[#F25B38] hover:bg-[#F25B38] hover:text-white">
+              {User.website[0]}
+            </button>
           </div>
+        )}
+        <h1 className="w-[143px] h-[23px]">Art focus</h1>
+        <div className="flex flex-row  ">
+          {User.art_focus && (
+            <div className="flex flex-row flex-wrap  text-[#8AC5C7]">
+              {User.art_focus &&
+                User.art_focus.map((d: string, i: number) => (
+                  <p className="text-sm font-Poppins text-black ml-2" key={i}>
+                    {d},
+                  </p>
+                ))}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-6">
           <h1>Location</h1>
-          <div className="flex flex-row gap-6">
-            <img className="w-[24px] h-[24px]" src="public/images/map-marker.svg" alt="" />
-            <p className="w-[164px] h-[24px] text-[#686B6F]">Lagos, Nigeria</p>
-          </div>
+          {User.address !== null && (
+            <div className="flex flex-row gap-6">
+              <img className="w-[24px] h-[24px]" src="public/images/map-marker.svg" alt="" />
+              <p className="w-[164px] h-[24px] text-[#686B6F]">Lagos, Nigeria</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

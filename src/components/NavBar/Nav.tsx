@@ -1,13 +1,15 @@
-import { useState } from "react";
-import UploadCard from "./Cards/UploadCard";
-import NotificationCard from "./Cards/NotificationCard";
-import ProfileCard from "./Cards/ProfileCard";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
+import UploadCard from "./UploadCard";
+import NotificationCard from "./NotificationCard";
+import ProfileCard from "./ProfileCard";
 import MessageCard from "./Messageing/MessageCard";
-import PUBLIC_ROUTES from "../utils/PublicRoutes";
-import { ArtSearch } from "../Redux/FetchArtwork";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../Redux/store";
+import PUBLIC_ROUTES from "../../utils/PublicRoutes";
+import { ArtSearch } from "../../Redux/FetchArtwork";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../Redux/store";
 import { useNavigate } from "react-router-dom";
+import { GetMyProfile } from "../../Redux/User";
 
 const Nav = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,7 +21,7 @@ const Nav = () => {
   const [showMessageCard, setShowMessageCard] = useState(false);
 
   const [searchText, setSearchText] = useState("");
-
+  const User = useSelector((state: any) => state.User.my_profile.data);
   const naveData = [
     { title: "Explore", url: PUBLIC_ROUTES.EXPLORE },
     { title: "Shop", url: PUBLIC_ROUTES.SHOP },
@@ -33,6 +35,13 @@ const Nav = () => {
       navigate(PUBLIC_ROUTES.SEARCH);
     }
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      dispatch(GetMyProfile());
+    };
+    fetchUser();
+  }, []);
 
   return (
     <>
@@ -104,14 +113,16 @@ const Nav = () => {
           className="mx-3  w-auto flex flex-row items-center"
           onClick={() => setShowProfileCard(!showProfileCard)}
         >
-          <img
-            src="/images/profilimage.jpeg"
-            alt=""
-            className="w-10 h-10 object-cover rounded-full"
-          />
+          {User.profile_img && (
+            <img
+              src={User.profile_img}
+              alt=""
+              className="w-10 h-10 object-cover rounded-full"
+            />
+          )}
           <img src="/images/arrow_drop_down.svg" alt="search" className="mx-1 w-5 h-5" />
 
-          {showProfileCard && <ProfileCard />}
+          {showProfileCard && <ProfileCard User={User} />}
         </div>
       </div>
       {showUploadCard && (

@@ -12,6 +12,7 @@ const PUBLIC_ROUTES = {
   ARTIST_PROFILE: "/artist_profile",
   MY_PROFILE: "/my_profile",
   PROFILE_SETTINGS: "/profile_settings",
+  GENERAL_SETTINGS: "/general_settings",
   POST_ART: "/post_art",
   SELL_ART: "/sell_art",
   SHOP: "/shop",

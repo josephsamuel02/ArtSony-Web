@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavBar/Nav";
 import ArtOfTheWeek from "./ArtOfTheWeek";
 import Banner from "./Banner";
 import Explore from "./Explore";

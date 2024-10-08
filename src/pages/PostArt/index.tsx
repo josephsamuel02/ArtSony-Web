@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MdAdd, MdArrowCircleDown, MdArrowCircleUp, MdDelete, MdEdit } from "react-icons/md";
-import Nav from "../../components/Nav";
+import Nav from "../../components/NavBar/Nav";
 import { useEffect, useRef, useState } from "react";
 import StageTwo from "./StageTwo";
 import StageThree from "./StageThree";

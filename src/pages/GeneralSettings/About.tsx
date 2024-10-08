@@ -1,18 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Select from "react-select";
-
-interface compData {
-  userInfo: any;
-}
-const About = ({ userInfo }: compData) => {
-  // const capitalizeFirstLetter = (sentence: string) => {
-  //   return sentence
-  //     .split("")
-  //     .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-  //     .join("");
-  // };
-
+const About = () => {
   const [ArtFocus] = useState([
     { value: "random", label: "Random" },
     { value: "ai Art", label: "Ai Art" },
@@ -42,7 +30,7 @@ const About = ({ userInfo }: compData) => {
           options={ArtFocus}
           isMulti
           placeholder="Examples : Photography, hyper-realism, Architecture."
-          className=" w-[99%] py-2 text-base  px-4 outline-none font-Poppins   rounded"
+          className=" w-[99%] py-2  px-4 outline-none font-Poppins   rounded"
         />
         <h2 className="text-base p-3 pb-1 text-customOrange font-Raleway">Bio *</h2>
         <h2 className="text-sm p-3 py-1 text-gray-800 font-Raleway">
@@ -50,10 +38,9 @@ const About = ({ userInfo }: compData) => {
         </h2>
         <textarea
           name="bio"
-          defaultValue={userInfo.bio == null ? "" : userInfo.bio}
-          className="mx-auto w-11/12 h-[120px] py-2 my-3 px-4 outline-none font-Poppins border border-[#ff6f4373] rounded"
+          className=" mx-auto w-11/12 h-[120px] py-2 my-3 px-4 outline-none font-Poppins border border-[#ff6f4373] rounded"
         />
-        <h2 className="px-5 text-xs text-customOrange font-Raleway">
+        <h2 className="text-xs     text-customOrange font-Raleway">
           Maximum of 250 characters
         </h2>
       </div>
