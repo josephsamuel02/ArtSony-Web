@@ -5,7 +5,6 @@ import Followers from "../../components/NavBar/Followers";
 import Following from "../../components/NavBar/Following";
 import Artwork from "./Artworks";
 import About from "./About";
-import Moodboard from "./Moodboard";
 import Store from "./Store";
 import { MdOutlineFileUpload } from "react-icons/md";
 import UploadCard from "../../components/NavBar/UploadCard";
@@ -38,10 +37,10 @@ const MyProfile = () => {
       icon: "https://res.cloudinary.com/dspkk9qlz/image/upload/v1716894332/profilee_qy0rxm.svg",
       title: "About",
     },
-    {
-      icon: "https://res.cloudinary.com/dspkk9qlz/image/upload/v1716894446/folder_eeotfy.svg",
-      title: "Moodboard",
-    },
+    // {
+    //   icon: "https://res.cloudinary.com/dspkk9qlz/image/upload/v1716894446/folder_eeotfy.svg",
+    //   title: "Moodboard",
+    // },
     {
       icon: "https://res.cloudinary.com/dspkk9qlz/image/upload/v1716894788/store_j0eefa.svg",
       title: "Store",
@@ -66,7 +65,7 @@ const MyProfile = () => {
               <div className="relative bg-[url(https://res.cloudinary.com/dspkk9qlz/image/upload/v1718099830/Group_1542_rqqlwm.png)] bg-cover w-[166.77px] h-[166px] text-orange-500">
                 {User.profile_img !== null ? (
                   <img
-                    className="absolute mt-5 ml-5 w-[127px] h-[126.42] flex"
+                    className="absolute mt-5 ml-5 w-[127px] h-[126.42] rounded-full flex"
                     src={User.profile_img}
                     alt="profile image"
                   />
@@ -143,7 +142,7 @@ const MyProfile = () => {
         <div className="absolute top-[720px] flex gap-3">
           {profileMenu.map((d, i) => (
             <button
-              className={`mx-auto w-[228px] h-[48px] px-[61px] py-[12px] items-center  flex  flex-row item-center rounded border border-[#F25B3833] hover:bg-[#b65a452c] hover:text-[#F25B38]  ${
+              className={`mx-auto   w-[105px] h-auto md:w-[228px] md:h-[48px] py-[12px] items-center  flex  flex-row item-center rounded border border-[#F25B3833] hover:bg-[#b65a452c] hover:text-[#F25B38]  ${
                 profileComponent == d.title
                   ? " text-white  bg-[#02272F]"
                   : "text-[#F25B38] bg-white"
@@ -151,8 +150,12 @@ const MyProfile = () => {
               key={i}
               onClick={() => setProfileComponent(d.title)}
             >
-              <img src={d.icon} alt="filter" className="w-[20px] h-[20px] mx-1 object-cover" />
-              {d.title}
+              <img
+                src={d.icon}
+                alt="filter"
+                className="w-[20px] h-[20px] ml-auto mr-1 object-cover"
+              />
+              <span className="text-sm md:text-lg mr-auto">{d.title}</span>
             </button>
           ))}
         </div>
@@ -160,7 +163,7 @@ const MyProfile = () => {
 
       {profileComponent == "Artwork" && <Artwork />}
       {profileComponent == "About" && <About User={User} />}
-      {profileComponent == "Moodboard" && <Moodboard />}
+      {/* {profileComponent == "Moodboard" && <Moodboard />} */}
       {profileComponent == "Store" && <Store />}
       {showFollowers && <Followers setShowFollowers={setShowFollowers} />}
       {showFollowing && <Following setShowFollowing={setShowFollowing} />}

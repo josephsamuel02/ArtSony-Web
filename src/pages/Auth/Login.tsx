@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PUBLIC_ROUTES from "../../utils/PublicRoutes";
-import { LoginUser } from "../../Redux/AuthSlice";
+import { clearAuthData, LoginUser } from "../../Redux/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../Redux/store";
 import { Loading } from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
+import Nav from "../../components/NavBar/Nav";
+import { clearUserData } from "../../Redux/User";
 
 const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const Navigate = useNavigate();
-  const LogInResponse = useSelector((state: any) => state.Auth.user.status);
-  const status = useSelector((state: any) => state.Auth.status);
+  const LogInStatus = useSelector((state: any) => state.Auth.auth?.status);
+  // const status = useSelector((state: any) => state.Auth.auth.status);
 
-  const [loading, setLoading] = useState(status);
+  const [loading, setLoading] = useState(LogInStatus);
   const [loginData, setLoginData] = useState<any>({
     email: "",
     password: "",
@@ -24,15 +26,14 @@ const Login: React.FC = () => {
     console.log(loginData);
 
     try {
-      dispatch(LoginUser(loginData));
+      await dispatch(LoginUser(loginData));
       setLoading(true);
-      setTimeout(() => {
-        if (LogInResponse === 200) {
-          setLoading(false);
-          window.location.assign;
-          Navigate(PUBLIC_ROUTES.HOME);
-        }
-      }, 1000);
+
+      if (LogInStatus === 200) {
+        setLoading(false);
+        window.location.assign;
+        Navigate(PUBLIC_ROUTES.HOME);
+      }
 
       console.log(loginData);
     } catch (error) {
@@ -40,9 +41,16 @@ const Login: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch(clearUserData());
+    dispatch(clearAuthData());
+    localStorage.removeItem("ASY_A_Token");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="bg-[url(https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716659025/552fe2dc96c0c5502efc7291525a99e9_qzcemj.png)] bg-cover bg-no-repeat bg-center h-screen w-screen flex flex-col items-center justify-center">
-      <div className="w-[380px] h-auto py-8 bg-[rgba(22,22,53,0.5)]  bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-xl flex flex-col justify-center items-center px-6  ">
+      <Nav />
+      <div className="w-[380px] h-auto mt-20 py-8 bg-[rgba(22,22,53,0.5)]  bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-xl flex flex-col justify-center items-center px-6  ">
         <img
           src="https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716659881/Layer_6_qlz3mp.png"
           className="w-[150px] h-[40px] mb-10"
@@ -141,7 +149,6 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
-
       {loading == "loading" && <Loading />}
     </div>
   );

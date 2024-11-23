@@ -1,65 +1,48 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { FaHeart, FaEye } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../Redux/store";
+import { GetMyArtworks } from "../../Redux/FetchArtwork";
 
 const Artwork = () => {
-  const cardsData = [
-    {
-      image: "cards/card1.svg",
-      name: "Aurora",
-      likes: 2,
-      views: 10,
-    },
-    {
-      image: "cards/card2.svg",
-      name: "Forest Dream",
-      likes: 2,
-      views: 10,
-    },
-    {
-      image: "cards/card3.svg",
-      name: "Ice Cold",
-      likes: 2,
-      views: 10,
-    },
-    {
-      image: "cards/card4.svg",
-      name: "I Am Pink",
-      likes: 2,
-      views: 10,
-    },
-    {
-      image: "cards/card5.svg",
-      name: "X-ray Mushroom",
-      likes: 2,
-      views: 10,
-    },
-    {
-      image: "cards/card6.svg",
-      name: "Red Tiger",
-      likes: 2,
-      views: 10,
-    },
-  ];
+  const dispatch = useDispatch<AppDispatch>();
+  const User = useSelector((state: any) => state.User.my_profile.data);
+  const artworkData = useSelector((state: any) => state.ShopArtworks.my_shop_artwork.data);
+
+  const [artwork, setArtwork] = useState(artworkData);
+
+  useEffect(() => {
+    const getArtwork = async () => {
+      dispatch(GetMyArtworks(User.userId));
+      setArtwork(artworkData);
+    };
+    getArtwork();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <div className="grid grid-cols-3   ">
-        {cardsData.map((d, i) => (
-          <div className="mx-6 my-10 w-[375px] h-[260px] rounded-md  relative  " key={i}>
-            <div className="flex w-full h-64">
-              <img
-                src={d.image}
-                alt={d.name}
-                className="relative w-full h-64 rounded-t-md object-cover"
-              />
-              <img
-                className="absolute z-10 w-6 mt-9 ml-6"
-                src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718107635/perm_media_kofzof.svg"
-                alt="folder"
-              />
-            </div>
+        {artwork.map((d: any, i: any) => (
+          <div
+            className=" relative mx-6 my-10 w-[300px] h-auto rounded-md cursor-pointer  transform transition-transform duration-300 hover:scale-105 "
+            key={i}
+          >
+            <img
+              className="absolute z-10 w-6 mt-9 left-6"
+              src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718107635/perm_media_kofzof.svg"
+              alt="folder"
+            />
 
-            <div className="p-4 flex justify-between items-center rounded border-b-2 border-x border-[#fa684733] text-black bg-white bg-opacity-50">
-              <h2 className="text-[16px] font-Poppins ">{d.name}</h2>
+            <img
+              src={d.images[0]}
+              alt={d.artwork_name}
+              className="  w-full h-[180px] rounded-t-md object-cover"
+            />
+
+            <div className="p-3 flex justify-between items-center rounded border-b-2 border-x border-[#fa684733] text-black bg-white bg-opacity-50">
+              <h2 className="text-[16px] font-Poppins ">{d.artwork_name}</h2>
               <div className="flex items-center space-x-4">
                 <span className="flex items-center space-x-1">
                   <FaHeart className="text-[#F25B38]" />

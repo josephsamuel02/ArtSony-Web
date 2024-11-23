@@ -6,6 +6,7 @@ import { UserSignup } from "../../Redux/AuthSlice";
 import { AppDispatch } from "../../Redux/store";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../../components/Loading";
+import Nav from "../../components/NavBar/Nav";
 
 function Signup() {
   const dispatch = useDispatch<AppDispatch>();
@@ -36,7 +37,8 @@ function Signup() {
   };
   return (
     <div className="bg-[url(https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716657921/52f815ef99b62d1351fcc7c3db448e8b_ucxlyz.png)] bg-cover bg-no-repeat bg-center h-screen  w-screen flex flex-col items-center justify-center ">
-      <div className="w-[380px] h-auto bg-[rgba(22,22,53,0.5)]  bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-xl flex flex-col justify-center items-center px-6  ">
+      <Nav />
+      <div className="w-[380px] h-auto mt-20 bg-[rgba(22,22,53,0.5)]  bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-xl flex flex-col justify-center items-center px-6  ">
         <img
           src="https://res.cloudinary.com/dyjo2mvqb/image/upload/v1716659881/Layer_6_qlz3mp.png"
           className="w-[150px] h-[40px] my-5 "

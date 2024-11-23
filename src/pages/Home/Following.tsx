@@ -7,7 +7,9 @@ import { ArtworkByFollowing } from "../../Redux/FetchArtwork";
 
 const Following = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const userId = useSelector((state: any) => state.Auth.user.user.userId);
+  const user_id = useSelector((state: any) => state.Auth.user.user?.userId);
+
+  const [userId, setUserId] = useState();
 
   const one_artwork_by_followed_users = useSelector(
     (state: any) => state.FetchArtwork.artwork_by_following.data
@@ -16,6 +18,7 @@ const Following = () => {
   const [showPostData, setShowPostData] = useState(false);
 
   useEffect(() => {
+    setUserId(user_id);
     const fetchArtworks = async () => {
       try {
         await dispatch(ArtworkByFollowing({ userId: userId }));
@@ -24,7 +27,7 @@ const Following = () => {
       }
     };
 
-    fetchArtworks();
+    userId && fetchArtworks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

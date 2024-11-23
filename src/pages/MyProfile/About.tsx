@@ -10,8 +10,10 @@ const About = ({ User }: compData) => {
       <div className="flex flex-col ">
         <div className="gap-2">
           <h1 className="text-[24px] text-xl font-normal">Bio</h1>
-          {User.bio !== null && (
+          {User.bio !== null ? (
             <p className="w-[613px] font-Poppins text-[17px]">{User.bio}</p>
+          ) : (
+            <p className="w-[613px] font-Poppins text-[17px]">Your bio will appear here</p>
           )}
         </div>
 
@@ -58,51 +60,82 @@ const About = ({ User }: compData) => {
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-6">
           <h1 className="w-[103px] h-[24px]">Socials</h1>
-          {User.socials !== null && (
-            <div className="flex gap-12">
-              <img src="./images/instagram.svg" alt="instagram" className="hover:opacity-60" />
+
+          <div className="flex flex-row items-center">
+            <a
+              href={User.socials?.instagram ? User.socials?.instagram : ""}
+              className="mx-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="./images/instagram.svg"
+                alt="instagram"
+                className="hover:opacity-70 w-[25px] h-[25px] object-cover items-center "
+              />
+            </a>
+
+            <a
+              href={User.socials?.behance ? User.socials?.behance : ""}
+              className="mx-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img
                 src="public/images/behance.svg"
                 alt="behance"
-                className="hover:opacity-60"
+                className="hover:opacity-70 w-[25px] h-[25px] object-cover items-center"
               />
-              {User.socials.facebook && (
-                <a href={User.socials.facebook} target="_blank" rel="noopener noreferrer">
-                  <img
-                    src="public/images/facebook.svg"
-                    alt="facebook"
-                    className="hover:opacity-60"
-                  />
-                </a>
-              )}
+            </a>
 
-              {User.socials.x_social && (
-                <a href={User.socials.x_social} target="_blank" rel="noopener noreferrer">
-                  <img
-                    src="public/images/twitter.svg"
-                    alt="twitter"
-                    className="hover:opacity-60"
-                  />
-                </a>
-              )}
+            <a
+              href={User.socials?.facebook ? User.socials?.facebook : ""}
+              className="mx-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="public/images/facebook.svg"
+                alt="facebook"
+                className="hover:opacity-70 w-[25px] h-[25px] object-cover items-center"
+              />
+            </a>
 
-              {User.socials.youtube && (
-                <a href={User.socials.youtube} target="_blank" rel="noopener noreferrer">
-                  <FaYoutube color="red" size={28} />
-                </a>
-              )}
+            <a
+              href={User.socials?.x_social ? User.socials.x_social : ""}
+              className="mx-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="public/images/twitter.svg"
+                alt="twitter"
+                className="hover:opacity-70 w-[25px] h-[25px] object-cover items-center"
+              />
+            </a>
 
-              {User.socials.linkedin && (
-                <a href={User.socials.linkedin} target="_blank" rel="noopener noreferrer">
-                  <img
-                    src="public/images/linkedin.svg"
-                    alt="linkedin"
-                    className="hover:opacity-60"
-                  />
-                </a>
-              )}
-            </div>
-          )}
+            <a
+              href={User.socials?.youtube ? User.socials.youtube : ""}
+              className="mx-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaYoutube color="red" size={28} />
+            </a>
+
+            <a
+              href={User.socials?.linkedin ? User.socials.linkedin : ""}
+              className="mx-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="public/images/linkedin.svg"
+                alt="linkedin"
+                className="hover:opacity-70 w-[25px] h-[25px] object-cover items-center"
+              />
+            </a>
+          </div>
         </div>
 
         {User.website.length > 0 && (

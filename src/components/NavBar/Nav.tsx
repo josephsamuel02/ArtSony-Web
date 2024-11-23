@@ -21,7 +21,9 @@ const Nav = () => {
   const [showMessageCard, setShowMessageCard] = useState(false);
 
   const [searchText, setSearchText] = useState("");
-  const User = useSelector((state: any) => state.User.my_profile.data);
+  const UserData = useSelector((state: any) => state.User.my_profile.data);
+  const [User, setUser] = useState<any>([]);
+
   const naveData = [
     { title: "Explore", url: PUBLIC_ROUTES.EXPLORE },
     { title: "Shop", url: PUBLIC_ROUTES.SHOP },
@@ -41,16 +43,18 @@ const Nav = () => {
       dispatch(GetMyProfile());
     };
     fetchUser();
+    UserData && setUser(UserData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 w-full py-4 h-auto flex flex-row px-2 items-center backdrop-blur-sm backdrop-contrast-75 backdrop-opacity-75 backdrop-brightness-50 z-50 ">
+      <div className="fixed top-0 left-0 right-0 w-full py-4 h-auto flex flex-row px-2 items-center backdrop-blur-sm backdrop-contrast-75 backdrop-opacity-75 backdrop-brightness-50 z-40 ">
         <a href={PUBLIC_ROUTES.HOME}>
           <img
             src="/images/artsonylogo.png"
             alt="Art sony logo"
-            className="mx-6  w-auto h-5 object-cover"
+            className="mx-1 md:mx-6  w-auto h-3 md:h-5 object-cover"
           />
         </a>
         <div className="w-auto mx-auto items-center flex flex-row h-auto ">
@@ -76,54 +80,68 @@ const Nav = () => {
             />
           </div>
         </div>
-        <div className="mx-auto w-64 h-auto flex flex-row items-center">
-          <h2 className=" mx-auto  " onClick={() => setShowUploadCard("upload")}>
-            <img src="/images/upload.svg" alt="search" className="w-[27px] h-8" />
-          </h2>
-          <a href={PUBLIC_ROUTES.ORDERS} className=" mx-auto">
-            <img src="/images/local_shipping.svg" alt="search" className="w-[27px] h-8 " />
-          </a>
-          <h2
-            className="mx-auto relative p-1.5 px-1"
-            onClick={() => setShowNotificationCard(!showNotificationCard)}
-          >
-            <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
-              3
-            </p>
-            <img src="/images/notifications.svg" alt="search" className="w-[27px] h-8" />
-            {showNotificationCard && <NotificationCard />}
-          </h2>
-          <a href={PUBLIC_ROUTES.CHECKOUT} className=" mx-auto relative p-1.5 px-1">
-            <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
-              3
-            </p>
-            <img src="/images/local_mall.svg" alt="search" className="w-[27px] h-8" />
-          </a>
-          <h2
-            className=" mx-auto relative p-1.5 px-1"
-            onClick={() => setShowMessageCard(!showMessageCard)}
-          >
-            <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
-              3
-            </p>
-            <img src="/images/drafts.svg" alt="search" className="w-[27px] h-8" />
-          </h2>
-        </div>
-        <div
-          className="mx-3  w-auto flex flex-row items-center"
-          onClick={() => setShowProfileCard(!showProfileCard)}
-        >
-          {User.profile_img && (
-            <img
-              src={User.profile_img}
-              alt=""
-              className="w-10 h-10 object-cover rounded-full"
-            />
-          )}
-          <img src="/images/arrow_drop_down.svg" alt="search" className="mx-1 w-5 h-5" />
 
-          {showProfileCard && <ProfileCard User={User} />}
-        </div>
+        {UserData && (
+          <>
+            <div className="mx-auto w-64 h-auto flex flex-row items-center">
+              <h2 className=" mx-auto  " onClick={() => setShowUploadCard("upload")}>
+                <img src="/images/upload.svg" alt="search" className="w-[27px] h-8" />
+              </h2>
+              <a href={PUBLIC_ROUTES.ORDERS} className=" mx-auto">
+                <img src="/images/local_shipping.svg" alt="search" className="w-[27px] h-8 " />
+              </a>
+              <h2
+                className="mx-auto relative p-1.5 px-1"
+                onClick={() => setShowNotificationCard(!showNotificationCard)}
+              >
+                <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
+                  3
+                </p>
+                <img src="/images/notifications.svg" alt="search" className="w-[27px] h-8" />
+                {showNotificationCard && <NotificationCard />}
+              </h2>
+              <a href={PUBLIC_ROUTES.CHECKOUT} className=" mx-auto relative p-1.5 px-1">
+                <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
+                  3
+                </p>
+                <img src="/images/local_mall.svg" alt="search" className="w-[27px] h-8" />
+              </a>
+              <h2
+                className=" mx-auto relative p-1.5 px-1"
+                onClick={() => setShowMessageCard(!showMessageCard)}
+              >
+                <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
+                  3
+                </p>
+                <img src="/images/drafts.svg" alt="search" className="w-[27px] h-8" />
+              </h2>
+            </div>
+            <div
+              className="mx-3  w-auto flex flex-row items-center"
+              onClick={() => setShowProfileCard(!showProfileCard)}
+            >
+              {User.profile_img && (
+                <img
+                  src={User.profile_img}
+                  alt=""
+                  className="w-10 h-10 object-cover rounded-full"
+                />
+              )}
+              <img src="/images/arrow_drop_down.svg" alt="search" className="mx-1 w-5 h-5" />
+
+              {showProfileCard && <ProfileCard User={User} />}
+            </div>
+          </>
+        )}
+
+        {!UserData && (
+          <a
+            href={PUBLIC_ROUTES.LOGIN}
+            className=" md:ml-auto  py-2 px-3 md:px-6 bg-customOrange hover:bg-orange-900 text-white font-Poppins text-[12px] md:text-base rounded  "
+          >
+            Sign in
+          </a>
+        )}
       </div>
       {showUploadCard && (
         <UploadCard showUploadCard={showUploadCard} setShowUploadCard={setShowUploadCard} />

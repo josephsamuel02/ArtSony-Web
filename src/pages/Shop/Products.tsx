@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
-import ColorPicker from "react-pick-color";
+// import ColorPicker from "react-pick-color";
 import UserPostDetail from "../../components/PostDetails/UserPostDetail";
 import SearchResult from "../SearchPage.tsx/SearchResult";
 import { IoCartOutline } from "react-icons/io5";
@@ -13,13 +13,13 @@ import {
   ShopsArtworks,
   TopShopsArtworks,
 } from "../../Redux/ShopArtworks";
-import { useNavigate } from "react-router-dom";
-import { getArtworksByArtField } from "../../Redux/FetchArtwork";
-import PUBLIC_ROUTES from "../../utils/PublicRoutes";
+// import { useNavigate } from "react-router-dom";
+// import { getArtworksByArtField } from "../../Redux/FetchArtwork";
+// import PUBLIC_ROUTES from "../../utils/PublicRoutes";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const User = useSelector((state: any) => state.Auth.user.user);
+  const User = useSelector((state: any) => state.Auth.user?.user);
 
   const shop_artworks = useSelector((state: any) => state.ShopArtworks.shop_artworks.data);
 
@@ -33,19 +33,19 @@ const Products = () => {
     (state: any) => state.ShopArtworks.shop_artwork_for_you.data
   );
 
-  const [showArtistFieldList, setShowArtistFieldList] = useState(false);
-  const [showColorPicker, setShowColorPicker] = useState(false);
-  const [showLocation, setShowLocation] = useState(false);
+  // const [showArtistFieldList, setShowArtistFieldList] = useState(false);
+  // const [showColorPicker, setShowColorPicker] = useState(false);
+  // const [showLocation, setShowLocation] = useState(false);
   const [showPostData, setShowPostData] = useState(false);
   const [showSearchResult] = useState(false);
 
-  const [color, setColor] = useState("#3573CB");
+  // const [color, setColor] = useState("#3573CB");
 
   const colorpickeralRef = useRef<any>(null);
 
   const handleClickOutside = (event: any) => {
     if (colorpickeralRef.current && !colorpickeralRef.current.contains(event.target)) {
-      setShowColorPicker(false);
+      // setShowColorPicker(false);
     }
   };
 
@@ -84,7 +84,7 @@ const Products = () => {
   }, [selectedMenu]);
   return (
     <div className="w-full h-auto  ">
-      <div className="mx-auto w-full h-[80px]  px-6 flex flex-row items-center ">
+      {/* <div className="mx-auto w-full h-[80px]  px-6 flex flex-row items-center ">
         <div
           className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
           onClick={() => setShowArtistFieldList(true)}
@@ -147,7 +147,7 @@ const Products = () => {
           <p className="mx-auto text-sm font-Poppins text-black cursor-default">Recommended</p>
           <img src="/images/arrow_drop_down black.svg" alt="" className="mx-4" />
         </div>
-      </div>
+      </div> */}
 
       <div className="w-full h-auto mx-auto items-center mt-1 bg-white  flex flex-col ">
         <div className="w-full flex flex-row  py-5  items-center">
@@ -170,7 +170,7 @@ const Products = () => {
           {Artwork &&
             Artwork.map((i: any, n: number) => (
               <div
-                className="mx-auto w-[304px] h-[207px] my-10 bg-white rounded-md   relative"
+                className="mx-auto w-[304px] h-[207px] my-10 bg-white rounded-md cursor-pointer relative transform transition-transform duration-300 hover:scale-105"
                 onClick={() => setShowPostData(true)}
                 key={n}
               >
@@ -182,17 +182,17 @@ const Products = () => {
                 <div className="  absolute mx-2 top-2 lef-2 cursor-pointer items-center w-9 h-8 p-1 flex rounded  bg-[#05000060]  ">
                   <IoCartOutline size={26} className="text-white hover:text-[#fa6746]" />
                 </div>
-                <div className="absolute  bottom-7 left-0 right-0 bg-transparent h-1/4 bg-gradient-to-t  from-[#1919194D]">
-                  <p className="text-[28px] font-Raleway text-white text-center font-light ">
+                <div className="absolute  bottom-7 left-0 right-0 bg-[#1919194D] h-1/4 bg-gradient-to-t  from-black">
+                  <p className="text-[23px] py-2 font-Raleway text-white text-center font-light ">
                     {capitalizeFirstLetter(i.artwork_name)}
                   </p>
-                  <div className="w-full bottom-0 h-[50px] border border-[#f7b38594] rounded-b-sm bg-white flex flex-row items-center">
-                    <div className="w-2/3 px-4 flex flex-row items-center justify-start  ">
+                  <div className="w-full bottom-0 h-[50px] border border-[#b4b4b494] rounded-b bg-white flex flex-row items-center">
+                    <div className="w-2/3 px-1 flex flex-row items-center justify-start  ">
                       {i.user.profile_img && (
                         <img
                           src={i.user.profile_img}
                           alt=""
-                          className="w-[38px] h-[38px] mx-0 "
+                          className="w-[34px] h-[34px] mx-0 rounded-full "
                         />
                       )}
                       <p className="text-[11px] px-2 font-Poppins text-black ">
@@ -325,130 +325,130 @@ const Products = () => {
   );
 };
 
-const ArtisticField = ({ showArtistFieldList, setShowArtistFieldList }: any) => {
-  const artFieldRef = useRef<any>(null);
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  const Fields = [
-    "Random",
-    "Ai Art",
-    "Architecture",
-    "Space",
-    "Painting",
-    "Plant Life",
-    "Abstract",
-    "Medieval",
-    "Futuristic",
-    "Animation",
-    "Spiritual",
-  ];
+// const ArtisticField = ({ showArtistFieldList, setShowArtistFieldList }: any) => {
+//   const artFieldRef = useRef<any>(null);
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch<AppDispatch>();
+//   const Fields = [
+//     "Random",
+//     "Ai Art",
+//     "Architecture",
+//     "Space",
+//     "Painting",
+//     "Plant Life",
+//     "Abstract",
+//     "Medieval",
+//     "Futuristic",
+//     "Animation",
+//     "Spiritual",
+//   ];
 
-  const getArtByField = async (field: string) => {
-    dispatch(getArtworksByArtField({ art_field: field }));
-    navigate(`${PUBLIC_ROUTES.EXPLORE}?art_field=${field}`);
-  };
+//   const getArtByField = async (field: string) => {
+//     dispatch(getArtworksByArtField({ art_field: field }));
+//     navigate(`${PUBLIC_ROUTES.EXPLORE}?art_field=${field}`);
+//   };
 
-  const handleClickOutside = (event: any) => {
-    if (artFieldRef.current && !artFieldRef.current.contains(event.target)) {
-      setShowArtistFieldList(false);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-  return (
-    <>
-      {showArtistFieldList && (
-        <div
-          className="absolute top-12 w-[270px] h-[329px] bg-white shadow-md rounded-md z-30 overflow-y-scroll"
-          ref={artFieldRef}
-        >
-          <div className="mx-auto  w-11/12 p-2 px-4  rounded  h-auto flex flex-row  items-center bg-[#FEF7F5]  ">
-            <img
-              src="/images/search.svg"
-              alt=""
-              className="    w-[16px] h-[15px] cursor-pointer"
-            />
-            <input
-              type="text"
-              placeholder="Search Artistic Field"
-              className="placeholder-[#F25B38B2] text-[#292929b2] font-Poppins text-[12px] px-2 w-4/5 h-auto outline-none bg-transparent"
-            />
-          </div>
+//   const handleClickOutside = (event: any) => {
+//     if (artFieldRef.current && !artFieldRef.current.contains(event.target)) {
+//       setShowArtistFieldList(false);
+//     }
+//   };
+//   useEffect(() => {
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     };
+//   }, []);
+//   return (
+//     <>
+//       {showArtistFieldList && (
+//         <div
+//           className="absolute top-12 w-[270px] h-[329px] bg-white shadow-md rounded-md z-30 overflow-y-scroll"
+//           ref={artFieldRef}
+//         >
+//           <div className="mx-auto  w-11/12 p-2 px-4  rounded  h-auto flex flex-row  items-center bg-[#FEF7F5]  ">
+//             <img
+//               src="/images/search.svg"
+//               alt=""
+//               className=" w-[16px] h-[15px] cursor-pointer"
+//             />
+//             <input
+//               type="text"
+//               placeholder="Search Artistic Field"
+//               className="placeholder-[#F25B38B2] text-[#292929b2] font-Poppins text-[12px] px-2 w-4/5 h-auto outline-none bg-transparent"
+//             />
+//           </div>
 
-          <div className="w-full h-auto py-4 px-6 bg-white flex flex-col    border-t border-[#fadad3]">
-            <p className=" text-[16px] py-2 text-[#F25B38] font-Poppins  ">
-              All Artistic Fields
-            </p>
-            <p className=" text-[16px]  py-2  text-[#000000] font-Poppins  ">#</p>
-            {Fields.map((d: string, i: number) => (
-              <p
-                className=" text-[16px] py-2  text-[#000000] hover:text-customOrange font-Poppins cursor-default"
-                key={i}
-                onClick={() => getArtByField(d)}
-              >
-                {d}
-              </p>
-            ))}
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
+//           <div className="w-full h-auto py-4 px-6 bg-white flex flex-col    border-t border-[#fadad3]">
+//             <p className=" text-[16px] py-2 text-[#F25B38] font-Poppins  ">
+//               All Artistic Fields
+//             </p>
+//             <p className=" text-[16px]  py-2  text-[#000000] font-Poppins  ">#</p>
+//             {Fields.map((d: string, i: number) => (
+//               <p
+//                 className=" text-[16px] py-2  text-[#000000] hover:text-customOrange font-Poppins cursor-default"
+//                 key={i}
+//                 onClick={() => getArtByField(d)}
+//               >
+//                 {d}
+//               </p>
+//             ))}
+//           </div>
+//         </div>
+//       )}
+//     </>
+//   );
+// };
 
-const ArtLocation = ({ showLocation, setShowLocation }: any) => {
-  const modalRef = useRef<any>(null);
+// const ArtLocation = ({ showLocation, setShowLocation }: any) => {
+//   const modalRef = useRef<any>(null);
 
-  const handleClickOutside = (event: any) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setShowLocation(false);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-  return (
-    <>
-      {showLocation && (
-        <div
-          className="absolute top-12 w-[270px] h-[329px] bg-white shadow-md rounded-md z-30 overflow-y-scroll"
-          ref={modalRef}
-        >
-          <div className="mx-auto  w-11/12 p-2 px-4  rounded  h-auto flex flex-row  items-center bg-[#FEF7F5]  ">
-            <img
-              src="/images/search.svg"
-              alt=""
-              className="    w-[16px] h-[15px] cursor-pointer"
-            />
-            <input
-              type="text"
-              placeholder="Search Artistic Field"
-              className="placeholder-[#F25B38B2] text-[#292929b2] font-Poppins text-[12px] px-2 w-4/5 h-auto outline-none bg-transparent"
-            />
-          </div>
+//   const handleClickOutside = (event: any) => {
+//     if (modalRef.current && !modalRef.current.contains(event.target)) {
+//       setShowLocation(false);
+//     }
+//   };
+//   useEffect(() => {
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     };
+//   }, []);
+//   return (
+//     <>
+//       {showLocation && (
+//         <div
+//           className="absolute top-12 w-[270px] h-[329px] bg-white shadow-md rounded-md z-30 overflow-y-scroll"
+//           ref={modalRef}
+//         >
+//           <div className="mx-auto  w-11/12 p-2 px-4  rounded  h-auto flex flex-row  items-center bg-[#FEF7F5]  ">
+//             <img
+//               src="/images/search.svg"
+//               alt=""
+//               className="    w-[16px] h-[15px] cursor-pointer"
+//             />
+//             <input
+//               type="text"
+//               placeholder="Search Artistic Field"
+//               className="placeholder-[#F25B38B2] text-[#292929b2] font-Poppins text-[12px] px-2 w-4/5 h-auto outline-none bg-transparent"
+//             />
+//           </div>
 
-          <div className="w-full h-auto py-4 px-6 bg-white flex flex-col    border-t border-[#fadad3]">
-            <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
-              Afghanistan
-            </p>
-            <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
-              Aland Island
-            </p>
-            <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
-              Albania
-            </p>
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
+//           <div className="w-full h-auto py-4 px-6 bg-white flex flex-col    border-t border-[#fadad3]">
+//             <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
+//               Afghanistan
+//             </p>
+//             <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
+//               Alan Island
+//             </p>
+//             <p className=" text-[16px] py-2  text-[#000000] font-Poppins cursor-default  ">
+//               Albania
+//             </p>
+//           </div>
+//         </div>
+//       )}
+//     </>
+//   );
+// };
 
 export default Products;

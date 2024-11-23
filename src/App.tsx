@@ -1,27 +1,62 @@
-import { Routes, Route } from "react-router-dom";
-import Page404 from "./pages/Page404";
+import { useDispatch } from "react-redux";
+import { jwtDecode } from "jwt-decode";
 import PUBLIC_ROUTES from "./utils/PublicRoutes";
-import Home from "./pages/Home";
+import { Routes, Route } from "react-router-dom";
 import AboutUs from "./pages/AboutUs/AboutUs";
-import ContactUs from "./pages/ContactUs/ContactUs";
-import Login from "./pages/Auth/Login";
 import ForgottenPassword from "./pages/Auth/ForgottenPassword";
-import Signup from "./pages/Auth/Signup";
-import Faq from "./pages/Faq/Faq";
-import ArtistProfile from "./pages/Profile";
-import Checkout from "./pages/Checkout/Checkout";
+import Login from "./pages/Auth/Login";
 import LoginOption from "./pages/Auth/LoginOption";
-import Shop from "./pages/Shop";
+import Signup from "./pages/Auth/Signup";
+import Checkout from "./pages/Checkout/Checkout";
+import ContactUs from "./pages/ContactUs/ContactUs";
 import Explore from "./pages/Explore";
+import Faq from "./pages/Faq/Faq";
+import GeneralSettings from "./pages/GeneralSettings";
+import Home from "./pages/Home";
 import MyProfile from "./pages/MyProfile";
-import PostArt from "./pages/PostArt";
-import SellArtwork from "./pages/SellArt";
 import Orders from "./pages/Orders";
+import Page404 from "./pages/Page404";
+import PostArt from "./pages/PostArt";
+import ArtistProfile from "./pages/Profile";
+import ProfileSettings from "./pages/ProfileSettings";
 import SearchPage from "./pages/SearchPage.tsx";
-import ProfileSettings from "./pages/ProfileSettings/index.tsx";
-import GeneralSettings from "./pages/GeneralSettings/index.tsx";
+import SellArtwork from "./pages/SellArt";
+import Shop from "./pages/Shop";
+import { clearUserData } from "./Redux/User.ts";
+import { clearAuthData } from "./Redux/AuthSlice.ts";
+
+const checkTokenExpiry = () => {
+  const token = localStorage.getItem("ASY_A_Token");
+  if (token) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const decoded: any = jwtDecode(token);
+
+      const expiryTime = decoded.exp * 1000;
+      const currentTime = Date.now();
+      console.log(expiryTime - currentTime);
+      if (currentTime > expiryTime) {
+        // Token is expired
+        return true;
+      }
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+  }
+
+  return false; // Token is valid or not present
+};
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  // Check if the token has expired and clear the state if necessary
+  if (checkTokenExpiry()) {
+    dispatch(clearUserData());
+    dispatch(clearAuthData());
+    localStorage.removeItem("ASY_A_Token");
+  }
+
   return (
     <>
       <Routes>

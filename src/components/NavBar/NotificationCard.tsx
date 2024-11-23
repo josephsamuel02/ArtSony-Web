@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef, useEffect } from "react";
 
 const NotificationCard = () => {
@@ -120,7 +121,7 @@ const NotificationCard = () => {
             </div>
           </div>
         </div>
-      )}{" "}
+      )}
     </>
   );
 };

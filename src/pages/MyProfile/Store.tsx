@@ -1,52 +1,41 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GetMyShopArtworks } from "../../Redux/ShopArtworks";
+import { AppDispatch } from "../../Redux/store";
+
 export const Store = () => {
-  const cardsData = [
-    {
-      image: "public/cards/fireflies.svg",
-      name: "Fire Flies",
-      amount: " 100",
-      showIcon: true,
-    },
-    {
-      image: "public/cards/Beaming lights.svg",
-      name: "Beaming lights",
-      amount: " 1000",
-      showIcon: false,
-    },
-    {
-      image: "public/cards/Goldrain.svg",
-      name: "Gold rain",
-      amount: " 200",
-      showIcon: true,
-    },
-    {
-      image: "public/cards/Cyber punk.svg",
-      name: "Cyber punk",
-      amount: " 1000",
-      showIcon: false,
-    },
-    {
-      image: "public/cards/White out.svg",
-      name: "White out",
-      amount: " 700",
-      showIcon: false,
-    },
-    {
-      image: "public/cards/White out2.svg",
-      name: "White out",
-      amount: "2000",
-      showIcon: false,
-    },
-  ];
+  const dispatch = useDispatch<AppDispatch>();
+  const User = useSelector((state: any) => state.User.my_profile.data);
+  const artworkData = useSelector((state: any) => state.ShopArtworks.my_shop_artwork.data);
+
+  const [artwork, setArtwork] = useState(artworkData);
+
+  useEffect(() => {
+    const getArtwork = async () => {
+      dispatch(GetMyShopArtworks(User.userId));
+      setArtwork(artworkData);
+    };
+    getArtwork();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="grid grid-cols-3 gap-[80px]">
-        {cardsData.map((d, i) => (
-          <div className="w-[360px] bg-white mx-auto" key={i}>
-            <img src={d.image} alt="" className="w-full h-[200px] object-cover" />
-            <div className="w-full h-auto py-3 bg-white flex flex-row rounded-b border-x-2 border-b border-[#F25B3833]">
-              <p className="px-4 text-left font-poppins text-[14px]">{d.name}</p>
-              <h1 className="px-3 ml-auto justify-right text-[#F25B38]">${d.amount}</h1>
+    <div className="flex px-6 items-center justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[80px]">
+        {artwork.map((d: any, i: any) => (
+          <div
+            className="w-[320px] bg-white mx-auto rounded-b cursor-default  transform transition-transform duration-300 hover:scale-105"
+            key={i}
+          >
+            <img
+              src={d.images[0]}
+              alt=""
+              className="w-full h-[200px] object-cover rounded-t"
+            />
+            <div className="w-full h-auto py-3 bg-white flex flex-row rounded-b border-x-2 border-b border-[#83828133]">
+              <p className="px-4 text-left font-poppins text-[14px]">{d.artwork_name}</p>
+              <h1 className="px-3 ml-auto justify-right text-[#F25B38]">${d.price}</h1>
             </div>
           </div>
         ))}

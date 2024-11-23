@@ -105,7 +105,11 @@ const initialState = {
 export const authSlice: any = createSlice({
   name: "auth",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    clearAuthData: (state) => {
+      state.user = {};
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -136,5 +140,5 @@ export const authSlice: any = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
+export const { clearAuthData } = authSlice.actions;
 export default authSlice.reducer;
