@@ -518,7 +518,9 @@ const Comments = ({ Artwork }: any) => {
                       })
                     )
                   }
-                ></h3>
+                >
+                  Follow
+                </h3>
               </div>
             ))}
           <h3 className="mx-6 mt-4 text-sm text-black font-Poppins   ">

@@ -11,7 +11,7 @@ export const ViewArt = createAsyncThunk(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/artwork/view`,
         data
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
@@ -41,7 +41,7 @@ export const LikeArt = createAsyncThunk(
           },
         }
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
@@ -93,7 +93,7 @@ export const CommentOnArt = createAsyncThunk(
           },
         }
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
@@ -123,7 +123,7 @@ export const followUser = createAsyncThunk(
           },
         }
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
@@ -186,7 +186,7 @@ export const GetChatMessages = createAsyncThunk(
       const response = await axios.get(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/artwork/trending_artwork`
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
@@ -208,7 +208,7 @@ export const SendChatMessage = createAsyncThunk(
       const response = await axios.get(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/artwork/trending_artwork`
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
