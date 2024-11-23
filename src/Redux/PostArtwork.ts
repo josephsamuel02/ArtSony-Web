@@ -18,11 +18,10 @@ export const PostArtwork = createAsyncThunk(
           },
         }
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);

@@ -136,7 +136,6 @@ const TopArt = () => {
                 }`}
                 key={i}
                 onClick={() => {
-                  console.log(d);
                   setMenuedisplay(d);
                 }}
               >

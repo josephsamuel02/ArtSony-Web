@@ -14,7 +14,6 @@ export const ShopsArtworks = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -36,7 +35,6 @@ export const TopShopsArtworks = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -58,7 +56,6 @@ export const GetMyShopArtworks = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -80,7 +77,6 @@ export const getNewbiesShopArtwork = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -102,7 +98,6 @@ export const ShopArtworkJustForYou = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -125,7 +120,6 @@ export const getShopArtworksByArtField = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -140,8 +134,6 @@ export const ArtSearch = createAsyncThunk(
   "shop_search",
   async (data: any, { rejectWithValue }) => {
     try {
-      console.log(data);
-
       const response = await axios.post(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/artwork_shop/shop_search`,
         data
@@ -150,7 +142,6 @@ export const ArtSearch = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);

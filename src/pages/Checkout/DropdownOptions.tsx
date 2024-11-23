@@ -22,7 +22,6 @@ class DropdownOptions extends React.Component<Props, State> {
 
   _onSelect(option: string) {
     this.setState({ selectedOption: option });
-    console.log(`Selected option: ${option}`);
   }
 
   render() {

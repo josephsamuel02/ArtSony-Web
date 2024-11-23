@@ -79,7 +79,6 @@ const Explore = () => {
       }
     };
     getArtwork();
-    console.log(searchTerm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [artworkData, artworkField, searchTerm]);
 

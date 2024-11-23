@@ -28,7 +28,6 @@ const Home = () => {
       } catch (error) {
         console.error("Error fetching art of the week:", error);
       }
-      console.log(userId);
     };
 
     fetchArtworks();

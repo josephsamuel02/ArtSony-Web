@@ -32,8 +32,6 @@ const StageFour = ({ selectedFiles }: compData) => {
   };
 
   useEffect(() => {
-    // console.log(selectedFiles);
-    // console.log(Thumbnail);
     setThumbnail(selectedFiles);
   }, [selectedFiles]);
 

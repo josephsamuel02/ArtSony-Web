@@ -65,7 +65,6 @@ const StageSeven = ({ uploadImage }: cmpData) => {
 
         .then((response) => {
           setProductionFilesUrls((prev: any) => [...prev, response.data.secure_url]);
-          console.log(response.data.secure_url);
         })
         .catch((err) => console.log(err));
     }
@@ -76,7 +75,6 @@ const StageSeven = ({ uploadImage }: cmpData) => {
   const uploadArtwork = async (draft: string) => {
     setLoading("true");
     try {
-      console.log(artData);
       await uploadImage();
       await uploadProductionFiles();
       const action = await dispatch(
@@ -88,8 +86,6 @@ const StageSeven = ({ uploadImage }: cmpData) => {
         setLoading("success");
         dispatch(ResetSellDraft());
         navigate(PUBLIC_ROUTES.HOME);
-
-        console.log("Artwork uploaded successfully:", action.payload);
       } else if (PostArtwork.rejected.match(action)) {
         // Handle error
         setLoading("failed");
@@ -99,7 +95,6 @@ const StageSeven = ({ uploadImage }: cmpData) => {
       setLoading("false");
     } catch (error) {
       setLoading("error");
-      console.log(error);
     }
   };
 

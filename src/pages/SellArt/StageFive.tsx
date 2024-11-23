@@ -46,7 +46,6 @@ const StageFive = () => {
 
         .then((response) => {
           setImageUrls((prev: any) => [...prev, response.data.secure_url]);
-          console.log(response.data.secure_url);
         })
         .catch((err) => console.log(err));
     }

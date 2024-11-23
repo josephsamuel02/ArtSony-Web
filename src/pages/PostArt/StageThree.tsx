@@ -19,7 +19,6 @@ const StageThree = () => {
     },
   ];
   const updatePost = async () => {
-    // console.log(artDetail);
     dispatch(PostArtworkDraft(artDetail));
   };
 

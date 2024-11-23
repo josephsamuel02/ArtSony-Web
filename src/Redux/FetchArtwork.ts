@@ -10,7 +10,6 @@ export const Artworks = createAsyncThunk("get_artworks", async (_, { rejectWithV
     return response.data;
   } catch (error: any) {
     console.error(rejectWithValue);
-    console.log(error);
 
     if (error.response && error.response.data) {
       return rejectWithValue(error.response.data);
@@ -31,7 +30,6 @@ export const GetMyArtworks = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -53,7 +51,6 @@ export const GetArtOfTheWeek = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -73,7 +70,6 @@ export const TopArtwork = createAsyncThunk("top_art", async (_, { rejectWithValu
     return response.data;
   } catch (error: any) {
     console.error(rejectWithValue);
-    console.log(error);
 
     if (error.response && error.response.data) {
       return rejectWithValue(error.response.data);
@@ -93,7 +89,6 @@ export const TrendingArtworks = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -115,7 +110,6 @@ export const TopShopsArtworks = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -137,7 +131,6 @@ export const getArtworkByNewbies = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -159,7 +152,6 @@ export const JustForYou = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -182,7 +174,6 @@ export const getArtworksByArtField = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -204,7 +195,6 @@ export const ArtworkByFollowing = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -219,8 +209,6 @@ export const ArtSearch = createAsyncThunk(
   "artwork_search",
   async (data: any, { rejectWithValue }) => {
     try {
-      console.log(data);
-
       const response = await axios.post(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/artwork/search`,
         data
@@ -229,7 +217,6 @@ export const ArtSearch = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);

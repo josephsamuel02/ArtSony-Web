@@ -23,7 +23,6 @@ const Login: React.FC = () => {
 
   const LoginAction = async (e: MouseEvent) => {
     e.preventDefault();
-    console.log(loginData);
 
     try {
       await dispatch(LoginUser(loginData));
@@ -34,8 +33,6 @@ const Login: React.FC = () => {
         window.location.assign;
         Navigate(PUBLIC_ROUTES.HOME);
       }
-
-      console.log(loginData);
     } catch (error) {
       console.log(`${error}, unable to login`);
     }

@@ -10,11 +10,11 @@ export const UserSignup = createAsyncThunk(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/auth/signup`,
         data
       );
-      // console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
+
       return error.response.data;
     }
   }
@@ -24,8 +24,6 @@ export const LoginUser = createAsyncThunk(
   "login-user",
   async (data: any, { rejectWithValue }) => {
     try {
-      console.log(data);
-
       const response = await axios.post(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/auth/login`,
         data
@@ -35,10 +33,8 @@ export const LoginUser = createAsyncThunk(
         localStorage.setItem("ASY_A_Token", response.data.access_token);
       }
 
-      console.log(response.data);
       return response.data;
     } catch (error: any) {
-      console.log(error);
       return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
@@ -83,7 +79,6 @@ export const SendCode = createAsyncThunk(
 export const VerifyPhone = createAsyncThunk(
   "verify-phone",
   async (data, { rejectWithValue }) => {
-    console.log(data);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/users/verify-phone`,

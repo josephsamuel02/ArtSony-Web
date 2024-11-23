@@ -17,7 +17,6 @@ export const GetMyProfile = createAsyncThunk("my_profile", async (_, { rejectWit
     return response.data;
   } catch (error: any) {
     console.error(rejectWithValue);
-    console.log(error);
 
     if (error.response && error.response.data) {
       return rejectWithValue(error.response.data);
@@ -30,8 +29,6 @@ export const GetMyProfile = createAsyncThunk("my_profile", async (_, { rejectWit
 export const UpdateUserProfile = createAsyncThunk(
   "update_user",
   async (data: any, { rejectWithValue }) => {
-    console.log(data);
-
     try {
       const token = localStorage.getItem("ASY_A_Token");
       const response = await axios.put(
@@ -43,11 +40,10 @@ export const UpdateUserProfile = createAsyncThunk(
           },
         }
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -69,7 +65,6 @@ export const GetProfileById = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);

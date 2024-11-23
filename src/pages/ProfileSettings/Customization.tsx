@@ -73,7 +73,6 @@ const Customization = ({ userInfo }: compData) => {
         .post(import.meta.env.VITE_CLOUDINARY_BASE_URL, formData)
         .then((response) => {
           setUserData((prev) => ({ ...prev, profile_img: response.data.secure_url }));
-          console.log(response.data.secure_url);
         })
         .catch((err) => console.log(err));
     }
@@ -85,7 +84,6 @@ const Customization = ({ userInfo }: compData) => {
       await axios
         .post(import.meta.env.VITE_CLOUDINARY_BASE_URL, formData)
         .then((response) => {
-          console.log(response.data.secure_url);
           setUserData((prev) => ({ ...prev, profile_poster_img: response.data.secure_url }));
         })
         .catch((err) => console.log(err));
@@ -104,7 +102,6 @@ const Customization = ({ userInfo }: compData) => {
 
   const updateUserInfo = async (e: any) => {
     e.preventDefault();
-    console.log(userData);
 
     setLoading(true);
     await uploadImage();
