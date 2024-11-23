@@ -15,7 +15,6 @@ export const ViewArt = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -31,7 +30,7 @@ export const LikeArt = createAsyncThunk(
   async (data: any, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("ASY_A_Token");
-      console.log(data);
+
       const response = await axios.post(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/artwork/like`,
         data,
@@ -45,7 +44,6 @@ export const LikeArt = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -67,7 +65,6 @@ export const UnlikeArt = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -97,7 +94,6 @@ export const CommentOnArt = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -127,7 +123,6 @@ export const followUser = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -147,7 +142,6 @@ export const LikeComment = createAsyncThunk("like_comment", async (_, { rejectWi
     return response.data;
   } catch (error: any) {
     console.error(rejectWithValue);
-    console.log(error);
 
     if (error.response && error.response.data) {
       return rejectWithValue(error.response.data);
@@ -168,7 +162,6 @@ export const GetAllChats = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -190,7 +183,6 @@ export const GetChatMessages = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -212,7 +204,6 @@ export const SendChatMessage = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       console.error(rejectWithValue);
-      console.log(error);
 
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
