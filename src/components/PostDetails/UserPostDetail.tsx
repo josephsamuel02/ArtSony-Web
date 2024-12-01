@@ -15,6 +15,7 @@ import { GetMyArtworks } from "../../Redux/FetchArtwork";
 import { GetMyShopArtworks } from "../../Redux/ShopArtworks";
 import FormatNumber from "../NumberFormater";
 import { CommentOnArt, followUser } from "../../Redux/Engagement";
+import socket from "../../utils/socket";
 
 interface cmpState {
   Artwork: any;
@@ -32,6 +33,19 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
   const [artworkData, setArtworkData] = useState(userArtworks);
   const [shopartworkData, setShopArtworkData] = useState(userShopArtworks);
   const [showSectionTwo, setShowSectionTwo] = useState(false);
+  const [showChatBox, setShowChatBox] = useState(false);
+
+  const [message, setMessage] = useState({
+    sender: User.userId,
+    receiver: Artwork.userId,
+    text: "",
+  });
+
+  const onStartNewChat = (data: object) => {
+    socket.emit("create_message", data, (response: any) => {
+      console.log(response);
+    });
+  };
 
   const item = {
     images: [
@@ -98,10 +112,10 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
 
               <div className="flex flex-col items-center justify-center mt-14">
                 <div className="relative bg-[url(https://res.cloudinary.com/dspkk9qlz/image/upload/v1718099830/Group_1542_rqqlwm.png)] bg-cover w-[166.77px] h-[166px] text-orange-500">
-                  {Artwork.user?.profile_img !== null ? (
+                  {Artwork.User?.profile_img !== null ? (
                     <img
                       className="absolute mt-5 ml-5 w-[127px] h-[127px] object-center object-cover rounded-full flex"
-                      src={Artwork.user?.profile_img}
+                      src={Artwork.User?.profile_img}
                       alt="profile image"
                     />
                   ) : (
@@ -114,13 +128,13 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
                 </div>
 
                 <h3 className="text-xl font-Poppins py-2 text-black mb-6">
-                  {Artwork.user?.user_name}
+                  {Artwork.User?.user_name}
                 </h3>
 
                 <div className="w-full h-auto">
                   <h3 className="w-full text-lg font-Poppins font-semibold p-6  text-black border border-t-blue-gray-200">
                     Also by
-                    <span className="text-customOrange"> {Artwork.user?.user_name}</span>
+                    <span className="text-customOrange"> {Artwork.User?.user_name}</span>
                   </h3>
 
                   <div className="w-full h-auto  grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center bg-white py-5   ">
@@ -167,14 +181,14 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
                                 )}
                               </div>
                               <div className="w-2/3 px-4 flex flex-row items-center justify-end">
-                                {i.user?.user_name && (
+                                {i.User?.user_name && (
                                   <p className="text-[14px] px-2 font-Poppins text-white">
-                                    {i.user?.user_name}
+                                    {i.User?.user_name}
                                   </p>
                                 )}
-                                {i.user?.profile_img && (
+                                {i.User?.profile_img && (
                                   <img
-                                    src={i.user?.profile_img}
+                                    src={i.User?.profile_img}
                                     alt=""
                                     className="w-[38px] h-[38px] mx-1 rounded-full"
                                   />
@@ -190,7 +204,7 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
 
                   <h3 className="text-lg font-Poppins font-semibold  p-6  text-black border border-t-blue-gray-200">
                     Also by
-                    <span className="text-customOrange"> {Artwork.user?.user_name}</span> for
+                    <span className="text-customOrange"> {Artwork.User?.user_name}</span> for
                     sale
                   </h3>
 
@@ -238,14 +252,14 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
                                 )}
                               </div>
                               <div className="w-2/3 px-4 flex flex-row items-center justify-end">
-                                {i.user?.user_name && (
+                                {i.User?.user_name && (
                                   <p className="text-[14px] px-2 font-Poppins text-white">
-                                    {i.user?.user_name}
+                                    {i.User?.user_name}
                                   </p>
                                 )}
-                                {i.user?.profile_img && (
+                                {i.User?.profile_img && (
                                   <img
-                                    src={i.user?.profile_img}
+                                    src={i.User?.profile_img}
                                     alt=""
                                     className="w-[38px] h-[38px] mx-1 rounded-full"
                                   />
@@ -275,18 +289,18 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
             <h3 className="py-4 text-[#504f4f] text-[19px] font-Poppins">Owner</h3>
           </div>
           <div className="mx-auto w-full flex flex-row items-center">
-            {Artwork.user?.profile_img && (
+            {Artwork.User?.profile_img && (
               <img
-                src={Artwork.user?.profile_img}
+                src={Artwork.User?.profile_img}
                 className="m-1 w-12 h-12 object-cover rounded-full"
               />
             )}
             <div className="flex flex-col pl-3">
               <h1 className="text-[#F25B38] text-[13px] font-Raleway">
-                {Artwork.user?.user_name}
+                {Artwork.User?.user_name}
               </h1>
               <p className="text-[#0a0a0a] text-[11px] font-light font-Raleway">
-                {Artwork.user?.profession}
+                {Artwork.User?.profession}
               </p>
             </div>
           </div>
@@ -298,9 +312,9 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
                 dispatch(
                   followUser({
                     userId: Artwork.userId,
-                    user_id: User.userId,
-                    user_name: User.user_name,
-                    profile_img: User.profile_image,
+                    user_id: User?.userId,
+                    user_name: User?.user_name,
+                    profile_img: User?.profile_image,
                   })
                 )
               }
@@ -308,9 +322,42 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
               <IoMdPersonAdd size={15} />
               <button className="text-center  ml-1 text-xs">Follow</button>
             </div>
-            <div className=" flex flex-row  bg-lightOrange  hover:bg-customOrange py-3  text-customOrange  hover:text-white  border border-[#fcac9a69]   justify-center gap-1 rounded-md items-center">
-              <FaRegEnvelope size={15} />
-              <button className="text-center ml-1 text-xs ">Message</button>
+            <div className=" relative flex flex-row bg-lightOrange  hover:bg-customOrange py-3  text-customOrange  hover:text-white  border border-[#fcac9a69]   justify-center gap-1 rounded-md items-center">
+              <div
+                className="flex flex-row"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowChatBox(!showChatBox);
+                }}
+              >
+                <FaRegEnvelope size={15} />
+                <button className="text-center ml-1 text-xs ">Message</button>
+              </div>
+              {showChatBox && (
+                <div className="absolute top-[40px] mx-auto p-2 w-full h-auto flex flex-col items-center rounded-lg bg-white border border-[#fa843f4b]">
+                  <textarea
+                    name="chat box"
+                    placeholder="Enter message..."
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      setMessage((prev) => ({
+                        ...prev,
+                        text: e.target.value,
+                      }));
+                    }}
+                    className=" resize-none w-full h-[70px] p-1 text-xs text-gray-900 font-Poppins rounded-md border border-[#da624d8a] outline-none"
+                  ></textarea>
+                  <input
+                    type="button"
+                    value="Send"
+                    onClick={() => {
+                      setShowChatBox(false);
+                      onStartNewChat(message);
+                    }}
+                    className="mx-auto my-2 w-full h-auto py-2 text-center text-white bg-customOrange hover:bg-[#da4b32] rounded-md"
+                  />
+                </div>
+              )}
             </div>
           </div>
           <hr className="py-3 mt-3" />
@@ -400,11 +447,11 @@ const Comments = ({ Artwork }: any) => {
   const User = useSelector((state: any) => state.User?.my_profile.data);
 
   const [comment, setComment] = useState({
-    userId: User.userId,
+    userId: User?.userId,
     artwork_id: "",
     comment: "",
-    user_name: User.user_name,
-    profile_img: User.profile_img,
+    user_name: User?.user_name,
+    profile_img: User?.profile_img,
   });
   const textareaRef = useRef<HTMLTextAreaElement | any>(null); // Create a ref to reference the textarea
 
@@ -447,11 +494,11 @@ const Comments = ({ Artwork }: any) => {
                   onClick={() => {
                     dispatch(CommentOnArt(comment));
                     setComment({
-                      userId: User.userId,
+                      userId: User?.userId,
                       artwork_id: "",
                       comment: "",
-                      user_name: User.user_name,
-                      profile_img: User.profile_img,
+                      user_name: User?.user_name,
+                      profile_img: User?.profile_img,
                     });
                     clearTextarea();
                   }}
@@ -512,9 +559,9 @@ const Comments = ({ Artwork }: any) => {
                     dispatch(
                       followUser({
                         userId: d.userId,
-                        user_id: User.userId,
-                        user_name: User.user_name,
-                        profile_img: User.profile_image,
+                        user_id: User?.userId,
+                        user_name: User?.user_name,
+                        profile_img: User?.profile_image,
                       })
                     )
                   }

@@ -1,11 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import { BiEnvelopeOpen } from "react-icons/bi";
-import { MdOutlineArchive } from "react-icons/md";
+import { MdOutlineArchive, MdSend } from "react-icons/md";
 import { MdOutlineSettings } from "react-icons/md";
 import Icons from "./Icons";
-
+import socket from "../../../utils/socket";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../Redux/store";
+import { getAllMessages } from "../../../Redux/websockets";
 const MessageCard = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [cardSate, setCardState] = useState("open");
   const [selectedChat, setSelectedChat] = useState(0);
   const [showIcons, setShowIcons] = useState(false);
@@ -18,43 +23,50 @@ const MessageCard = () => {
     { image: "/images/Ellipse 10 (1).svg", name: "James Christopher" },
     { image: "/images/Ellipse 10 (1).svg", name: "James Christopher" },
   ];
-
-  const chatMessages = [
+  const userId = localStorage.getItem("artsoney_user_id");
+  const [chatMessages, setChatMessages] = useState([
     {
       message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in diam pellentesque placerat ultricies.",
+        "Lorem ipsum dolor sit t, consectetur advising edit. In in diam pellentesque  .",
       user: "me",
       time: "10:28pm",
     },
     {
-      message: "Lorem consectetur adipiscing elit. In in diam  ultricies.",
+      message: "Lorem consectetur advising edit. In in diam  utricles.",
       user: "other",
       time: "10:28pm",
     },
     {
-      message: "Lorem ipsum dolor sit amet, consectetur   placerat ultricies.",
+      message: "Lorem ipsum dolor sit okay, consectetur .",
       user: "me",
       time: "10:28pm",
     },
     {
-      message: "Lorem ipsum dolor sit amet,  lacerat ultricies.",
+      message: "Lorem ipsum dolor sit abet,  lacerta utricles.",
       user: "other",
       time: "10:28pm",
     },
     {
-      message: "Lorem ipsum dolor sit amet, consectetur.",
+      message: "Lorem ipsum dolor sit okay, consectetur.",
       user: "me",
       time: "10:28pm",
     },
     {
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in diam pellentesque placerat ultricies.",
+      message: "Lorem ipsum dolor sit okay, consectetur yes  . In in diam pellentesque  .",
       user: "other",
       time: "10:28pm",
     },
-  ];
+  ]);
+  const [chatId] = useState("chatId");
 
-  const [cOption, setcOption] = useState("Messages");
+  const [message, setMessage] = useState<object>({
+    id: chatId,
+    user_id: userId,
+    text: "",
+    url: "",
+    image: "",
+  });
+  const [cOption, setC_Options] = useState("Messages");
   const [showCOptions, setShowCOptions] = useState(false);
 
   const chatOptions = [
@@ -77,12 +89,71 @@ const MessageCard = () => {
     }
   };
 
+  // const onOpenNewChat = () => {
+  //   if (message.trim()) {
+  //     socket.emit(
+  //       "create_message",
+  //       { sender: "User1", receiver: "user2" },
+  //       (response: any) => {
+  //         console.log(response);
+  //       }
+  //     );
+  //   }
+  // };
+
+  const sendMessage = () => {
+    // Emit a message to the server
+    socket.emit("send_message", message, (response: any) => {
+      setChatMessages(response);
+      setMessage({}); // Clear input field
+    });
+  };
+
+  const emitTyping = () => {
+    // setIsTyping(true);
+    socket.emit("typing", { isTyping: true });
+
+    setTimeout(() => {
+      socket.emit("typing", { isTyping: false });
+    }, 2000);
+  };
+
+  useEffect(() => {
+    socket.connect();
+
+    dispatch(getAllMessages());
+
+    // Listen for incoming messages
+    socket.on(chatId, (response: any) => {
+      console.log("Message received:", response);
+      setMessage(response);
+      console.log(response);
+    });
+
+    socket.on("typing", (response: any) => {
+      console.log(response);
+    });
+
+    // Clean up on unmount
+    return () => {
+      socket.off("message");
+      socket.off("connect");
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatId]);
+
+  // useEffect(() => {
+  //   socket.emit("findAll", {}, (response: any) => {
+  //      console.log(response);
+  //   });
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <div
       className={`w-full h-full   fixed top-0 bottom-0 left-0 right-0 flex items-center backdrop-brightness-50 backdrop-blur-xs z-50
@@ -115,7 +186,7 @@ const MessageCard = () => {
                           : "text-black border-l-2 border-[#ffffff]"
                       }`}
                       key={i}
-                      onClick={() => setcOption(d.title)}
+                      onClick={() => setC_Options(d.title)}
                     >
                       {d.icon} {d.title}
                     </p>
@@ -172,7 +243,7 @@ const MessageCard = () => {
                       <span className="absolute bottom-8 right-0  p-[7px] bg-[#28DA24] rounded-full"></span>
 
                       <p className="truncate  text-[14px] text-center font-Poppins text-black">
-                        {d.name}{" "}
+                        {d.name}
                       </p>
                     </div>
                   ))}
@@ -210,8 +281,7 @@ const MessageCard = () => {
                         </div>
                         <div className="w-min py-1 h-1/2 flex flex-row items-center">
                           <p className="truncate w-3/5    text-[14px] text-center font-Poppins text-black">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. rq3rq
-                            3c3rq3r 3 r 3
+                            Lorem ipsum dolor sit okay, consectetur yes . rq3rq 3c3rq3r 3 r 3
                           </p>
                           <img
                             src="/images/menu.svg "
@@ -247,7 +317,7 @@ const MessageCard = () => {
                 </p>
               </div>
             </div>
-            {/* Serch Input */}
+            {/* Search Input */}
             <div className="mx-auto  w-3/5 p-4 py-3 rounded  h-auto flex flex-row  items-center bg-[#FEF7F5]  ">
               <img
                 src="/images/search.svg"
@@ -301,7 +371,7 @@ const MessageCard = () => {
             </div>
 
             <div className="relative w-full h-auto py-2 flex flex-row items-center">
-              <div className="mx-auto py-3 w-10/12 h-auto items-center flex flex-row backdrop-brightness-75 rounded-md bg-[#8F8F8F]">
+              <div className="ml-auto py-3 w-10/12 h-auto items-center flex flex-row backdrop-brightness-75 rounded-md bg-[#8F8F8F]">
                 <img
                   src="/images/mood.svg"
                   alt=""
@@ -312,19 +382,30 @@ const MessageCard = () => {
                   type="text"
                   name=""
                   id=""
+                  onChange={(e) => {
+                    emitTyping();
+                    setMessage((prev) => ({ ...prev, text: e.target.value }));
+                  }}
                   className="w-4/6 text-white bg-transparent outline-none"
                 />
+
                 <img
                   src="/images/attachment.svg"
                   alt=""
-                  className=" mx-auto w-[22px] h-[22px]"
+                  className=" ml-auto w-[22px] h-[22px]"
                 />
                 <img
                   src="/images/photo_camera.svg"
                   alt=""
-                  className=" mx-auto w-[22px] h-[22px]"
+                  className=" mx-4 w-[22px] h-[22px]"
                 />
               </div>
+              <h3
+                className="mx-auto ml-3 px-2.5 py-2 flex items-center bg-customOrange hover:bg-[#e7463a] rounded-lg"
+                onClick={() => sendMessage()}
+              >
+                <MdSend size={30} color="white" />
+              </h3>
               {showIcons && <Icons showIcons={showIcons} setShowIcons={setShowIcons} />}
             </div>
           </div>

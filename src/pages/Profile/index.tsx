@@ -49,7 +49,7 @@ const ArtistProfile = () => {
                 <img
                   className="absolute mt-5 ml-5 w-[127px] h-[126.42] flex"
                   src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718099969/profile_page_image_ohcd63.svg"
-                  alt="profilepix"
+                  alt="profile_pix"
                 />
               </div>
             </div>

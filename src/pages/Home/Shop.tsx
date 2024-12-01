@@ -14,7 +14,7 @@ const Shop = () => {
   const top_shops_artworks = useSelector(
     (state: any) => state.FetchArtwork.top_shops_artworks.data
   );
-  const userId = useSelector((state: any) => state.Auth.user?.user?.userId);
+  const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
   const [showPostData, setShowPostData] = useState(false);
   const [artworkDetails, setArtworkDetails] = useState("");
 

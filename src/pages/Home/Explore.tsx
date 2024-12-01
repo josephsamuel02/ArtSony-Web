@@ -11,7 +11,7 @@ import FormatNumber from "../../components/NumberFormater";
 const Explore = () => {
   const dispatch = useDispatch<AppDispatch>();
   const artworks = useSelector((state: any) => state.FetchArtwork.artwork_of_the_week.data);
-  const userId = useSelector((state: any) => state.Auth.user?.user?.userId);
+  const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
 
   const [artworkDetails, setArtworkDetails] = useState("");
   const [showPostData, setShowPostData] = useState(false);
@@ -84,7 +84,7 @@ const Explore = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             userId &&
-                              dispatch(LikeArt({ userId: userId, user_name: i.user_name }));
+                              dispatch(LikeArt({ userId: userId, artwork_id: i.artwork_id }));
                           }}
                         >
                           {isLiked ? (

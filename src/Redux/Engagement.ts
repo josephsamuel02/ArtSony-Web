@@ -30,7 +30,6 @@ export const LikeArt = createAsyncThunk(
   async (data: any, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("ASY_A_Token");
-
       const response = await axios.post(
         `${import.meta.env.VITE_ARTSONY_TEST_API}/artwork/like`,
         data,

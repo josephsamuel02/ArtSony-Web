@@ -13,7 +13,7 @@ const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const Navigate = useNavigate();
   const LogInStatus = useSelector((state: any) => state.Auth.auth?.status);
-  // const status = useSelector((state: any) => state.Auth.auth.status);
+  const userId = useSelector((state: any) => state.Auth.auth.data.user_id);
 
   const [loading, setLoading] = useState(LogInStatus);
   const [loginData, setLoginData] = useState<any>({
@@ -23,7 +23,7 @@ const Login: React.FC = () => {
 
   const LoginAction = async (e: MouseEvent) => {
     e.preventDefault();
-
+    localStorage.setItem("artsoney_user_id", userId);
     try {
       await dispatch(LoginUser(loginData));
       setLoading(true);
@@ -39,6 +39,7 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
+    localStorage.removeItem("artsoney_user_id");
     dispatch(clearUserData());
     dispatch(clearAuthData());
     localStorage.removeItem("ASY_A_Token");
@@ -77,15 +78,18 @@ const Login: React.FC = () => {
             Login
           </button>
           <div className="flex flex-row py-6 text-white items-center w-full  ">
-            <div className="flex flex-row items-center justify-items-center">
-              <input
-                type="checkbox"
-                className="m-0 h-[11px]   accent-[#f25b38] bg-[#f25b38] mr-1"
-              />
-              <p className="m-auto text-sm font-Poppins text-[10px] font-light text-white  mt-1">
-                Remember me
-              </p>
-              <p className="text-sm font-Poppins text-[10px] font-light text-white   mt-1 mx-auto text-wrap pl-16 text-right ">
+            <div className="w-full flex flex-row items-center justify-items-center">
+              <h3 className="mr-auto w-auto flex flex-row items-center ">
+                <input
+                  type="checkbox"
+                  className="m-0 h-[11px] accent-[#f25b38] bg-[#f25b38] mr-1"
+                />
+                <p className=" font-Poppins text-[10px] font-light text-white   ">
+                  Remember me
+                </p>
+              </h3>
+
+              <p className="ml-auto flex font-Poppins text-[10px] font-light text-white   mt-1   text-wrap  text-right ">
                 Forgotten Password?
               </p>
             </div>

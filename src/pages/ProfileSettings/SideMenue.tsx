@@ -1,16 +1,21 @@
+import { clearAuthData } from "../../Redux/AuthSlice";
+import { AppDispatch } from "../../Redux/store";
+import { clearUserData } from "../../Redux/User";
+import { useDispatch } from "react-redux";
+
 interface compData {
   displayCom: string;
   setDisplayComp: (item: string) => void;
 }
 
 const SideMenue = ({ displayCom, setDisplayComp }: compData) => {
+  const dispatch = useDispatch<AppDispatch>();
   const settingsMenu = [
     "Personal Information",
     "Customization",
     "About",
     "Language & Location",
     "Socials & Links",
-    "Sign Out",
   ];
 
   return (
@@ -53,6 +58,17 @@ const SideMenue = ({ displayCom, setDisplayComp }: compData) => {
               {d}
             </h3>
           ))}
+
+          <h3
+            className="px-3 py-4 text-[15px] text-customOrange hover:bg-[#f25a382a] font-semibold font-Poppins   border-l-4 cursor-pointer "
+            onClick={() => {
+              dispatch(clearUserData());
+              dispatch(clearAuthData());
+              window.location.assign("/");
+            }}
+          >
+            Sign Out
+          </h3>
         </div>
       </div>
     </div>

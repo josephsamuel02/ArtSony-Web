@@ -14,6 +14,7 @@ import { GetMyProfile } from "../../Redux/User";
 const Nav = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const userId = useSelector((state: any) => state.Auth.auth.data.user_id);
 
   const [showUploadCard, setShowUploadCard] = useState("close");
   const [showNotificationCard, setShowNotificationCard] = useState(false);
@@ -39,6 +40,7 @@ const Nav = () => {
   };
 
   useEffect(() => {
+    localStorage.setItem("artsoney_user_id", userId);
     const fetchUser = async () => {
       dispatch(GetMyProfile());
     };

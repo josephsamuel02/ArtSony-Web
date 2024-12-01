@@ -133,10 +133,10 @@ const Explore = () => {
             {artwork.map((d: any, i: any) => (
               <div
                 key={i}
-                className="flex flex-col bg-white rounded border shadow-md cursor-pointer transform transition-transform duration-300 hover:scale-105"
+                className="flex flex-col bg-white rounded-lg border shadow-md cursor-pointer transform transition-transform duration-300 hover:scale-105"
               >
                 <div className="relative">
-                  <div className="absolute top-2 left-2 bg-[#05000060] p-1 rounded">
+                  <div className="absolute top-4 left-4 bg-[#05000060] p-1 rounded">
                     <FaRegImages size={20} className="text-white hover:text-[#fa6746]" />
                   </div>
                   <img

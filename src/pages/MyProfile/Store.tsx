@@ -13,7 +13,7 @@ export const Store = () => {
 
   useEffect(() => {
     const getArtwork = async () => {
-      dispatch(GetMyShopArtworks(User.userId));
+      dispatch(GetMyShopArtworks(User?.userId));
       setArtwork(artworkData);
     };
     getArtwork();
@@ -25,15 +25,15 @@ export const Store = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[80px]">
         {artwork.map((d: any, i: any) => (
           <div
-            className="w-[320px] bg-white mx-auto rounded-b cursor-default  transform transition-transform duration-300 hover:scale-105"
+            className="w-[320px] bg-white mx-auto rounded-lg cursor-default  transform transition-transform duration-300 hover:scale-105"
             key={i}
           >
             <img
               src={d.images[0]}
               alt=""
-              className="w-full h-[200px] object-cover rounded-t"
+              className="w-full h-[200px] object-cover rounded-t-lg"
             />
-            <div className="w-full h-auto py-3 bg-white flex flex-row rounded-b border-x-2 border-b border-[#83828133]">
+            <div className="w-full h-auto py-3 bg-white flex flex-row rounded-b-lg border-x-2 border-b border-[#83828133]">
               <p className="px-4 text-left font-poppins text-[14px]">{d.artwork_name}</p>
               <h1 className="px-3 ml-auto justify-right text-[#F25B38]">${d.price}</h1>
             </div>

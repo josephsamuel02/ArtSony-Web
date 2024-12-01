@@ -7,6 +7,7 @@ import FetchArtwork from "./FetchArtwork";
 import Engagement from "./Engagement";
 import ShopArtworks from "./ShopArtworks";
 import User from "./User";
+import { FetchChatMessages } from "./websockets";
 
 const reducers = combineReducers({
   Auth: authSlice,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   ShopArtworks: ShopArtworks,
   Engagement: Engagement,
   PostArtwork: postArtworkSlice,
+  FetchChatMessages: FetchChatMessages,
 });
 
 const persistConfig = {

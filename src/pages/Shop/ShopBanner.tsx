@@ -56,7 +56,7 @@ const ShopBanner = () => {
           {userData?.user && (
             <div className="w-full h-auto py-4 px-10 flex flex-row justify-end items-center">
               <p className="font-Poppins font-light text-[16px] text-white mx-4">
-                {capitalizeFirstLetter(userData.user?.user_name)}
+                {capitalizeFirstLetter(userData.User?.user_name)}
               </p>
               {userData.user.profile_img && (
                 <img

@@ -46,7 +46,7 @@ const ProfileCard = ({ User }: compData) => {
             )}
             <div className=" mx-5 w-3/5 flex flex-col  ">
               <p className=" text-[20px] text-[#2e2d2d] font-Poppins  ">
-                {capitalizeFirstLetter(User.user_name)}
+                {capitalizeFirstLetter(User?.user_name)}
               </p>
               <a
                 href={PUBLIC_ROUTES.MY_PROFILE}

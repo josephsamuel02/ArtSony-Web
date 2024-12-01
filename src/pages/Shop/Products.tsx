@@ -19,7 +19,7 @@ import {
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const User = useSelector((state: any) => state.Auth.user?.user);
+  const User = useSelector((state: any) => state.Auth.User?.user);
 
   const shop_artworks = useSelector((state: any) => state.ShopArtworks.shop_artworks.data);
 
@@ -61,7 +61,7 @@ const Products = () => {
       await dispatch(ShopsArtworks());
       await dispatch(TopShopsArtworks());
       await dispatch(getNewbiesShopArtwork());
-      await dispatch(ShopArtworkJustForYou(User.userId));
+      await dispatch(ShopArtworkJustForYou(User?.userId));
     };
 
     fetchData();

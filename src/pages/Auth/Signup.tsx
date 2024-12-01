@@ -23,6 +23,7 @@ function Signup() {
 
   const SignupAction = (e: MouseEvent) => {
     e.preventDefault();
+    localStorage.removeItem("artsoney_user_id");
     dispatch(UserSignup(signupData));
     setLoading(true);
 

@@ -12,7 +12,7 @@ interface compData {
 const PersonalInformation = ({ userInfo }: compData) => {
   const dispatch = useDispatch<AppDispatch>();
   const User = useSelector((state: any) => state.Auth.user.user);
-  const [userData, setUserData] = useState({ userId: User.userId });
+  const [userData, setUserData] = useState({ userId: User?.userId });
   const [defaultUserData, setDefaultUserData] = useState(userInfo);
   const [loading, setLoading] = useState(false);
 
@@ -30,6 +30,7 @@ const PersonalInformation = ({ userInfo }: compData) => {
     setDefaultUserData(userInfo);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   // const  = (sentence: string) => {
   //   if (!sentence) {
   //     return "";
@@ -40,6 +41,7 @@ const PersonalInformation = ({ userInfo }: compData) => {
   //       .join("");
   //   }
   // };
+
   return (
     <div className="w-full h-full p-5 rounded-md">
       <h2 className="text-xl p-3 py-5 border-b border-[#ff6f4349] text-customOrange font-Raleway">

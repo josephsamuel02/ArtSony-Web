@@ -13,7 +13,7 @@ import UserPostDetail from "../../components/PostDetails/UserPostDetail";
 import { LikeArt, ViewArt } from "../../Redux/Engagement";
 import FormatNumber from "../../components/NumberFormater";
 const ArtOfTheWeek = () => {
-  const userId = useSelector((state: any) => state.Auth.user?.user?.userId);
+  const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
 
   const art_of_the_week = useSelector(
     (state: any) => state.FetchArtwork.artwork_of_the_week.data

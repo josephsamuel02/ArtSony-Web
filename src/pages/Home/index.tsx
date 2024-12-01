@@ -16,7 +16,7 @@ import { AppDispatch } from "../../Redux/store";
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const userId = useSelector((state: any) => state.Auth.user?.user?.userId);
+  const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
 
   useEffect(() => {
     const fetchArtworks = async () => {

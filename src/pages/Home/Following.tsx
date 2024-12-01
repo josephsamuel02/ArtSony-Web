@@ -7,7 +7,7 @@ import { ArtworkByFollowing } from "../../Redux/FetchArtwork";
 
 const Following = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const user_id = useSelector((state: any) => state.Auth.user.user?.userId);
+  const user_id = useSelector((state: any) => state.Auth.user.(User?.userId);
 
   const [userId, setUserId] = useState();
 

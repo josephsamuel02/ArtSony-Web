@@ -17,7 +17,7 @@ import FormatNumber from "../../components/NumberFormater";
 
 const TopArt = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const userId = useSelector((state: any) => state.Auth.user?.user?.userId);
+  const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
 
   const newbies_artworks = useSelector(
     (state: any) => state.FetchArtwork.newbies_artworks.data
@@ -193,7 +193,7 @@ const TopArt = () => {
                                 e.stopPropagation();
                                 userId &&
                                   dispatch(
-                                    LikeArt({ userId: userId, user_name: i.user_name })
+                                    LikeArt({ userId: userId, artwork_id: i.artwork_id })
                                   );
                               }}
                             >
@@ -250,7 +250,7 @@ const TopArt = () => {
 
 // const TopArt = () => {
 //   const dispatch = useDispatch<AppDispatch>();
-//   const userId = useSelector((state: any) => state.Auth.user?.user?.userId);
+//   const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
 
 //   const newbies_artworks = useSelector(
 //     (state: any) => state.FetchArtwork.newbies_artworks.data

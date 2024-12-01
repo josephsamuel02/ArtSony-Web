@@ -11,7 +11,7 @@ import FormatNumber from "../../components/NumberFormater";
 
 const JustforYou = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const userId = useSelector((state: any) => state.Auth.user?.user?.userId);
+  const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
   const [just_for_you, setJust_for_you] = useState([]);
   const just_for_you_data = useSelector(
     (state: any) => state.FetchArtwork.artwork_just_for_you.data
