@@ -9,54 +9,13 @@ import { AppDispatch } from "../../Redux/store";
 const Checkout = () => {
   const dispatch = useDispatch<AppDispatch | any>();
   const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
+  const shop_artworks = useSelector((state: any) => state.ShopArtworks?.shop_artworks.data);
 
   const my_cart = useSelector((state: any) => state.Cart?.cart.data);
 
   const [paymentOptionState] = useState("previousCard");
   const [cart, setCart] = useState(my_cart);
-
-  const details = [
-    {
-      id: 1,
-      imageUrl:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718245464/Rectangle_7_hcw1fb.svg",
-      artname: "Fusion",
-      avatarUrl:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718275823/Ellipse_10_x2eyae.svg",
-      name: "Arlene McCoy",
-      price: "$ 1,000",
-    },
-    {
-      id: 2,
-      imageUrl:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718278552/Rectangle_7_1_lpxtgu.svg",
-      artname: "Metal Wave",
-      avatarUrl:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718278730/Ellipse_10_1_mkytlw.svg",
-      name: "Eleanor Pena",
-      price: "$ 600",
-    },
-    {
-      id: 3,
-      imageUrl:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718278888/Rectangle_7_2_y97mpx.svg",
-      artname: "Food Chain",
-      avatarUrl:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718278809/Ellipse_10_2_lqlnew.svg",
-      name: "Darrell Steward",
-      price: "$ 1000",
-    },
-    {
-      id: 4,
-      imageUrl:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718278888/Rectangle_7_2_y97mpx.svg",
-      artname: "Pet Dog",
-      avatarUrl:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718279032/Group_32_xh4auo.svg",
-      name: "Ronald Richards",
-      price: "$ 500",
-    },
-  ];
+  const [shopArtwork, setShopArtwork] = useState(shop_artworks);
 
   const updateCart = (data: any) => {
     dispatch(UpdateCartItem({ userId: data.userId, product: { ...data } }));
@@ -80,8 +39,9 @@ const Checkout = () => {
   useEffect(() => getMyCart(), [userId]);
   useEffect(() => {
     setCart(my_cart);
+    setShopArtwork(shop_artworks);
     // console.log(my_cart);
-  }, [my_cart]);
+  }, [my_cart, shop_artworks]);
   return (
     <div className="w-full px-10  flex flex-col">
       <Nav />
@@ -95,15 +55,19 @@ const Checkout = () => {
             cart.products.map((d: any, i: any) => (
               <div
                 key={i}
-                className="flex flex-row h-44 w-10/12 rounded-md border border-[#f5dcdc]"
+                className="flex flex-row py-2 h-44 w-11/12 rounded-md border border-[#f5dcdcd7] shadow-md hover:shadow-xl"
               >
-                <img src={d.thumbnail && d.thumbnail} alt="bg" className="w-44 h-44" />
-                <div className="relative my-auto mx-4 flex      w-[495px]   ">
-                  <div className="flex flex-col  h-auto gap-2">
-                    <p className="text-[#8AC5C7] font-[14px] font-Poppins">{d.artwork_name}</p>
+                <img
+                  src={d.thumbnail && d.thumbnail}
+                  alt="bg"
+                  className="w-56 h-40 object-cover "
+                />
+                <div className="relative my-3 mx-4 flex w-[495px] ">
+                  <div className="flex flex-col h-auto gap-2">
+                    <p className="text-[#2a9094] font-[14px] font-Poppins">{d.artwork_name}</p>
                     <p className="text-[#8F8F8F] font-[16px] font-Poppins">{d.rights}</p>
                     <div className="flex flex-row gap-2">
-                      <p className="text-[#8F8F8F] w-[104px] h-[20px] text-sm font-[400]">
+                      <p className="text-[#575757] w-[104px] h-[20px] text-sm font-[400]">
                         {d.artwork_type}
                       </p>
                       <img
@@ -114,7 +78,7 @@ const Checkout = () => {
                     </div>
                     <div className="flex flex-row gap-4 items-center w-[144px]">
                       <button
-                        className="bg-[#f8eae7] w-[32px] h-[32px] text-[#F25B38] rounded-md border border-[#D9D9D9]"
+                        className="bg-[#eee9e8] hover:bg-[#f1d2cc]  w-[28px] h-[28px] text-[#F25B38] rounded-lg border border-[#D9D9D9]"
                         onClick={() =>
                           d.quantity > 1 &&
                           updateCart({ ...d, quantity: d.quantity > 1 ? d.quantity - 1 : 1 })
@@ -122,25 +86,32 @@ const Checkout = () => {
                       >
                         -
                       </button>
-                      <p>{d.quantity}</p>
+                      <p className="text-sm">{d.quantity}</p>
                       <button
-                        className="bg-[#f8eae7] w-[32px] h-[32px] text-[#F25B38] rounded-md border border-[#D9D9D9]"
+                        className="bg-[#eee9e8] hover:bg-[#f1d2cc] w-[28px] h-[28px] text-[#F25B38] rounded-lg border border-[#D9D9D9]"
                         onClick={() => updateCart({ ...d, quantity: d.quantity + 1 })}
                       >
                         +
                       </button>
                     </div>
-                  </div>
-                  <div className="absolute right-0 flex flex-col justify-between h-[145px]  items-end ">
-                    <img
-                      className="w-[19.21px] h-[19.21px]"
-                      src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718120486/delete_iwoglq.svg"
-                      alt="delete"
-                      onClick={() => deleteItem(d)}
-                    />
-                    <h3 className="pr-2">
-                      <span className="text-[#F25B38]">$ {d.price}</span>
+                    <h3 className="pr-2 mt-auto ">
+                      <span className="text-[#240d08] text-sm">
+                        {new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "NGN",
+                        }).format(d.price)}
+                      </span>
                     </h3>
+                  </div>
+                  <div className="absolute top-0 right-0 flex flex-col justify-between h-[145px] items-end ">
+                    <div className="p-2 bg-white hover:bg-[#e0e0e0] rounded-full">
+                      <img
+                        className="w-[15px] h-[15px]"
+                        src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718120486/delete_iwoglq.svg"
+                        alt="delete"
+                        onClick={() => deleteItem(d)}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -152,35 +123,23 @@ const Checkout = () => {
 
           <div className="flex flex-col w-full h-[272px]  border border-[#D9D9D9] gap-9 justify-center">
             <div className="flex flex-col">
-              <div className="flex flex-row justify-between pt-5 pl-6">
-                <div className="gap-5 flex text-[#8F8F8F]">
-                  <p>Soul Mountain</p> <p>x1</p>
-                </div>
+              {cart.products &&
+                cart.products.map((d: any, i: number) => (
+                  <div className="flex flex-row justify-between pt-5 pl-6" key={i}>
+                    <div className="gap-5 flex text-[#8F8F8F]">
+                      <p>{d.artwork_name}</p> <p>X{d.quantity}</p>
+                    </div>
 
-                <h3 className="pr-6">
-                  USD <span className="text-[#F25B38]">$ 200</span>
-                </h3>
-              </div>
-
-              <div className="flex flex-row justify-between pt-5  pl-6">
-                <div className="gap-5 flex text-[#8F8F8F]">
-                  <p>Crimson Sky</p> <p>x2</p>
-                </div>
-
-                <h3 className="pr-6">
-                  USD <span className="text-[#F25B38]">$ 2000</span>
-                </h3>
-              </div>
-
-              <div className="flex flex-row justify-between pt-5  pl-6">
-                <div className="gap-5 flex text-[#8F8F8F]">
-                  <p>Classified</p> <p>x1</p>{" "}
-                </div>
-
-                <h3 className="pr-6">
-                  USD <span className="text-[#F25B38]">$ 1000</span>
-                </h3>
-              </div>
+                    <h3 className="pr-6">
+                      <span className="text-[#130704] text-sm">
+                        {new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "NGN",
+                        }).format(d.price)}
+                      </span>
+                    </h3>
+                  </div>
+                ))}
             </div>
             {/* <img
               className="w-[666px] pl-4"
@@ -190,7 +149,12 @@ const Checkout = () => {
             <div className="flex h-[40px] flex-row justify-between   pl-6  items-center">
               <h1 className="pb-4 text-2xl">Total</h1>
               <h3 className="pr-6 pb-4 text-2xl">
-                USD <span className="text-[#F25B38]">$ 1000</span>
+                <span className="text-[#F25B38] text-xl">
+                  {new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "NGN",
+                  }).format(cart.total_price)}
+                </span>
               </h3>
             </div>
           </div>
@@ -206,39 +170,44 @@ const Checkout = () => {
         <h1 className="font-Poppins text-[30px]  py-2">Artworks you may like </h1>
 
         <div className="w-full grid grid-cols-3 justify-around ">
-          {details.map((detail) => (
-            <div
-              key={detail.id}
-              className="flex flex-col my-6 w-[351px] h-[288px] border border-[#f25a386a] rounded-md"
-            >
+          {shopArtwork &&
+            shopArtwork.map((d: any, i: number) => (
               <div
-                className="flex justify-between p-2 relative object-cover w-[351px] h-[216px]"
-                style={{ backgroundImage: `url(${detail.imageUrl})` }}
+                key={i}
+                className="flex flex-col my-6 w-[351px] h-[288px] border border-[#f25a382d] shadow-lg hover:shadow-xl rounded-lg"
               >
-                <img
-                  src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718269585/shopping_cart_vxqsls.svg"
-                  alt="Image 1"
-                  className="h-[32px] w-[32px] absolute left-3 top-4"
-                />
-                <p className="text-white absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 font-[400]">
-                  {detail.artname}
-                </p>
-              </div>
-              <div className="flex justify-between">
-                <div className="flex items-center gap-2 mt-3 ml-3">
-                  <img src={detail.avatarUrl} alt="" />
-                  <p>{detail.name}</p>
-                </div>
-                <div className="flex items-center gap-6 mt-3 mr-5 justify-between">
+                <div
+                  className="flex justify-between p-2 relative object-cover w-[351px] h-[216px]"
+                  style={{ backgroundImage: `url(${d.images[0]})` }}
+                >
                   <img
-                    src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718276229/Group_1818_hipuuo.svg"
-                    alt=""
+                    src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718269585/shopping_cart_vxqsls.svg"
+                    alt="Image 1"
+                    className="h-[32px] w-[32px] absolute left-3 top-4"
                   />
-                  <p className="text-[#F25B38]">{detail.price}</p>
+                  <p className="text-white text-lg absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4  font-Raleway ">
+                    {d.artwork_name}
+                  </p>
+                </div>
+                <div className="flex justify-between bg-white rounded-b-xl">
+                  <div className="flex items-center gap-2 mt-3 ml-3">
+                    <img
+                      src={d.user.profile_img}
+                      alt=""
+                      className="w-[30px] h-[30px] rounded-full object-cover"
+                    />
+                    <p className="text-[#464646]">{d.user.user_name}</p>
+                  </div>
+                  <div className="flex items-center gap-6  mr-4 justify-between">
+                    <img
+                      src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718276229/Group_1818_hipuuo.svg"
+                      alt=""
+                    />
+                    <p className="text-[#F25B38]">NGN {d.price}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         <div className=" py-10 flex item-center justify-center w-full gap-6  ">

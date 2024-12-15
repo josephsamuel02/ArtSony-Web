@@ -27,10 +27,8 @@ const MessageCard = () => {
   const userId = localStorage.getItem("artsoney_user_id");
   const [chatId, setChatId] = useState("chatId");
   const [allChatMessages, setAllChatMessages] = useState<any>();
-  const [chatMessages, setChatMessages] = useState({
+  const [chatMessages, setChatMessages] = useState<any>({
     id: chatId,
-    // sender: "",
-    // receiver: "",
     receiverUser: {},
     senderUser: {},
     content: [],
@@ -43,6 +41,7 @@ const MessageCard = () => {
     url: "",
     image: "",
   });
+
   const [cOption, setC_Options] = useState("Messages");
   const [showCOptions, setShowCOptions] = useState(false);
 
@@ -66,25 +65,9 @@ const MessageCard = () => {
     }
   };
 
-  // const onOpenNewChat = () => {
-  //   if (message.trim()) {
-  //     socket.emit(
-  //       "create_message",
-  //       { sender: "User1", receiver: "user2" },
-  //       (response: any) => {
-  //         console.log(response);
-  //       }
-  //     );
-  //   }
-  // };
-
   const sendMessage = () => {
-    console.log(message);
     // Emit a message to the server
-    socket.emit("send_message", message, (response: any) => {
-      console.log(response);
-      setMessage({});
-    });
+    socket.emit("send_message", message);
   };
 
   const fetchMessages = (chatId: string) => {
@@ -108,13 +91,10 @@ const MessageCard = () => {
 
     socket.on("get_all_user_messages", (data) => {
       setAllChatMessages(data);
-      // console.log(data);
     });
 
     socket.on(chatId, (data: any) => {
-      // setMessage(data);
       setChatMessages(data.data);
-      // console.log(data);
     });
 
     // Clean up on unmount
@@ -127,13 +107,11 @@ const MessageCard = () => {
   useEffect(() => {
     // Listen for incoming messages
     socket.on(`${userId}`, (response: any) => {
-      // console.log("Message received:", response);
       setMessage(response);
-      // console.log(response);
     });
-    socket.on("send_message", (response: any) => {
-      console.log(response);
-    });
+    // socket.on("send_message", (response: any) => {
+    //   // console.log(response);
+    // });
   }, [userId]);
 
   useEffect(() => {
@@ -285,7 +263,7 @@ const MessageCard = () => {
                                 </p>
                               </div>
                               <span className="justify-end  text-[10px] font-bold font-Poppins text-[#777777]">
-                                {formatDistanceToNow(new Date(d.createdAt), {
+                                {formatDistanceToNow(new Date(d.updatedAt), {
                                   addSuffix: true,
                                 })}
                               </span>
@@ -316,7 +294,7 @@ const MessageCard = () => {
                                 </p>
                               </div>
                               <span className="  justify-end  text-[10px]   font-bold font-Poppins text-[#777777]">
-                                {formatDistanceToNow(new Date(d.createdAt), {
+                                {formatDistanceToNow(new Date(d.updatedAt), {
                                   addSuffix: true,
                                 })}
                               </span>
@@ -404,7 +382,7 @@ const MessageCard = () => {
             <div className="w-full h-auto overflow-y-scroll">
               <div className="w-full h-[510px] flex flex-col">
                 {chatMessages.content &&
-                  chatMessages?.content.map((d: any, i) => (
+                  chatMessages?.content.map((d: any, i: number) => (
                     <div
                       className={`w-full h-auto flex ${
                         d.user_id == userId ? "justify-end" : "justify-start"
@@ -436,7 +414,7 @@ const MessageCard = () => {
             </div>
 
             <div className="relative w-full h-auto py-2 flex flex-row items-center bg-white shadow-xl">
-              <div className="ml-auto py-3 w-10/12 h-auto items-center flex flex-row backdrop-brightness-75 rounded-md bg-[#8F8F8F]">
+              <div className="ml-auto py-2 w-10/12 h-auto items-center flex flex-row backdrop-brightness-75 rounded-md bg-[#8F8F8F]">
                 <img
                   src="/images/mood.svg"
                   alt=""
@@ -448,7 +426,8 @@ const MessageCard = () => {
                   onChange={(e) => {
                     setMessage((prev) => ({ ...prev, text: e.target.value }));
                   }}
-                  className="w-4/6 text-white bg-transparent outline-none"
+                  placeholder="your message"
+                  className="w-4/6 p-1 px-2 text-[#6b250f] bg-[#ffffff2a] outline-none rounded"
                 />
 
                 <img
