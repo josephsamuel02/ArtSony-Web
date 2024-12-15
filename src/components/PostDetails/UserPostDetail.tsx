@@ -36,7 +36,7 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
   const [showChatBox, setShowChatBox] = useState(false);
 
   const [message, setMessage] = useState({
-    sender: User.userId,
+    sender: User?.userId,
     receiver: Artwork.userId,
     text: "",
   });
@@ -305,61 +305,63 @@ const UserPostDetail = ({ Artwork, setShowPostData }: cmpState) => {
             </div>
           </div>
 
-          <div className="flex flex-col mt-5 gap-2">
-            <div
-              className="bg-lightOrange hover:bg-customOrange py-3 my-2 text-customOrange hover:text-white rounded-md gap-1 flex flex-row border border-[#fcac9a69] justify-center items-center"
-              onClick={() =>
-                dispatch(
-                  followUser({
-                    userId: Artwork.userId,
-                    user_id: User?.userId,
-                    user_name: User?.user_name,
-                    profile_img: User?.profile_image,
-                  })
-                )
-              }
-            >
-              <IoMdPersonAdd size={15} />
-              <button className="text-center  ml-1 text-xs">Follow</button>
-            </div>
-            <div className=" relative flex flex-row bg-lightOrange  hover:bg-customOrange py-3  text-customOrange  hover:text-white  border border-[#fcac9a69]   justify-center gap-1 rounded-md items-center">
+          {User && (
+            <div className="flex flex-col mt-5 gap-2">
               <div
-                className="flex flex-row"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowChatBox(!showChatBox);
-                }}
+                className="bg-lightOrange hover:bg-customOrange py-3 my-2 text-customOrange hover:text-white rounded-md gap-1 flex flex-row border border-[#fcac9a69] justify-center items-center"
+                onClick={() =>
+                  dispatch(
+                    followUser({
+                      userId: Artwork.userId,
+                      user_id: User?.userId,
+                      user_name: User?.user_name,
+                      profile_img: User?.profile_image,
+                    })
+                  )
+                }
               >
-                <FaRegEnvelope size={15} />
-                <button className="text-center ml-1 text-xs ">Message</button>
+                <IoMdPersonAdd size={15} />
+                <button className="text-center  ml-1 text-xs">Follow</button>
               </div>
-              {showChatBox && (
-                <div className="absolute top-[40px] mx-auto p-2 w-full h-auto flex flex-col items-center rounded-lg bg-white border border-[#fa843f4b]">
-                  <textarea
-                    name="chat box"
-                    placeholder="Enter message..."
-                    onChange={(e) => {
-                      e.stopPropagation();
-                      setMessage((prev) => ({
-                        ...prev,
-                        text: e.target.value,
-                      }));
-                    }}
-                    className=" resize-none w-full h-[70px] p-1 text-xs text-gray-900 font-Poppins rounded-md border border-[#da624d8a] outline-none"
-                  ></textarea>
-                  <input
-                    type="button"
-                    value="Send"
-                    onClick={() => {
-                      setShowChatBox(false);
-                      onStartNewChat(message);
-                    }}
-                    className="mx-auto my-2 w-full h-auto py-2 text-center text-white bg-customOrange hover:bg-[#da4b32] rounded-md"
-                  />
+              <div className=" relative flex flex-row bg-lightOrange  hover:bg-customOrange py-3  text-customOrange  hover:text-white  border border-[#fcac9a69]   justify-center gap-1 rounded-md items-center">
+                <div
+                  className="flex flex-row"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowChatBox(!showChatBox);
+                  }}
+                >
+                  <FaRegEnvelope size={15} />
+                  <button className="text-center ml-1 text-xs ">Message</button>
                 </div>
-              )}
+                {showChatBox && (
+                  <div className="absolute top-[40px] mx-auto p-2 w-full h-auto flex flex-col items-center rounded-lg bg-white border border-[#fa843f4b]">
+                    <textarea
+                      name="chat box"
+                      placeholder="Enter message..."
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        setMessage((prev) => ({
+                          ...prev,
+                          text: e.target.value,
+                        }));
+                      }}
+                      className=" resize-none w-full h-[70px] p-1 text-xs text-gray-900 font-Poppins rounded-md border border-[#da624d8a] outline-none"
+                    ></textarea>
+                    <input
+                      type="button"
+                      value="Send"
+                      onClick={() => {
+                        setShowChatBox(false);
+                        onStartNewChat(message);
+                      }}
+                      className="mx-auto my-2 w-full h-auto py-2 text-center text-white bg-customOrange hover:bg-[#da4b32] rounded-md"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
           <hr className="py-3 mt-3" />
           <p className="text-[#02272F] text-bold font-Poppins text-[16px]  ">
             {Artwork.artwork_name}

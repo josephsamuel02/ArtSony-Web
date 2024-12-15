@@ -34,9 +34,9 @@ export const TopShopsArtworks = createAsyncThunk(
 
       return response.data;
     } catch (error: any) {
-      console.error(rejectWithValue);
-
       if (error.response && error.response.data) {
+        console.error(rejectWithValue);
+
         return rejectWithValue(error.response.data);
       } else {
         return rejectWithValue("An unexpected error occurred");

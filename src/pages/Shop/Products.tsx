@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useRef, useState } from "react";
 // import ColorPicker from "react-pick-color";
+import { useEffect, useRef, useState } from "react";
 import UserPostDetail from "../../components/PostDetails/UserPostDetail";
 import SearchResult from "../SearchPage.tsx/SearchResult";
 import { IoCartOutline } from "react-icons/io5";
@@ -13,15 +13,17 @@ import {
   ShopsArtworks,
   TopShopsArtworks,
 } from "../../Redux/ShopArtworks";
-// import { useNavigate } from "react-router-dom";
-// import { getArtworksByArtField } from "../../Redux/FetchArtwork";
-// import PUBLIC_ROUTES from "../../utils/PublicRoutes";
+import FormatNumber from "../../components/NumberFormater";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { LikeArt } from "../../Redux/Engagement";
+import { AddToCart } from "../../Redux/Cart";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const User = useSelector((state: any) => state.Auth.User?.user);
+  const User = useSelector((state: any) => state.User.my_profile?.data);
+  const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
 
-  const shop_artworks = useSelector((state: any) => state.ShopArtworks.shop_artworks.data);
+  const shop_artworks = useSelector((state: any) => state.ShopArtworks?.shop_artworks.data);
 
   const top_shop_artworks = useSelector(
     (state: any) => state.ShopArtworks.top_shop_artworks.data
@@ -32,16 +34,15 @@ const Products = () => {
   const shop_artwork_for_you = useSelector(
     (state: any) => state.ShopArtworks.shop_artwork_for_you.data
   );
+  const colorpickeralRef = useRef<any>(null);
 
   // const [showArtistFieldList, setShowArtistFieldList] = useState(false);
   // const [showColorPicker, setShowColorPicker] = useState(false);
   // const [showLocation, setShowLocation] = useState(false);
   const [showPostData, setShowPostData] = useState(false);
   const [showSearchResult] = useState(false);
-
+  const [artworkDetails, setArtworkDetails] = useState("");
   // const [color, setColor] = useState("#3573CB");
-
-  const colorpickeralRef = useRef<any>(null);
 
   const handleClickOutside = (event: any) => {
     if (colorpickeralRef.current && !colorpickeralRef.current.contains(event.target)) {
@@ -49,12 +50,41 @@ const Products = () => {
     }
   };
 
-  const capitalizeFirstLetter = (sentence: string) => {
-    return sentence
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-      .join(" ");
+  const AddCart = (p: any) => {
+    const data = {
+      userId: p.userId,
+      storeId: p.userId,
+      product: {
+        userId: p.userId,
+        storeId: p.userId,
+        artwork_id: p.artwork_id,
+        images: p.images,
+        artwork_name: p.artwork_name,
+        price: p.price,
+        quantity: 1,
+
+        tags: p.tags,
+        tools: p.tools,
+        description: p.description,
+        artwork_type: p.artwork_type,
+
+        thumbnail: p.thumbnail,
+        embed_code: p.embed_code,
+        audio_video: p.audio_video,
+        animated_3d: p.animated_3d,
+      },
+    };
+    dispatch(AddToCart(data));
+
+    // console.log(data);
   };
+
+  // const capitalizeFirstLetter = (sentence: string) => {
+  //   return sentence
+  //     .split(" ")
+  //     .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+  //     .join(" ");
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,158 +103,132 @@ const Products = () => {
 
   const [Artwork, setArtwork] = useState(top_shop_artworks);
   const [selectedMenu, setSelectedMenu] = useState("All");
-
-  const topArtMenu = ["All", "Recent", "Newbies", "For You"];
+  const topArtMenu = ["All", "Top Arts", "Newbies", "For You"];
 
   useEffect(() => {
-    selectedMenu == "All" && setArtwork(top_shop_artworks);
-    selectedMenu == "Recent" && setArtwork(shop_artworks);
+    // console.log(top_shop_artworks);
+    selectedMenu == "All" && setArtwork(shop_artworks);
+    selectedMenu == "Top Arts" && setArtwork(top_shop_artworks);
     selectedMenu == "Newbies" && setArtwork(newbies_shop_artwork);
     selectedMenu == "For You" && setArtwork(shop_artwork_for_you);
   }, [selectedMenu]);
+
   return (
     <div className="w-full h-auto  ">
-      {/* <div className="mx-auto w-full h-[80px]  px-6 flex flex-row items-center ">
-        <div
-          className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
-          onClick={() => setShowArtistFieldList(true)}
-        >
-          <img src="/images/interests.svg" alt="" className="mx-4" />
-          <p className="mx-auto text-[16px] font-Poppins text-[#333333] cursor-default">
-            Artistic Field
-          </p>
-          <img src="/images/arrow_left.svg" alt="" className="mx-4" />
-          {showArtistFieldList && (
-            <ArtisticField
-              showArtistFieldList={showArtistFieldList}
-              setShowArtistFieldList={setShowArtistFieldList}
-            />
-          )}
-        </div>
-        <div
-          className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
-          onClick={() => setShowColorPicker(!showColorPicker)}
-        >
-          <img src="/images/colors.svg" alt="" className="mx-4" />
-          <p className="mx-auto text-[16px] font-Poppins text-[#333333] cursor-default">
-            Color
-          </p>
-          <img src="/images/arrow_left.svg" alt="" className="mx-4" />
-          {showColorPicker && (
-            <div
-              ref={colorpickeralRef}
-              className="absolute top-12 w-[250px]  bg-white shadow-md rounded-md z-30  "
-            >
-              <ColorPicker
-                color={color}
-                onChange={(color: any) => setColor(color.hex)}
-                theme={{
-                  borderRadius: "2px",
-                  width: "200px",
-                }}
-              />
-            </div>
-          )}
-        </div>
-        <div
-          className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
-          onClick={() => setShowLocation(true)}
-        >
-          <img src="/images/location.svg" alt="" className="mx-4" />
-          <p className="mx-auto text-[16px] font-Poppins text-[#333333] cursor-default">
-            Location
-          </p>
-          <img src="/images/arrow_left.svg" alt="" className="mx-4" />
-
-          {showLocation && (
-            <ArtLocation showLocation={showLocation} setShowLocation={setShowLocation} />
-          )}
-        </div>
-        <p className="mx-auto text-[16px] font-Poppins text-[#F25B38] cursor-default">
-          Clear All
-        </p>
-        <div className="w-[178px] h-[42px] mx-auto flex flex-row rounded border border-[#F25B38] items-center bg-white">
-          <p className="mx-auto text-sm font-Poppins text-black cursor-default">Recommended</p>
-          <img src="/images/arrow_drop_down black.svg" alt="" className="mx-4" />
-        </div>
-      </div> */}
-
       <div className="w-full h-auto mx-auto items-center mt-1 bg-white  flex flex-col ">
         <div className="w-full flex flex-row  py-5  items-center">
-          <div className="w-4/5 mx-auto flex flex-row items-center bg-white ">
-            {topArtMenu.map((d, i) => (
-              <h3
-                className={`text-[22px]  mx-5 font-Poppins text-black border-b-4 cursor-pointer ${
-                  selectedMenu == d ? "border-[#F25B38]" : "border-[#ffff]"
-                }`}
-                key={i}
-                onClick={() => setSelectedMenu(d)}
-              >
-                {d}
-              </h3>
-            ))}
+          <div className="w-4/5 mx-auto flex flex-row items-center bg-white">
+            {topArtMenu &&
+              topArtMenu.map((d, i) => (
+                <h3
+                  className={`text-[22px]  mx-5 font-Poppins text-black border-b-4 cursor-pointer ${
+                    selectedMenu == d ? "border-[#F25B38]" : "border-[#ffff]"
+                  }`}
+                  key={i}
+                  onClick={() => setSelectedMenu(d)}
+                >
+                  {d}
+                </h3>
+              ))}
           </div>
         </div>
 
-        <div className="w-full h-auto mx-auto items-center bg-white grid gap-2  grid-flow-row grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
+        <div className="w-full h-auto mx-auto items-center bg-white grid gap-2  grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
           {Artwork &&
-            Artwork.map((i: any, n: number) => (
-              <div
-                className="mx-auto w-[304px] h-[207px] my-10 bg-white rounded-md cursor-pointer relative transform transition-transform duration-300 hover:scale-105"
-                onClick={() => setShowPostData(true)}
-                key={n}
-              >
-                <img
-                  src={i.images[0]}
-                  alt=""
-                  className=" mx-auto w-full rounded h-full object-cover"
-                />
-                <div className="  absolute mx-2 top-2 lef-2 cursor-pointer items-center w-9 h-8 p-1 flex rounded  bg-[#05000060]  ">
-                  <IoCartOutline size={26} className="text-white hover:text-[#fa6746]" />
-                </div>
-                <div className="absolute  bottom-7 left-0 right-0 bg-[#1919194D] h-1/4 bg-gradient-to-t  from-black">
-                  <p className="text-[23px] py-2 font-Raleway text-white text-center font-light ">
-                    {capitalizeFirstLetter(i.artwork_name)}
-                  </p>
-                  <div className="w-full bottom-0 h-[50px] border border-[#b4b4b494] rounded-b bg-white flex flex-row items-center">
-                    <div className="w-2/3 px-1 flex flex-row items-center justify-start  ">
-                      {i.user.profile_img && (
-                        <img
-                          src={i.user.profile_img}
-                          alt=""
-                          className="w-[34px] h-[34px] mx-0 rounded-full "
-                        />
-                      )}
-                      <p className="text-[11px] px-2 font-Poppins text-black ">
-                        {capitalizeFirstLetter(i.user.user_name)}
-                      </p>
+            Artwork.slice(0, 10).map((d: any, i: number) => {
+              const isLiked = d.likes?.some((like: any) => like.userId === userId);
+              return (
+                <div
+                  className=" relative mx-auto w-[304px] h-[207px] my-10 bg-white rounded-lg   cursor-pointer transform transition-transform duration-300 hover:scale-105"
+                  onClick={() => {
+                    setArtworkDetails(d);
+                    setShowPostData(true);
+                  }}
+                  key={i}
+                >
+                  <img
+                    src={d.images[0]}
+                    alt=""
+                    className=" mx-auto w-full rounded-t-lg h-full object-cover"
+                  />
+                  {User && (
+                    <div
+                      className=" absolute mx-2 top-2 lef-2 cursor-pointer items-center w-9 h-8 p-1 flex rounded  bg-[#05000060] "
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        AddCart(d);
+                        // setProduct((prev) => ({ ...prev, product: d }));
+                      }}
+                    >
+                      <IoCartOutline size={26} className="text-white hover:text-[#fa6746]" />
                     </div>
-                    <div className="w-1/3 mx-4 items-center justify-end flex flex-row">
-                      <img
-                        src="/images/favorite.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2"
-                      />
-                      {i.likes && (
-                        <p className="text-[10] font-Raleway text-[#F25B38] text-center font-light ">
-                          {i.likes}k
+                  )}
+                  <div className="absolute  bottom-7 left-0 right-0 bg-[#0707072c] h-1/4 bg-gradient-to-t  from-black">
+                    <p className="text-[19px] pb-4 pt-2 font-Raleway text-white text-center font-light ">
+                      {d.artwork_name}
+                    </p>
+
+                    <div className="w-full bottom-0 h-[60px] border border-[#bdbdbd75] rounded-b bg-white flex flex-row items-center">
+                      <div className="w-2/3 px-4 flex flex-row items-center justify-start  rounded-b">
+                        {d.user.profile_img && (
+                          <img
+                            src={d.user.profile_img}
+                            alt=""
+                            className="w-[35px] h-[35px] mx-0 rounded-full"
+                          />
+                        )}
+                        <p className="text-[11px] px-2 font-Poppins text-black ">
+                          {d.user.user_name}
                         </p>
-                      )}
-                      <img
-                        src="/images/visibility.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2 "
-                      />
-                      {i.views && (
-                        <p className="text-[10] font-Raleway text-[#F25B38] text-center font-light ">
-                          {i.views}k
-                        </p>
-                      )}
+                      </div>
+
+                      <div className="w-1/3 mx-4 items-center justify-end flex flex-row">
+                        <div className="flex  items-center">
+                          <div className="flex justify-between items-center">
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                userId &&
+                                  dispatch(
+                                    LikeArt({ userId: userId, artwork_id: d.artwork_id })
+                                  );
+                              }}
+                            >
+                              {isLiked ? (
+                                <AiFillHeart
+                                  size={30}
+                                  className="text-red-500 w-[20px] h-[18px] mx-2 cursor-pointer"
+                                />
+                              ) : (
+                                <AiOutlineHeart
+                                  size={30}
+                                  className="text-red-500 w-[20px] h-[18px] mx-2 cursor-pointer"
+                                />
+                              )}
+                            </div>
+                            {d.likesCount > 0 && (
+                              <p className="text-[10px] font-Poppins text-[#F25B38] text-center font-light ">
+                                {FormatNumber(d.likesCount)}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <img
+                          src="/images/visibility.svg"
+                          alt=""
+                          className="w-[20px] h-[18px] mx-2 "
+                        />
+                        {d.views > 0 && (
+                          <p className="text-[10px] font-Poppins text-[#F25B38] text-center font-light ">
+                            {FormatNumber(d.views)}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
         </div>
       </div>
 
@@ -258,68 +262,104 @@ const Products = () => {
       <div className="w-full h-auto px-2">
         <div className="w-full h-auto mx-auto items-center bg-white py-5 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {shop_artworks &&
-            shop_artworks.map((i: any, n: number) => (
-              <div
-                className="mx-auto w-[304px] h-[207px] my-10 bg-white rounded-md   relative"
-                onClick={() => setShowPostData(true)}
-                key={n}
-              >
-                <img
-                  src={i.images[0]}
-                  alt=""
-                  className=" mx-auto w-full rounded h-full object-cover"
-                />
-                <div className="  absolute mx-2 top-2 lef-2 cursor-pointer items-center w-9 h-8 p-1 flex rounded  bg-[#05000060]  ">
-                  <IoCartOutline size={26} className="text-white hover:text-[#fa6746]" />
-                </div>
-                <div className="absolute  bottom-7 left-0 right-0 bg-transparent h-1/4 bg-gradient-to-t  from-[#1919194D]">
-                  <p className="text-[28px] font-Raleway text-white text-center font-light ">
-                    {capitalizeFirstLetter(i.artwork_name)}
-                  </p>
-                  <div className="w-full bottom-0 h-[50px] border border-[#f7b38594] rounded-b-sm bg-white flex flex-row items-center">
-                    <div className="w-2/3 px-4 flex flex-row items-center justify-start  ">
-                      {i.user.profile_img && (
-                        <img
-                          src={i.user.profile_img}
-                          alt=""
-                          className="w-[38px] h-[38px] mx-0 "
-                        />
-                      )}
-                      <p className="text-[11px] px-2 font-Poppins text-black ">
-                        {capitalizeFirstLetter(i.user.user_name)}
-                      </p>
+            shop_artworks.map((i: any, n: number) => {
+              const isLiked = i.likes?.some((like: any) => like.userId === userId);
+              return (
+                <div
+                  className=" relative mx-auto w-[304px] h-[207px] my-10 bg-white rounded-lg   cursor-pointer transform transition-transform duration-300 hover:scale-105"
+                  onClick={() => {
+                    setArtworkDetails(i);
+                    setShowPostData(true);
+                  }}
+                  key={n}
+                >
+                  <img
+                    src={i.images[0]}
+                    alt=""
+                    className=" mx-auto w-full rounded-t-lg h-full object-cover"
+                  />
+                  {User && (
+                    <div
+                      className=" absolute mx-2 top-2 lef-2 cursor-pointer items-center w-9 h-8 p-1 flex rounded  bg-[#05000060] "
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        AddCart(i);
+                      }}
+                    >
+                      <IoCartOutline size={26} className="text-white hover:text-[#fa6746]" />
                     </div>
-                    <div className="w-1/3 mx-4 items-center justify-end flex flex-row">
-                      <img
-                        src="/images/favorite.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2"
-                      />
-                      {i.likes && (
-                        <p className="text-[10] font-Raleway text-[#F25B38] text-center font-light ">
-                          {i.likes}k
+                  )}
+                  <div className="absolute  bottom-7 left-0 right-0 bg-[#0707072c] h-1/4 bg-gradient-to-t  from-black">
+                    <p className="text-[19px] pb-4 pt-2 font-Raleway text-white text-center font-light ">
+                      {i.artwork_name}
+                    </p>
+
+                    <div className="w-full bottom-0 h-[60px]  border border-[#bdbdbd75] rounded-b bg-white flex flex-row items-center">
+                      <div className="w-2/3 px-4 flex flex-row items-center justify-start  rounded-b">
+                        {i.user.profile_img && (
+                          <img
+                            src={i.user.profile_img}
+                            alt=""
+                            className="w-[35px] h-[35px] mx-0 rounded-full"
+                          />
+                        )}
+                        <p className="text-[11px] px-2 font-Poppins text-black ">
+                          {i.user.user_name}
                         </p>
-                      )}
-                      <img
-                        src="/images/visibility.svg"
-                        alt=""
-                        className="w-[20px] h-[18px] mx-2 "
-                      />
-                      {i.views && (
-                        <p className="text-[10] font-Raleway text-[#F25B38] text-center font-light ">
-                          {i.views}k
-                        </p>
-                      )}
+                      </div>
+
+                      <div className="w-1/3 mx-4 items-center justify-end flex flex-row">
+                        <div className="flex  items-center">
+                          <div className="flex justify-between items-center">
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                userId &&
+                                  dispatch(
+                                    LikeArt({ userId: userId, artwork_id: i.artwork_id })
+                                  );
+                              }}
+                            >
+                              {isLiked ? (
+                                <AiFillHeart
+                                  size={30}
+                                  className="text-red-500 w-[20px] h-[18px] mx-2 cursor-pointer"
+                                />
+                              ) : (
+                                <AiOutlineHeart
+                                  size={30}
+                                  className="text-red-500 w-[20px] h-[18px] mx-2 cursor-pointer"
+                                />
+                              )}
+                            </div>
+                            {i.likesCount > 0 && (
+                              <p className="text-[10px] font-Poppins text-[#F25B38] text-center font-light ">
+                                {FormatNumber(i.likesCount)}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <img
+                          src="/images/visibility.svg"
+                          alt=""
+                          className="w-[20px] h-[18px] mx-2 "
+                        />
+                        {i.views > 0 && (
+                          <p className="text-[10px] font-Poppins text-[#F25B38] text-center font-light ">
+                            {FormatNumber(i.views)}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
         </div>
       </div>
       {showSearchResult && <SearchResult />}
       {showPostData && (
-        <UserPostDetail setShowPostData={setShowPostData} Artwork={undefined} />
+        <UserPostDetail Artwork={artworkDetails} setShowPostData={setShowPostData} />
       )}
     </div>
   );
@@ -450,5 +490,70 @@ const Products = () => {
 //     </>
 //   );
 // };
+{
+  /* <div className="mx-auto w-full h-[80px]  px-6 flex flex-row items-center ">
+        <div
+          className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
+          onClick={() => setShowArtistFieldList(true)}
+        >
+          <img src="/images/interests.svg" alt="" className="mx-4" />
+          <p className="mx-auto text-[16px] font-Poppins text-[#333333] cursor-default">
+            Artistic Field
+          </p>
+          <img src="/images/arrow_left.svg" alt="" className="mx-4" />
+          {showArtistFieldList && (
+            <ArtisticField
+              showArtistFieldList={showArtistFieldList}
+              setShowArtistFieldList={setShowArtistFieldList}
+            />
+          )}
+        </div>
+        <div
+          className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
+          onClick={() => setShowColorPicker(!showColorPicker)}
+        >
+          <img src="/images/colors.svg" alt="" className="mx-4" />
+          <p className="mx-auto text-[16px] font-Poppins text-[#333333] cursor-default">
+            Color
+          </p>
+          <img src="/images/arrow_left.svg" alt="" className="mx-4" />
+          {showColorPicker && (
+            <div
+              ref={colorpickeralRef}
+              className="absolute top-12 w-[250px]  bg-white shadow-md rounded-md z-30  "
+            >
+              <ColorPicker
+                color={color}
+                onChange={(color: any) => setColor(color.hex)}
+                theme={{
+                  borderRadius: "2px",
+                  width: "200px",
+                }}
+              />
+            </div>
+          )}
+        </div>
+        <div
+          className="relative w-[250px] h-[42px] mx-auto flex flex-row rounded items-center bg-[#8AC5C733]"
+          onClick={() => setShowLocation(true)}
+        >
+          <img src="/images/location.svg" alt="" className="mx-4" />
+          <p className="mx-auto text-[16px] font-Poppins text-[#333333] cursor-default">
+            Location
+          </p>
+          <img src="/images/arrow_left.svg" alt="" className="mx-4" />
 
+          {showLocation && (
+            <ArtLocation showLocation={showLocation} setShowLocation={setShowLocation} />
+          )}
+        </div>
+        <p className="mx-auto text-[16px] font-Poppins text-[#F25B38] cursor-default">
+          Clear All
+        </p>
+        <div className="w-[178px] h-[42px] mx-auto flex flex-row rounded border border-[#F25B38] items-center bg-white">
+          <p className="mx-auto text-sm font-Poppins text-black cursor-default">Recommended</p>
+          <img src="/images/arrow_drop_down black.svg" alt="" className="mx-4" />
+        </div>
+      </div> */
+}
 export default Products;

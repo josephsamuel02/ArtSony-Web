@@ -1,46 +1,26 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import Nav from "../../components/NavBar/Nav";
 import { PaymentState_1, PaymentState_2 } from "./PaymentState";
+import { useDispatch, useSelector } from "react-redux";
+import { DeleteCartItem, GetUserCart, UpdateCartItem } from "../../Redux/Cart";
+import { AppDispatch } from "../../Redux/store";
 
 const Checkout = () => {
-  const [paymentOptionState, setpaymentoptionState] = useState("previousCard");
+  const dispatch = useDispatch<AppDispatch | any>();
+  const userId = useSelector((state: any) => state.Auth.User?.User?.userId);
 
-  const items = [
-    {
-      title: "Soul Mountain",
-      rights: "Exclusive Rights",
-      price: 200,
-      image:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718118210/Group_1339_ol2ukf.svg",
-      botton1: "+",
-      botton2: "-",
-    },
-    {
-      title: "Crimson Sky",
-      rights: "Exclusive Rights",
-      price: 1000,
-      image:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718121792/Rectangle_174_q6mssw.svg",
-      botton1: "+",
-      botton2: "-",
-    },
-    {
-      title: "Glassified",
-      rights: "Exclusive Rights",
-      price: 500,
-      image:
-        "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718122076/Group_1695_s1ykp7.svg",
-      botton1: "+",
-      botton2: "-",
-    },
-  ];
+  const my_cart = useSelector((state: any) => state.Cart?.cart.data);
+
+  const [paymentOptionState] = useState("previousCard");
+  const [cart, setCart] = useState(my_cart);
 
   const details = [
     {
       id: 1,
       imageUrl:
         "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718245464/Rectangle_7_hcw1fb.svg",
-      artname: "Fussion",
+      artname: "Fusion",
       avatarUrl:
         "https://res.cloudinary.com/dspkk9qlz/image/upload/v1718275823/Ellipse_10_x2eyae.svg",
       name: "Arlene McCoy",
@@ -78,58 +58,93 @@ const Checkout = () => {
     },
   ];
 
+  const updateCart = (data: any) => {
+    dispatch(UpdateCartItem({ userId: data.userId, product: { ...data } }));
+    console.log(data);
+  };
+
+  const deleteItem = (data: any) => {
+    dispatch(
+      DeleteCartItem({
+        userId: data.userId,
+        product: { artwork_id: data.artwork_id, price: data.price, quantity: data.quantity },
+      })
+    );
+  };
+
+  const getMyCart = () => {
+    dispatch(GetUserCart({ userId: userId }));
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => getMyCart(), [userId]);
+  useEffect(() => {
+    setCart(my_cart);
+    // console.log(my_cart);
+  }, [my_cart]);
   return (
     <div className="w-full px-10  flex flex-col">
       <Nav />
 
-      <div className="flex flex-row  mx-auto   mt-28">
+      <div className="flex flex-row mx-auto mt-28">
         {/* ------------cards----------- */}
         <div className="mx-auto w-1/2 flex flex-col items-start justify-start border-r-2 border-[#F25B38]  gap-6   mb-9">
           <h1 className=" text-3xl font-[400]">Cart & Checkout</h1>
 
-          {items.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-row h-44 w-10/12 rounded-md border border-[#f5dcdc]"
-            >
-              <img src={item.image} alt="bgone" className="w-44 h-44" />
-              <div className="relative my-auto mx-4 flex      w-[495px]   ">
-                <div className="flex flex-col  h-auto gap-2">
-                  <p className="text-[#8AC5C7] font-[14px] font-Poppins">{item.title}</p>
-                  <p className="text-[#8F8F8F] font-[16px] font-Poppins">{item.rights}</p>
-                  <div className="flex flex-row gap-2">
-                    <p className="text-[#8F8F8F] w-[104px] h-[20px] text-sm font-[400]">
-                      Physical artwork
-                    </p>
+          {cart.products &&
+            cart.products.map((d: any, i: any) => (
+              <div
+                key={i}
+                className="flex flex-row h-44 w-10/12 rounded-md border border-[#f5dcdc]"
+              >
+                <img src={d.thumbnail && d.thumbnail} alt="bg" className="w-44 h-44" />
+                <div className="relative my-auto mx-4 flex      w-[495px]   ">
+                  <div className="flex flex-col  h-auto gap-2">
+                    <p className="text-[#8AC5C7] font-[14px] font-Poppins">{d.artwork_name}</p>
+                    <p className="text-[#8F8F8F] font-[16px] font-Poppins">{d.rights}</p>
+                    <div className="flex flex-row gap-2">
+                      <p className="text-[#8F8F8F] w-[104px] h-[20px] text-sm font-[400]">
+                        {d.artwork_type}
+                      </p>
+                      <img
+                        className="w-[17px] h-[17px]"
+                        src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718118918/help_x9fybk.svg"
+                        alt="question"
+                      />
+                    </div>
+                    <div className="flex flex-row gap-4 items-center w-[144px]">
+                      <button
+                        className="bg-[#f8eae7] w-[32px] h-[32px] text-[#F25B38] rounded-md border border-[#D9D9D9]"
+                        onClick={() =>
+                          d.quantity > 1 &&
+                          updateCart({ ...d, quantity: d.quantity > 1 ? d.quantity - 1 : 1 })
+                        }
+                      >
+                        -
+                      </button>
+                      <p>{d.quantity}</p>
+                      <button
+                        className="bg-[#f8eae7] w-[32px] h-[32px] text-[#F25B38] rounded-md border border-[#D9D9D9]"
+                        onClick={() => updateCart({ ...d, quantity: d.quantity + 1 })}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div className="absolute right-0 flex flex-col justify-between h-[145px]  items-end ">
                     <img
-                      className="w-[17px] h-[17px]"
-                      src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718118918/help_x9fybk.svg"
-                      alt="question"
+                      className="w-[19.21px] h-[19.21px]"
+                      src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718120486/delete_iwoglq.svg"
+                      alt="delete"
+                      onClick={() => deleteItem(d)}
                     />
+                    <h3 className="pr-2">
+                      <span className="text-[#F25B38]">$ {d.price}</span>
+                    </h3>
                   </div>
-                  <div className="flex flex-row gap-4 items-center w-[144px]">
-                    <button className="bg-[#f8eae7] w-[32px] h-[32px] text-[#F25B38] rounded-md border border-[#D9D9D9]">
-                      {item.botton1}
-                    </button>
-                    <p>1</p>
-                    <button className="bg-[#f8eae7] w-[32px] h-[32px] text-[#F25B38] rounded-md border border-[#D9D9D9]">
-                      {item.botton2}
-                    </button>
-                  </div>
-                </div>
-                <div className="absolute right-0 flex flex-col justify-between h-[145px]  items-end ">
-                  <img
-                    className="w-[19.21px] h-[19.21px]"
-                    src="https://res.cloudinary.com/dspkk9qlz/image/upload/v1718120486/delete_iwoglq.svg"
-                    alt="delete"
-                  />
-                  <h3 className="pr-2">
-                    USD <span className="text-[#F25B38]">$ {item.price}</span>
-                  </h3>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
 
           <h2 className=" justify-start items-start w-full text-[14px] font-Poppins">
             Summary
@@ -139,7 +154,7 @@ const Checkout = () => {
             <div className="flex flex-col">
               <div className="flex flex-row justify-between pt-5 pl-6">
                 <div className="gap-5 flex text-[#8F8F8F]">
-                  <p>Soul Mountain</p> <p>x1</p>{" "}
+                  <p>Soul Mountain</p> <p>x1</p>
                 </div>
 
                 <h3 className="pr-6">
@@ -149,7 +164,7 @@ const Checkout = () => {
 
               <div className="flex flex-row justify-between pt-5  pl-6">
                 <div className="gap-5 flex text-[#8F8F8F]">
-                  <p>Crimson Sky</p> <p>x2</p>{" "}
+                  <p>Crimson Sky</p> <p>x2</p>
                 </div>
 
                 <h3 className="pr-6">
@@ -159,7 +174,7 @@ const Checkout = () => {
 
               <div className="flex flex-row justify-between pt-5  pl-6">
                 <div className="gap-5 flex text-[#8F8F8F]">
-                  <p>Glassified</p> <p>x1</p>{" "}
+                  <p>Classified</p> <p>x1</p>{" "}
                 </div>
 
                 <h3 className="pr-6">

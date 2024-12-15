@@ -6,16 +6,25 @@ export const getAllMessages = createAsyncThunk(
   "get_all_chat_messages",
   async (_, { rejectWithValue }) => {
     try {
-      let data = [""];
-      socket.on("connected", (response) => {
-        console.log("Connected response:", response);
+      const userId = localStorage.getItem("artsoney_user_id");
+      let data = "";
+      new Promise((resolve) => {
+        socket.emit("get_all_user_messages", { userId });
 
-        if (response.status === 200) {
-          console.log("Chat history:", response.chatHistory);
-        } else {
-          console.error("Connection error:", response.message);
-        }
-        data = response;
+        socket.on("get_all_user_messages", (response: any) => {
+          // console.log("Received response:", response);
+
+          if (response) {
+            resolve(response);
+            data = response;
+          }
+          data = response;
+        });
+
+        // Timeout handling
+        // setTimeout(() => {
+        //   reject(rejectWithValue("Request timed out"));
+        // }, 5000);
       });
       return data;
     } catch (error: any) {

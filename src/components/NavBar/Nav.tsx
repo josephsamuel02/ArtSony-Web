@@ -10,11 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../Redux/store";
 import { useNavigate } from "react-router-dom";
 import { GetMyProfile } from "../../Redux/User";
+import socket from "../../utils/socket";
 
 const Nav = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const userId = useSelector((state: any) => state.Auth.auth.data.user_id);
+  const userId = useSelector((state: any) => state.User.my_profile.data?.userId);
 
   const [showUploadCard, setShowUploadCard] = useState("close");
   const [showNotificationCard, setShowNotificationCard] = useState(false);
@@ -41,6 +42,7 @@ const Nav = () => {
 
   useEffect(() => {
     localStorage.setItem("artsoney_user_id", userId);
+    socket.connect();
     const fetchUser = async () => {
       dispatch(GetMyProfile());
     };
@@ -97,14 +99,14 @@ const Nav = () => {
                 onClick={() => setShowNotificationCard(!showNotificationCard)}
               >
                 <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
-                  3
+                  {/* your notification count shows here */}
                 </p>
                 <img src="/images/notifications.svg" alt="search" className="w-[27px] h-8" />
                 {showNotificationCard && <NotificationCard />}
               </h2>
               <a href={PUBLIC_ROUTES.CHECKOUT} className=" mx-auto relative p-1.5 px-1">
                 <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
-                  3
+                  {/* your cart count shows here */}
                 </p>
                 <img src="/images/local_mall.svg" alt="search" className="w-[27px] h-8" />
               </a>
@@ -113,7 +115,7 @@ const Nav = () => {
                 onClick={() => setShowMessageCard(!showMessageCard)}
               >
                 <p className="bg-white text-xs px-1 text-red-500 absolute top-0 right-0  rounded-full">
-                  3
+                  {/* your messages count shows here */}
                 </p>
                 <img src="/images/drafts.svg" alt="search" className="w-[27px] h-8" />
               </h2>

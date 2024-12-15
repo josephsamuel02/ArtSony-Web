@@ -5,13 +5,20 @@ import PUBLIC_ROUTES from "../../utils/PublicRoutes";
 
 const ShopBanner = () => {
   const userData = useSelector((state: any) => state.Auth.user);
+  const userInfo = useSelector((state: any) => state.User.my_profile.data);
 
   const capitalizeFirstLetter = (sentence: string) => {
+    if (!sentence) return ""; // Handle undefined or null input
     return sentence
-      .split(" ")
+      .split(" ") // Split the sentence into words
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-      .join(" ");
+      .join(" "); // Join the words back into a sentence
   };
+
+  // Usage example:
+  {
+    capitalizeFirstLetter(userData?.user_name || "");
+  }
 
   // Define the background images
   const backgroundImages = [
@@ -53,14 +60,14 @@ const ShopBanner = () => {
             Sell Your Art?
           </a>
 
-          {userData?.user && (
+          {userInfo && (
             <div className="w-full h-auto py-4 px-10 flex flex-row justify-end items-center">
               <p className="font-Poppins font-light text-[16px] text-white mx-4">
-                {capitalizeFirstLetter(userData.User?.user_name)}
+                {capitalizeFirstLetter(userData?.user_name)}
               </p>
-              {userData.user.profile_img && (
+              {userData.profile_img && (
                 <img
-                  src={userData.user.profile_img}
+                  src={userData.profile_img}
                   alt=""
                   className="w-12 h-12 object-cover rounded-full"
                 />

@@ -13,7 +13,7 @@ const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const Navigate = useNavigate();
   const LogInStatus = useSelector((state: any) => state.Auth.auth?.status);
-  const userId = useSelector((state: any) => state.Auth.auth.data.user_id);
+  const userId = useSelector((state: any) => state.User.my_profile.data?.userId);
 
   const [loading, setLoading] = useState(LogInStatus);
   const [loginData, setLoginData] = useState<any>({

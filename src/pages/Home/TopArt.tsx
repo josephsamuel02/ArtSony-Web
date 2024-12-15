@@ -37,65 +37,6 @@ const TopArt = () => {
   const [Artwork, setArtwork] = useState(newbies_artworks);
   const [artworkDetails, setArtworkDetails] = useState("");
 
-  // const Artwork = [
-  //   {
-  //     img: "/images/Rectangle 6.png",
-  //     title: "Side View",
-  //     views: "100",
-  //     likes: "25",
-  //     user_image: "/images/Ellipse 10.svg",
-  //     user_name: "Leslie Alexander",
-  //   },
-  //   {
-  //     img: "/images/Rectangle 6.png",
-  //     title: "Side View",
-  //     views: "100",
-  //     likes: "25",
-  //     user_image: "/images/Ellipse 10.svg",
-  //     user_name: "Leslie Alexander",
-  //   },
-  //   {
-  //     img: "/images/Rectangle 6.png",
-  //     title: "Side View",
-  //     views: "100",
-  //     likes: "25",
-  //     user_image: "/images/Ellipse 10.svg",
-  //     user_name: "Leslie Alexander",
-  //   },
-  //   {
-  //     img: "/images/Rectangle 6.png",
-  //     title: "Side View",
-  //     views: "100",
-  //     likes: "25",
-  //     user_image: "/images/Ellipse 10.svg",
-  //     user_name: "Leslie Alexander",
-  //   },
-  //   {
-  //     img: "/images/Rectangle 6.png",
-  //     title: "Side View",
-  //     views: "100",
-  //     likes: "25",
-  //     user_image: "/images/Ellipse 10.svg",
-  //     user_name: "Leslie Alexander",
-  //   },
-  //   {
-  //     img: "/images/Rectangle 6.png",
-  //     title: "Side View",
-  //     views: "100",
-  //     likes: "25",
-  //     user_image: "/images/Ellipse 10.svg",
-  //     user_name: "Leslie Alexander",
-  //   },
-  //   {
-  //     img: "/images/Rectangle 6.png",
-  //     title: "Side View",
-  //     views: "100",
-  //     likes: "25",
-  //     user_image: "/images/Ellipse 10.svg",
-  //     user_name: "Leslie Alexander",
-  //   },
-  // ];
-
   const topArtMenu = ["Newbies", "Recent", "Trending", "Top Art", userId && "For You"];
 
   useEffect(() => {
