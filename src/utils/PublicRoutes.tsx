@@ -13,6 +13,7 @@ const PUBLIC_ROUTES = {
   MY_PROFILE: "/my_profile",
   PROFILE_SETTINGS: "/profile_settings",
   GENERAL_SETTINGS: "/general_settings",
+  WALLET_STATISTICS: "/wallet_statistics",
   POST_ART: "/post_art",
   SELL_ART: "/sell_art",
   SHOP: "/shop",

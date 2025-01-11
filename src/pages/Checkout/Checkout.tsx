@@ -135,7 +135,7 @@ const Checkout = () => {
                         {new Intl.NumberFormat("en-US", {
                           style: "currency",
                           currency: "NGN",
-                        }).format(d.price)}
+                        }).format(d.price * d.quantity)}
                       </span>
                     </h3>
                   </div>

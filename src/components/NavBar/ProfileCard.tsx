@@ -70,13 +70,16 @@ const ProfileCard = ({ User }: compData) => {
               </a>
               <a
                 href={PUBLIC_ROUTES.GENERAL_SETTINGS}
-                className="   my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default"
+                className=" my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default"
               >
                 General Settings
               </a>
-              <h3 className="   my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default">
+              <a
+                href={PUBLIC_ROUTES.WALLET_STATISTICS}
+                className=" my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default"
+              >
                 Wallet & Statistics
-              </h3>
+              </a>
             </div>
             <div className="w-full h-auto pl-10 py-5 flex flex-col  border-b-2 border-gray-400  ">
               <h3 className="   my-2 text-[15px] text-[#2e2d2d] hover:text-[#F25B38] font-semibold font-Poppins cursor-default">

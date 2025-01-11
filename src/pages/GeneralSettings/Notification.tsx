@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Switch from "react-switch";
 const Notification = () => {
   const userData = true;
 
   const [disableComments, setDisableComments] = useState<boolean>(userData ? userData : false);
+
+  useEffect(() => setDisableComments(userData), [userData]);
 
   return (
     <div className="w-full h-full p-3  rounded-md">
