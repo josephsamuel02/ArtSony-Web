@@ -7,17 +7,17 @@ import { Provider } from "react-redux";
 
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
-// import { ThemeProvider } from "@material-tailwind/react";
 import { PersistGate } from "redux-persist/integration/react";
+import { PrimeReactProvider } from "primereact/api";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Router>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          {/* <ThemeProvider> */}
-          <App />
-          {/* </ThemeProvider> */}
+          <PrimeReactProvider value={{ unstyled: true }}>
+            <App />
+          </PrimeReactProvider>
         </PersistGate>
       </Provider>
     </Router>

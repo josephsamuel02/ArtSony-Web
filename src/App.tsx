@@ -81,7 +81,6 @@ const App = () => {
         <Route path={PUBLIC_ROUTES.PROFILE_SETTINGS} element={<ProfileSettings />} />
         <Route path={PUBLIC_ROUTES.GENERAL_SETTINGS} element={<GeneralSettings />} />
         <Route path={PUBLIC_ROUTES.WALLET_STATISTICS} element={<WalletStatistics />} />
-
         <Route path={PUBLIC_ROUTES.CHECKOUT} element={<Checkout />} />
 
         <Route path={"/about_us"} element={<AboutUs />} />
